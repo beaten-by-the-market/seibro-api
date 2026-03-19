@@ -22,7 +22,7 @@ seibro_api/
   __init__.py          # 모듈 진입점 (공개 함수 export)
   client.py            # Seibro Open API 기본 클라이언트
   corp_loader.py       # 법인정보 로더 (DART + Seibro 종목 맵핑)
-  stock_bond.py        # 주식관련사채 조회 (Seibro API + DART 공시)
+  stock_bond.py        # 주식관련사채 조회 (Seibro API + DART API)
   dart_report.py       # 사업/반기보고서 XML 파싱 (CB/BW/EB/SUB_PIS)
   display.py           # 종합 조회 표출 스크립트
 ```
@@ -62,7 +62,7 @@ df = load_corps(refresh=True)   # 강제 새로고침
 | 함수 | 데이터 소스 | 설명 |
 |------|:----------:|------|
 | `get_stock_bonds(stock_code)` | Seibro API | 단일 종목의 CB/BW/EB 실시간 현황 조회 |
-| `get_dart_cb_events(stock_code, years=5)` | DART 공시 API | CB/BW/EB 발행결정 공시 이력 (최근 N년) |
+| `get_dart_cb_events(stock_code, years=5)` | DART API | CB/BW/EB 발행결정 공시 이력 (최근 N년) |
 
 ```python
 from seibro_api import get_stock_bonds, get_dart_cb_events
@@ -150,7 +150,7 @@ df_pis = get_sub_pis("079160")
 
 | 함수 | 설명 |
 |------|------|
-| `display_bond_summary(stock_code)` | 예탁원 + DART 공시 + 정기보고서를 한 번에 조회하여 표출 |
+| `display_bond_summary(stock_code)` | 예탁원 + DART API + 정기보고서 XML을 한 번에 조회하여 표출 |
 
 ```python
 from seibro_api import display_bond_summary
@@ -172,7 +172,7 @@ python -m seibro_api.display 307750
 
 ## 데이터 소스 비교
 
-| 항목 | Seibro API | DART 공시 | DART 보고서 XML |
+| 항목 | Seibro API | DART API | 정기보고서 XML |
 |------|:----------:|:---------:|:---------------:|
 | **함수** | `get_stock_bonds` | `get_dart_cb_events` | `get_bonds_from_report` |
 | **시점** | 실시간 | 공시일 기준 | 보고서 기준일 |
