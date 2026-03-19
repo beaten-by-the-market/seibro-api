@@ -1,0 +1,9 @@
+requests
+pandas
+python-dotenv
+xml_to_dict
+tqdm
+openpyxl
+beautifulsoup4
+lxml
+OpenDartReader
