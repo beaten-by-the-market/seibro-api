@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "seibro-api"
+version = "0.1.0"
+description = "Seibro & DART OpenAPI client for Korean stock-linked bonds (CB/BW/EB)"
+requires-python = ">=3.9"
+dependencies = [
+    "requests",
+    "pandas",
+    "python-dotenv",
+    "xml_to_dict",
+    "tqdm",
+    "openpyxl",
+    "beautifulsoup4",
+    "lxml",
+    "OpenDartReader",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
