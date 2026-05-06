@@ -22,6 +22,7 @@ seibro_api/
   __init__.py          # 모듈 진입점 (공개 함수 export)
   client.py            # Seibro Open API 기본 클라이언트
   corp_loader.py       # 법인정보 로더 (DART + Seibro 종목 맵핑)
+  stock_issue.py       # 주식수량 변동내역 조회 (Seibro API)
   stock_bond.py        # 주식관련사채 조회 (Seibro API + DART API)
   dart_report.py       # 사업/반기보고서 XML 파싱 (CB/BW/EB/SUB_PIS)
   display.py           # 종합 조회 표출 스크립트
@@ -56,6 +57,42 @@ from seibro_api import load_corps
 df = load_corps()               # 캐시 있으면 캐시 사용
 df = load_corps(refresh=True)   # 강제 새로고침
 ```
+
+### stock_issue.py — 주식수량 변동내역 조회
+
+| 함수 | 데이터 소스 | 설명 |
+|------|:----------:|------|
+| `get_stock_issue_details(stock_code=None, isin=None, issuco_custno=None, issue_year=None)` | Seibro API | 발행회사별 주식수량 변동내역 조회 |
+
+Seibro API ID는 `getStkIncdceDetails`입니다. `stock_code`, `isin`, `issuco_custno` 중 하나 이상을 입력해야 하며, `issue_year`는 선택값입니다.
+
+```python
+from seibro_api import get_stock_issue_details
+
+# 삼성전자 2018년 주식수량 변동내역
+df = get_stock_issue_details(stock_code="005930", issue_year=2018)
+
+# 표준코드 또는 발행회사고객번호로도 조회 가능
+df = get_stock_issue_details(isin="KR7005930003", issue_year=2018)
+df = get_stock_issue_details(issuco_custno=593, issue_year=2018)
+```
+
+터미널에서 직접 실행:
+
+```bash
+python -m seibro_api.stock_issue 005930 2018
+```
+
+**주요 출력 칼럼:**
+
+| 칼럼 | 설명 |
+|------|------|
+| 발행회사고객번호 / 종목번호 | 발행회사 및 종목 식별 |
+| 종목종류코드 / 종목종류 | 보통주, 우선주 등 |
+| 종목발행횟수 | 발행 이력을 관리하기 위한 순번 |
+| 발행일자 / 발행가 / 발행수량 | 발행 조건 |
+| 종목발행사유코드 / 종목발행사유명 | 액면분할, 무상증자 등 권리사유 |
+| 상장일자 | 종목상장 적용일자 |
 
 ### stock_bond.py — 주식관련사채 조회
 

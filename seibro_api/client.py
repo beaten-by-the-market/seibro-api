@@ -2,6 +2,7 @@ import os
 import requests
 import pandas as pd
 from time import sleep
+from typing import Union
 from xml_to_dict import XMLtoDict
 from dotenv import load_dotenv
 
@@ -148,3 +149,39 @@ class SeibroClient:
         result = pd.concat(dfs, ignore_index=True)
         print(f"\n총 {len(result)}개 종목 수집 완료")
         return result
+
+    def get_stock_issue_details(
+        self,
+        stock_code: str = None,
+        isin: str = None,
+        issuco_custno: Union[str, int] = None,
+        issue_year: Union[str, int] = None,
+    ) -> pd.DataFrame:
+        """주식수량 변동내역 조회.
+
+        Seibro API ID: getStkIncdceDetails
+
+        Args:
+            stock_code: 단축코드(SHOTN_ISIN). 예: "005930"
+            isin: 표준코드(ISIN). 예: "KR7005930003"
+            issuco_custno: 발행회사고객번호(ISSUCO_CUSTNO).
+            issue_year: 발행연도(ISSU_YEAR). 예: 2018
+
+        Returns:
+            DataFrame with Seibro 원천 칼럼.
+        """
+        params = {}
+
+        if stock_code:
+            params["SHOTN_ISIN"] = str(stock_code).strip().zfill(6)
+        if isin:
+            params["ISIN"] = str(isin).strip()
+        if issuco_custno is not None:
+            params["ISSUCO_CUSTNO"] = str(issuco_custno).strip()
+        if issue_year is not None:
+            params["ISSU_YEAR"] = str(issue_year).strip()
+
+        if not any(k in params for k in ("SHOTN_ISIN", "ISIN", "ISSUCO_CUSTNO")):
+            raise ValueError("stock_code, isin, issuco_custno 중 하나 이상이 필요합니다.")
+
+        return self._call_api("getStkIncdceDetails", params)
