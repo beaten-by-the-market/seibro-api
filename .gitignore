@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Environment / secrets
+.env
+
+# Claude Code
+.claude/
+
+# 생성물(조회 결과 CSV)
+stock_bond_*.csv
+dart_bond_*.csv
+schedule_reason_*.csv
+dividend_*.csv
