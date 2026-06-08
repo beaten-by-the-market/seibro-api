@@ -24,9 +24,13 @@ seibro_api/
   corp_loader.py       # 법인정보 로더 (DART + Seibro 종목 맵핑)
   stock_issue.py       # 주식수량 변동내역 조회 (Seibro API)
   stock_bond.py        # 주식관련사채 조회 (Seibro API + DART API)
+  dividend.py          # 배당내역상세 조회 (Seibro 웹 WebSquare, key 불필요)
   dart_report.py       # 사업/반기보고서 XML 파싱 (CB/BW/EB/SUB_PIS)
   display.py           # 종합 조회 표출 스크립트
 ```
+
+> 데이터 소스(공식 Open API / 웹 WebSquare / DART)별 전체 구분은
+> [`docs/data_sources.md`](docs/data_sources.md) 참고.
 
 ## 함수 목록
 
@@ -182,6 +186,42 @@ df_pis = get_sub_pis("079160")
 | 발행회사 / 증권종류 / 발행방법 | 회사채, 조건부자본증권 등 포괄 |
 | 발행일자 / 발행총액 / 이자율(%) / 신용등급 | 금액 |
 | 만기일 / 상환여부 / 주관회사 | 상태 |
+
+### dividend.py — 배당내역상세 조회
+
+| 함수 | 데이터 소스 | 설명 |
+|------|:----------:|------|
+| `get_dividend_details(stock_code)` | Seibro 웹 (WebSquare) | 보통주/우선주 배당내역 통합 조회 |
+
+SEIBro 웹 "배당내역상세"(BIP_CNTS01043V) 화면의 WebSquare 호출을 재현합니다.
+**Open API key 없이** 동작하며(키 없으면 웹 회사검색으로 고객번호 자동 해결),
+입력값은 종목코드 하나뿐입니다.
+
+```python
+from seibro_api import get_dividend_details
+
+df = get_dividend_details("005930")   # 삼성전자 (보통주 + 우선주)
+```
+
+터미널에서 직접 실행:
+
+```bash
+python -m seibro_api.dividend 005930
+```
+
+**출력 칼럼:** `종목코드 / 회사명 / 주식종류(보통주·우선주) / 항목 / <연도1~4>`
+
+| 항목(HB) 예시 | 설명 |
+|--------------|------|
+| 당기순이익(백만) / 유보이익(백만) | 손익 |
+| 배당금(백만) / 배당금(현금·주식)(백만) | 배당 총액 |
+| 배당성향(%) | 순이익 대비 배당 |
+| DPS(원) / DPS(현금·주식)(원) | 주당배당금 |
+| 시가배당률(현금)(%) | 시가 대비 배당률 |
+
+> **제약**: 서버가 **최신 4개 결산연도**만 하드코딩 반환합니다. 연도 파라미터
+> (`STD_YEAR`, `SETACC_YYMM` 등)는 무시되므로 이 API로는 5년 이전 과거치를
+> 조회할 수 없습니다.
 
 ### display.py — 종합 조회 표출
 
