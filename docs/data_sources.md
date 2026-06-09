@@ -40,6 +40,7 @@
 | `getRgtStdDtByConoList` | (사유별) | 사유별 권리기준일 드롭다운 목록 | `get_schedule_reason_details()` |
 | `rissuBasicInfoViewEL1` 외 3종 | BIP_CNTS01026V | 무상증자(102) 기준일별 상세 | `get_bonus_issue_details()` |
 | `entrDivResultsList` / `entrDivResultsList2` | BIP_CNTS01043V | 배당내역상세(보통주/우선주) | `get_dividend_details()` |
+| `chgDetailsListEL1` | BIP_CNTS01012V | 발행주식수증감내역(개별) — 기간 조회 지원 | `get_issued_share_changes()` |
 
 일정사유 19종(정기/임시총회·유무상증자·배당·액면분할·합병·분할·주식교환·매수청구 등)은
 `SCHEDULE_REASONS`에 정의돼 있으나, **상세 조회가 구현된 것은 무상증자(102)뿐**이고
@@ -81,7 +82,7 @@ Protocol로 SEIBRO를 수동 조작하며 WebSquare XML POST를 녹화 → `web_
 
 ```
 SEIBRO 공식 Open API (key O)  → 종목명부 · 주식수량변동 · 주식관련사채(CB/BW/EB) 현황
-SEIBRO 웹 WebSquare (key X)   → 회사검색 · 권리기준일 · 무상증자 상세 · 배당내역상세
+SEIBRO 웹 WebSquare (key X)   → 회사검색 · 권리기준일 · 무상증자 상세 · 배당내역상세 · 발행주식수증감내역
 DART (별도 기관, key O)       → 사채 발행공시 이력 · 정기보고서 사채 테이블
 ```
 
