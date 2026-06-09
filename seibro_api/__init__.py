@@ -12,6 +12,7 @@ __all__ = [
     "get_schedule_reason_details",
     "get_bonus_issue_details",
     "get_dividend_details",
+    "get_issued_share_changes",
     "get_sub_pis", "get_cb_from_report", "get_bw_from_report", "get_eb_from_report",
     "get_bonds_from_report",
 ]
@@ -30,4 +31,8 @@ def __getattr__(name):
         from .dividend import get_dividend_details
 
         return get_dividend_details
+    if name == "get_issued_share_changes":
+        from .issued_share_change import get_issued_share_changes
+
+        return get_issued_share_changes
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

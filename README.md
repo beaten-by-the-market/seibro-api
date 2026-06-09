@@ -25,6 +25,7 @@ seibro_api/
   stock_issue.py       # 주식수량 변동내역 조회 (Seibro API)
   stock_bond.py        # 주식관련사채 조회 (Seibro API + DART API)
   dividend.py          # 배당내역상세 조회 (Seibro 웹 WebSquare, key 불필요)
+  issued_share_change.py  # 발행주식수증감내역 조회 (Seibro 웹 WebSquare, key 불필요)
   dart_report.py       # 사업/반기보고서 XML 파싱 (CB/BW/EB/SUB_PIS)
   display.py           # 종합 조회 표출 스크립트
 ```
@@ -222,6 +223,37 @@ python -m seibro_api.dividend 005930
 > **제약**: 서버가 **최신 4개 결산연도**만 하드코딩 반환합니다. 연도 파라미터
 > (`STD_YEAR`, `SETACC_YYMM` 등)는 무시되므로 이 API로는 5년 이전 과거치를
 > 조회할 수 없습니다.
+
+### issued_share_change.py — 발행주식수증감내역 조회
+
+| 함수 | 데이터 소스 | 설명 |
+|------|:----------:|------|
+| `get_issued_share_changes(stock_code, start_dt, end_dt)` | Seibro 웹 (WebSquare) | 발행주식수 증감 이력(액면분할·이익소각·합병 등) |
+
+SEIBro 웹 "발행주식수증감내역(개별)"(BIP_CNTS01012V) 화면의 WebSquare 호출을
+재현합니다. **Open API key 없이** 동작하며, 배당내역상세와 달리 **기간을 입력받아
+과거 데이터까지** 조회할 수 있습니다.
+
+```python
+from seibro_api import get_issued_share_changes
+
+# 삼성전자 2010~2025 발행주식수 증감내역
+df = get_issued_share_changes("005930", "20100101", "20251231")
+
+# 종목종류/발행사유 필터 (선택)
+df = get_issued_share_changes("005930", secn_kacd="0201")        # 우선주만
+df = get_issued_share_changes("005930", rgt_link_racd="201")     # 액면분할만
+```
+
+터미널에서 직접 실행:
+
+```bash
+python -m seibro_api.issued_share_change 005930 20100101 20251231
+```
+
+**출력 칼럼:** `종목코드 / 종목명 / 종목종류(보통주·우선주) / 발행일자 / 상장일자 /
+발행횟수 / 발행사유(액면분할·이익소각·합병·무상소각 등) / 증감수량(감소는 음수) /
+발행가 / 액면가 / 발행형태`
 
 ### display.py — 종합 조회 표출
 
