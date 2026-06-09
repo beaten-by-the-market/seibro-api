@@ -17,3 +17,5 @@ stock_bond_*.csv
 dart_bond_*.csv
 schedule_reason_*.csv
 dividend_*.csv
+bonus_issue_*.csv
+issued_share_change_*.csv
