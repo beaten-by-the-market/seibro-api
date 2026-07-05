@@ -13,6 +13,8 @@ __all__ = [
     "get_bonus_issue_details",
     "get_dividend_details",
     "get_issued_share_changes",
+    "get_overseas_settlement_amounts",
+    "get_overseas_holdings",
     "get_sub_pis", "get_cb_from_report", "get_bw_from_report", "get_eb_from_report",
     "get_bonds_from_report",
 ]
@@ -35,4 +37,12 @@ def __getattr__(name):
         from .issued_share_change import get_issued_share_changes
 
         return get_issued_share_changes
+    if name == "get_overseas_settlement_amounts":
+        from .overseas_securities import get_overseas_settlement_amounts
+
+        return get_overseas_settlement_amounts
+    if name == "get_overseas_holdings":
+        from .overseas_securities import get_overseas_holdings
+
+        return get_overseas_holdings
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
