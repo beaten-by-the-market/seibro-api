@@ -26,6 +26,7 @@ seibro_api/
   stock_bond.py        # 주식관련사채 조회 (Seibro API + DART API)
   dividend.py          # 배당내역상세 조회 (Seibro 웹 WebSquare, key 불필요)
   issued_share_change.py  # 발행주식수증감내역 조회 (Seibro 웹 WebSquare, key 불필요)
+  kofr.py              # KOFR 무위험지표금리 조회 (KSD kofr.kr WebSquare, key 불필요)
   dart_report.py       # 사업/반기보고서 XML 파싱 (CB/BW/EB/SUB_PIS)
   display.py           # 종합 조회 표출 스크립트
 ```
@@ -278,6 +279,29 @@ df_bw = results["report_bw"]
 ```bash
 python -m seibro_api.display 307750
 ```
+
+### kofr.py — KOFR(무위험지표금리) 조회
+
+| 함수 | 소스 | 설명 |
+|------|------|------|
+| `get_kofr_rates(start_dt, end_dt)` | KSD kofr.kr (WebSquare) | 공시일자별 KOFR·지수·30/90/180일 복리평균 |
+
+```python
+from seibro_api import get_kofr_rates
+
+df = get_kofr_rates("20250101", "20251231")   # 기간별 KOFR 일별공시금리
+```
+
+터미널에서 직접 실행:
+
+```bash
+python -m seibro_api.kofr
+```
+
+**출력 칼럼:** `공시일자 / 공시회차 / KOFR / KOFR지수 / 30일평균 / 90일평균 / 180일평균 / 공시일시`
+
+> KOFR = Korea Overnight Financing Repo rate. 국채·통안증권 담보 익일물 RP 기반
+> 무위험지표금리(RFR, LIBOR 대체 한국판). 한국예탁결제원(KSD) 산출·공시.
 
 ## 데이터 소스 비교
 

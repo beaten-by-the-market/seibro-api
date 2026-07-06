@@ -67,6 +67,22 @@ Protocol로 SEIBRO를 수동 조작하며 WebSquare XML POST를 녹화 → `web_
 
 ---
 
+## 2b. KSD KOFR 공시 — kofr.kr WebSquare (key X)
+
+- 엔드포인트: `https://www.kofr.kr/websquare/engine/proworks/callServletService.jsp`
+- 방식: 섹션 2와 동일한 WebSquare XML POST. 호스트만 다르다(`www.kofr.kr`, KSD의 KOFR 공시 사이트).
+- 구현: [`kofr.py`](../seibro_api/kofr.py) `get_kofr_rates()` — 페이지네이션(`CURR_PAGE`) 자동 처리.
+
+| action | task | 용도 | 호출 함수 |
+|--------|------|------|----------|
+| `getGridRateList` | `ksd.rfr.user.rate.process.RatePTask` | 기간별 KOFR 일별공시(금리·지수·30/90/180일 복리평균) | `get_kofr_rates()` |
+
+KOFR = Korea Overnight Financing Repo rate. 국채·통안증권 담보 익일물 RP 거래에서 산출하는
+무위험지표금리(RFR, LIBOR 대체 한국판)로 KSD가 산출·공시한다. 응답 필드: `RFR_PUBN_DT`(공시일자),
+`RFR_PUBN_MR`(KOFR), `RFR_INDEX`(지수), `D30/D90/D180_AVG_MR`(복리평균).
+
+---
+
 ## 3. DART (별도 기관)
 
 | 소스 | 용도 | 호출 함수 |
@@ -83,6 +99,7 @@ Protocol로 SEIBRO를 수동 조작하며 WebSquare XML POST를 녹화 → `web_
 ```
 SEIBRO 공식 Open API (key O)  → 종목명부 · 주식수량변동 · 주식관련사채(CB/BW/EB) 현황
 SEIBRO 웹 WebSquare (key X)   → 회사검색 · 권리기준일 · 무상증자 상세 · 배당내역상세 · 발행주식수증감내역
+KSD KOFR kofr.kr (key X)      → KOFR 무위험지표금리 일별공시(금리·지수·복리평균)
 DART (별도 기관, key O)       → 사채 발행공시 이력 · 정기보고서 사채 테이블
 ```
 

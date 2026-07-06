@@ -15,6 +15,7 @@ __all__ = [
     "get_issued_share_changes",
     "get_overseas_settlement_amounts",
     "get_overseas_holdings",
+    "get_kofr_rates",
     "get_sub_pis", "get_cb_from_report", "get_bw_from_report", "get_eb_from_report",
     "get_bonds_from_report",
 ]
@@ -45,4 +46,8 @@ def __getattr__(name):
         from .overseas_securities import get_overseas_holdings
 
         return get_overseas_holdings
+    if name == "get_kofr_rates":
+        from .kofr import get_kofr_rates
+
+        return get_kofr_rates
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
