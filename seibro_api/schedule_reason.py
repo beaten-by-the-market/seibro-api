@@ -56,8 +56,28 @@ BONUS_ISSUE_DETAIL_CALLS = [
     DetailCall("issued_stock", "issuDetailsList1", "submission_issuDetailsList1", True),
 ]
 
+# 액면분할(201)/액면병합(202): BIP_CNTS01028V. 두 사유가 같은 화면·action을 쓰고
+# RGT_RACD로만 구분된다. (submission action명은 화면 XML에서 확인)
+FACE_VALUE_SPLIT_MERGE_DETAIL_CALLS = [
+    DetailCall("basic", "faceDiviMergBasicInfoListEL1", "submission_faceDiviMergBasicInfoListEL1"),
+    DetailCall("pre_issued_stock", "preIssuStkDetailsList3", "submission_preIssuStkDetailsList3", True),
+    DetailCall("payment", "payDetailsList2", "submission_payDetailsList2", True),
+    DetailCall("issued_stock", "issuDetailsList3", "submission_issuDetailsList3", True),
+]
+
+# 자본감소(205): BIP_CNTS01031V.
+CAPITAL_REDUCTION_DETAIL_CALLS = [
+    DetailCall("basic", "capDecBasicInfoViewEL1", "submission_capDecBasicInfoViewEL1"),
+    DetailCall("pre_issued_stock", "preIssuStkDetailsList5", "submission_preIssuStkDetailsList5", True),
+    DetailCall("payment", "payDetailsList3", "submission_payDetailsList3", True),
+    DetailCall("issued_stock", "issuDetailsList6", "submission_issuDetailsList6", True),
+]
+
 DETAIL_CALLS_BY_REASON = {
     "102": BONUS_ISSUE_DETAIL_CALLS,
+    "201": FACE_VALUE_SPLIT_MERGE_DETAIL_CALLS,
+    "202": FACE_VALUE_SPLIT_MERGE_DETAIL_CALLS,
+    "205": CAPITAL_REDUCTION_DETAIL_CALLS,
 }
 
 
@@ -290,9 +310,10 @@ def get_schedule_reason_details(
 ) -> pd.DataFrame:
     """Collect SEIBro schedule reason records by stock code and date range.
 
-    Detailed calls are currently implemented for ``reason_code="102"`` only
-    (무상증자). For other reason codes, the function returns filtered standard
-    dates when ``include_standard_dates_only`` is true.
+    Detailed calls are implemented for the reason codes in
+    ``DETAIL_CALLS_BY_REASON``: 102(무상증자), 201(액면분할), 202(액면병합),
+    205(자본감소). For other reason codes, the function returns filtered
+    standard dates when ``include_standard_dates_only`` is true.
     """
     start = _yyyymmdd(start_dt)
     end = _yyyymmdd(end_dt)
@@ -434,6 +455,54 @@ def get_bonus_issue_details(
     return get_schedule_reason_details(
         stock_code=stock_code,
         reason_code="102",
+        start_dt=start_dt,
+        end_dt=end_dt,
+        **kwargs,
+    )
+
+
+def get_face_value_split_details(
+    stock_code: str,
+    start_dt: str | date | datetime = "20000101",
+    end_dt: str | date | datetime | None = None,
+    **kwargs,
+) -> pd.DataFrame:
+    """액면분할(201) 상세내역 조회 wrapper (BIP_CNTS01028V)."""
+    return get_schedule_reason_details(
+        stock_code=stock_code,
+        reason_code="201",
+        start_dt=start_dt,
+        end_dt=end_dt,
+        **kwargs,
+    )
+
+
+def get_face_value_merge_details(
+    stock_code: str,
+    start_dt: str | date | datetime = "20000101",
+    end_dt: str | date | datetime | None = None,
+    **kwargs,
+) -> pd.DataFrame:
+    """액면병합(202) 상세내역 조회 wrapper (BIP_CNTS01028V)."""
+    return get_schedule_reason_details(
+        stock_code=stock_code,
+        reason_code="202",
+        start_dt=start_dt,
+        end_dt=end_dt,
+        **kwargs,
+    )
+
+
+def get_capital_reduction_details(
+    stock_code: str,
+    start_dt: str | date | datetime = "20000101",
+    end_dt: str | date | datetime | None = None,
+    **kwargs,
+) -> pd.DataFrame:
+    """자본감소(205) 상세내역 조회 wrapper (BIP_CNTS01031V)."""
+    return get_schedule_reason_details(
+        stock_code=stock_code,
+        reason_code="205",
         start_dt=start_dt,
         end_dt=end_dt,
         **kwargs,
