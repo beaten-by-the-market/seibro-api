@@ -1,4 +1,4 @@
-from .client import SeibroClient
+from .client import SeibroClient, SeibroAPIError
 from .corp_loader import load_corps
 from .stock_bond import get_stock_bonds, get_dart_cb_events
 from .stock_issue import get_stock_issue_details
@@ -6,7 +6,7 @@ from .dart_report import get_sub_pis, get_cb_from_report, get_bw_from_report, ge
 from .display import display_bond_summary
 
 __all__ = [
-    "SeibroClient", "load_corps",
+    "SeibroClient", "SeibroAPIError", "load_corps",
     "get_stock_bonds", "get_dart_cb_events",
     "get_stock_issue_details",
     "get_schedule_reason_details",
@@ -18,6 +18,8 @@ __all__ = [
     "get_company_schedules",
     "get_cost_payment_schedules",
     "get_dividend_details",
+    "get_dividend_history",
+    "get_market_dividend_schedules",
     "get_issued_share_changes",
     "get_overseas_settlement_amounts",
     "get_overseas_holdings",
@@ -64,6 +66,14 @@ def __getattr__(name):
         from .dividend import get_dividend_details
 
         return get_dividend_details
+    if name == "get_dividend_history":
+        from .dividend_history import get_dividend_history
+
+        return get_dividend_history
+    if name == "get_market_dividend_schedules":
+        from .dividend_history import get_market_dividend_schedules
+
+        return get_market_dividend_schedules
     if name == "get_issued_share_changes":
         from .issued_share_change import get_issued_share_changes
 
