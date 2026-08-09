@@ -18,6 +18,34 @@ TASK = "ksd.safe.bip.cnts.Company.process.EntrSkedulPTask"
 DEFAULT_MENU_NO = "21"
 DEFAULT_REPM_DT = "19990514"
 
+# 기간별 주요일정(BIP_CNTS01021V) — 회사 하나의 기간 내 모든 권리일정을 한 번에 조회
+TERM_SCHEDULE_W2X = "/IPORTAL/user/company/BIP_CNTS01021V.xml"
+TERM_SCHEDULE_MENU_NO = "274"
+TERM_SCHEDULE_ACTION = "termByImptSkedulList"
+
+# 기간별 주요일정 응답 태그 -> 한글 칼럼명
+TERM_SCHEDULE_RENAME = {
+    "DT_BEGIN_DT": "일정일자",
+    "DT_TPNM": "일정종류",
+    "RGT_RANM": "사유",
+    "RGT_RACD_NM_DETAIL": "사유상세",
+    "RGT_RACD": "사유코드",
+    "RGT_STD_DT": "기준일",
+    "DT_EXPRY_DT": "일정종료일",
+    "STD_DT": "표시일자",
+    "LIST_TPNM": "시장",
+    "AG_ORG_TPNM": "명의개서대리인",
+    "ROST_CLOSE_BEGIN_DT": "명부폐쇄시작",
+    "ROST_CLOSE_EXPRY_DT": "명부폐쇄종료",
+    "ISSUCO_NM": "회사명",
+    "DT_TPCD": "일정종류코드",
+}
+TERM_SCHEDULE_DISPLAY_ORDER = [
+    "종목코드", "회사명", "일정일자", "일정종류", "사유", "사유상세",
+    "사유코드", "기준일", "일정종료일", "표시일자", "시장",
+    "명부폐쇄시작", "명부폐쇄종료", "명의개서대리인",
+]
+
 SCHEDULE_REASONS = {
     "001": {"name": "정기총회", "w2x_path": "/IPORTAL/user/company/BIP_CNTS01024V.xml"},
     "002": {"name": "임시총회", "w2x_path": "/IPORTAL/user/company/BIP_CNTS01024V.xml"},
@@ -73,8 +101,21 @@ CAPITAL_REDUCTION_DETAIL_CALLS = [
     DetailCall("issued_stock", "issuDetailsList6", "submission_issuDetailsList6", True),
 ]
 
+# 배당일정(103): BIP_CNTS01027V. 배당내역상세(dividend.py, BIP_CNTS01043V)와는
+# 다른 화면 — 이쪽은 기준일별 배당 일정/금액(DPS·시가배당률·지급일)을 준다.
+# "dividend"(issuDetailsList2)가 핵심 배당 데이터, "stock_dividend"(knDivDetailsList1)는
+# 주식배당(현물)용이라 현금배당 종목에선 보통 비어 있다.
+DIVIDEND_SCHEDULE_DETAIL_CALLS = [
+    DetailCall("basic", "divSkedulView", "submission_divSkedulView"),
+    DetailCall("pre_issued_stock", "preIssuStkDetailsList2", "submission_preIssuStkDetailsList2", True),
+    DetailCall("dividend", "issuDetailsList2", "submission_issuDetailsList2", True),
+    DetailCall("stock_dividend", "knDivDetailsList1", "submission_knDivDetailsList1", True),
+    DetailCall("payment", "payDetailsList1", "submission_payDetailsList1", True),
+]
+
 DETAIL_CALLS_BY_REASON = {
     "102": BONUS_ISSUE_DETAIL_CALLS,
+    "103": DIVIDEND_SCHEDULE_DETAIL_CALLS,
     "201": FACE_VALUE_SPLIT_MERGE_DETAIL_CALLS,
     "202": FACE_VALUE_SPLIT_MERGE_DETAIL_CALLS,
     "205": CAPITAL_REDUCTION_DETAIL_CALLS,
@@ -311,9 +352,9 @@ def get_schedule_reason_details(
     """Collect SEIBro schedule reason records by stock code and date range.
 
     Detailed calls are implemented for the reason codes in
-    ``DETAIL_CALLS_BY_REASON``: 102(무상증자), 201(액면분할), 202(액면병합),
-    205(자본감소). For other reason codes, the function returns filtered
-    standard dates when ``include_standard_dates_only`` is true.
+    ``DETAIL_CALLS_BY_REASON``: 102(무상증자), 103(배당일정), 201(액면분할),
+    202(액면병합), 205(자본감소). For other reason codes, the function returns
+    filtered standard dates when ``include_standard_dates_only`` is true.
     """
     start = _yyyymmdd(start_dt)
     end = _yyyymmdd(end_dt)
@@ -461,6 +502,27 @@ def get_bonus_issue_details(
     )
 
 
+def get_dividend_schedule_details(
+    stock_code: str,
+    start_dt: str | date | datetime = "20000101",
+    end_dt: str | date | datetime | None = None,
+    **kwargs,
+) -> pd.DataFrame:
+    """배당일정(103) 상세내역 조회 wrapper (BIP_CNTS01027V).
+
+    기준일별 배당 일정/금액(DPS·시가배당률·지급개시일 등)을 돌려준다.
+    재무성 배당내역상세(dividend.get_dividend_details, BIP_CNTS01043V)와는
+    다른 화면이다.
+    """
+    return get_schedule_reason_details(
+        stock_code=stock_code,
+        reason_code="103",
+        start_dt=start_dt,
+        end_dt=end_dt,
+        **kwargs,
+    )
+
+
 def get_face_value_split_details(
     stock_code: str,
     start_dt: str | date | datetime = "20000101",
@@ -507,6 +569,108 @@ def get_capital_reduction_details(
         end_dt=end_dt,
         **kwargs,
     )
+
+
+def get_company_schedules(
+    stock_code: str,
+    start_dt: str | date | datetime = "20000101",
+    end_dt: str | date | datetime | None = None,
+    reason_code: str = "",
+    dt_tpcd: str = "",
+    list_tpcd: str = "",
+    client: SeibroClient | None = None,
+    web_client: SeibroWebSquareClient | None = None,
+    save_csv: bool = True,
+) -> pd.DataFrame:
+    """회사 하나의 기간 내 '기간별 주요일정'을 한 번에 조회 (BIP_CNTS01021V).
+
+    사유별(get_schedule_reason_details)과 달리, 회사(ISSUCO_CUSTNO)를 지정하면
+    기간 안의 모든 권리일정(정기총회·배당·권리락일·총회개최일·배당금지급일 등)을
+    이벤트 단위로 한 번에 돌려준다. 각 행은 하나의 일정 이벤트다.
+
+    Args:
+        stock_code: 단축종목코드 (예: '005930'). 회사(custno)로 변환되어 사용된다.
+        start_dt: 조회 시작일 (FROMDATE). 기본 20000101.
+        end_dt: 조회 종료일 (TODATE). None이면 오늘.
+        reason_code: 권리사유 필터(RGT_RACD). ""=전체, "103"=배당/분배 등.
+        dt_tpcd: 일정종류 필터(DT_TPCD). ""=전체.
+        list_tpcd: 시장구분 필터(LIST_TPCD). ""=전체.
+        client: 종목코드→고객번호 해결용. None이면 자동 시도(키 없으면 웹검색).
+        web_client: SeibroWebSquareClient. None이면 자동 생성.
+        save_csv: True이면 company_schedules_<종목코드>_<기간>.csv 저장.
+
+    Returns:
+        일정일자(DT_BEGIN_DT) 오름차순 DataFrame. 칼럼: 종목코드/회사명/일정일자/
+        일정종류/사유/사유상세/기준일/일정종료일/시장/명부폐쇄기간 등.
+
+    Note:
+        웹 화면은 최대 1년 범위로 제한하지만, API 자체는 더 넓은 범위도 받는다
+        (검증됨). 넓은 기간을 넣으면 그만큼 많은 행이 반환된다.
+    """
+    start = _yyyymmdd(start_dt)
+    end = _yyyymmdd(end_dt)
+    if start > end:
+        raise ValueError(f"start_dt must be <= end_dt: {start} > {end}")
+
+    web_client = web_client or SeibroWebSquareClient()
+    if client is None:
+        try:
+            client = SeibroClient()
+        except ValueError:
+            client = None
+    stock = _resolve_stock(stock_code, client, web_client)
+
+    print(f"\n[Seibro] 기간별 주요일정 조회")
+    print(f"  -> {stock['company_name']} ({stock['stock_code']}, 고객번호: {stock['issuco_custno']})")
+    print(f"  기간: {start} ~ {end}" + (f", 사유코드={reason_code}" if reason_code else ""))
+
+    payload = (
+        f'<reqParam action="{TERM_SCHEDULE_ACTION}" task="{TASK}">'
+        f'<MENU_NO value="{TERM_SCHEDULE_MENU_NO}"/>'
+        '<CMM_BTN_ABBR_NM value="total_search,openall,print,hwp,word,pdf,searchIcon,seach,xls,"/>'
+        f'<W2XPATH value="{TERM_SCHEDULE_W2X}"/>'
+        f'<ISSUCO_CUSTNO value="{stock["issuco_custno"]}"/>'
+        f'<DT_TPCD value="{_xml_escape(dt_tpcd)}"/>'
+        f'<FROMDATE value="{start}"/>'
+        f'<TODATE value="{end}"/>'
+        f'<LIST_TPCD value="{_xml_escape(list_tpcd)}"/>'
+        f'<RGT_RACD value="{_xml_escape(reason_code)}"/>'
+        "</reqParam>"
+    )
+    response = web_client.session.post(
+        WEB_CALL_URL,
+        headers={
+            "Referer": (
+                "https://seibro.or.kr/websquare/control.jsp?"
+                f"w2xPath={TERM_SCHEDULE_W2X}&menuNo={TERM_SCHEDULE_MENU_NO}"
+            ),
+            "submissionid": "submission_" + TERM_SCHEDULE_ACTION,
+        },
+        data=payload.encode("utf-8"),
+        timeout=60,
+    )
+    response.raise_for_status()
+    rows = _parse_records(response.text)
+
+    if not rows:
+        print("  해당 기간 내 일정이 없습니다.")
+        return pd.DataFrame()
+
+    df = pd.DataFrame(rows).rename(columns=TERM_SCHEDULE_RENAME)
+    df.insert(0, "종목코드", stock["stock_code"])
+    if "일정일자" in df.columns:
+        df = df.sort_values("일정일자").reset_index(drop=True)
+
+    ordered = [c for c in TERM_SCHEDULE_DISPLAY_ORDER if c in df.columns]
+    extras = [c for c in df.columns if c not in ordered and c != "SCH_DTTM"]
+    df = df[ordered + extras]
+
+    print(f"  -> {len(df)}건 수집 완료")
+    if save_csv:
+        filename = f"company_schedules_{stock['stock_code']}_{start}_{end}.csv"
+        df.to_csv(filename, index=False, encoding="utf-8-sig")
+        print(f"  -> {filename} 저장 완료")
+    return df
 
 
 if __name__ == "__main__":
