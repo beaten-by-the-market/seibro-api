@@ -16,6 +16,7 @@ __all__ = [
     "get_face_value_merge_details",
     "get_capital_reduction_details",
     "get_company_schedules",
+    "get_cost_payment_schedules",
     "get_dividend_details",
     "get_issued_share_changes",
     "get_overseas_settlement_amounts",
@@ -55,6 +56,10 @@ def __getattr__(name):
         from .schedule_reason import get_company_schedules
 
         return get_company_schedules
+    if name == "get_cost_payment_schedules":
+        from .schedule_reason import get_cost_payment_schedules
+
+        return get_cost_payment_schedules
     if name == "get_dividend_details":
         from .dividend import get_dividend_details
 

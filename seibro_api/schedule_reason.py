@@ -46,6 +46,38 @@ TERM_SCHEDULE_DISPLAY_ORDER = [
     "명부폐쇄시작", "명부폐쇄종료", "명의개서대리인",
 ]
 
+# 대금지급일정(BIP_CNTS01022V) — 회사의 대금(배당금 등) 지급 예정 목록
+COST_PAYMENT_W2X = "/IPORTAL/user/company/BIP_CNTS01022V.xml"
+COST_PAYMENT_MENU_NO = "20"
+COST_PAYMENT_ACTION = "costPaymentScheduleInfoListEL1"
+COST_PAYMENT_COUNT_ACTION = "costPaymentScheduleInfoListCnt"
+
+# 대금종류(PAY_COST_TPCD). 화면 드롭다운 라벨 기준.
+PAY_COST_TYPES = {
+    "1": "배당금지급일",
+    "2": "단주대금지급일",
+    "3": "현물배당지급일",
+}
+_PAY_COST_ALIASES = {
+    "배당금": "1", "배당": "1", "배당금지급일": "1", "배당/분배금": "1",
+    "단주대금": "2", "단주": "2", "단주대금지급일": "2",
+    "현물배당": "3", "현물": "3", "현물배당지급일": "3",
+}
+
+COST_PAYMENT_RENAME = {
+    "RGT_STD_DT": "기준일",
+    "REP_SECN_NM": "종목명",
+    "SHOTN_ISIN": "종목코드",
+    "SECN_KACD": "종목종류",
+    "PAY_COST_TPCD": "대금종류",
+    "CALTOT_MART_TPCD": "시장",
+    "RGT_RACD": "사유",
+    "ISSU_FORM": "발행형태",
+}
+COST_PAYMENT_DISPLAY_ORDER = [
+    "기준일", "종목코드", "종목명", "종목종류", "대금종류", "사유", "시장", "발행형태",
+]
+
 SCHEDULE_REASONS = {
     "001": {"name": "정기총회", "w2x_path": "/IPORTAL/user/company/BIP_CNTS01024V.xml"},
     "002": {"name": "임시총회", "w2x_path": "/IPORTAL/user/company/BIP_CNTS01024V.xml"},
@@ -668,6 +700,128 @@ def get_company_schedules(
     print(f"  -> {len(df)}건 수집 완료")
     if save_csv:
         filename = f"company_schedules_{stock['stock_code']}_{start}_{end}.csv"
+        df.to_csv(filename, index=False, encoding="utf-8-sig")
+        print(f"  -> {filename} 저장 완료")
+    return df
+
+
+def _resolve_pay_cost_type(pay_cost_type: str) -> str:
+    """대금종류를 PAY_COST_TPCD 코드('1'~'3')로 정규화."""
+    key = str(pay_cost_type).strip()
+    if key in PAY_COST_TYPES:
+        return key
+    normalized = key.replace(" ", "")
+    if normalized in _PAY_COST_ALIASES:
+        return _PAY_COST_ALIASES[normalized]
+    raise ValueError(
+        f"대금종류를 알 수 없습니다: {pay_cost_type!r}. "
+        f"코드('1'~'3') 또는 {list(PAY_COST_TYPES.values())} 중 하나를 사용하세요."
+    )
+
+
+def get_cost_payment_schedules(
+    stock_code: str,
+    start_dt: str | date | datetime | None = None,
+    end_dt: str | date | datetime | None = None,
+    pay_cost_type: str = "1",
+    market: str = "",
+    ag_org: str = "",
+    client: SeibroClient | None = None,
+    web_client: SeibroWebSquareClient | None = None,
+    save_csv: bool = True,
+) -> pd.DataFrame:
+    """회사의 대금지급일정(배당금 등)을 조회 (BIP_CNTS01022V).
+
+    기준일(RGT_STD_DT) 범위 내에서 회사가 지급하는 대금(배당금/단주대금/현물배당)
+    지급일정 목록을 돌려준다. 지급 예정 성격이라 기본 기간은 오늘~+1년(미래)이다.
+
+    Args:
+        stock_code: 단축종목코드 (예: '005930'). 회사(custno)로 변환되어 사용된다.
+        start_dt: 기준일 시작(RGT_STD_DT_FROM). None이면 오늘.
+        end_dt: 기준일 종료(RGT_STD_DT_TO). None이면 오늘+1년.
+        pay_cost_type: 대금종류(PAY_COST_TPCD). 코드('1'~'3') 또는
+            '배당금'/'단주대금'/'현물배당'. 기본 '1'(배당금지급일).
+        market: 시장구분 필터(CALTOT_MART_TPCD). ""=전체.
+        ag_org: 명의개서대리인 필터(AG_ORG_TPCD). ""=전체.
+        client: 종목코드→고객번호 해결용. None이면 자동 시도(키 없으면 웹검색).
+        web_client: SeibroWebSquareClient. None이면 자동 생성.
+        save_csv: True이면 cost_payment_<종목코드>_<기간>.csv 저장.
+
+    Returns:
+        기준일 오름차순 DataFrame. 칼럼: 기준일/종목코드/종목명/종목종류/
+        대금종류/사유/시장/발행형태.
+    """
+    start = _yyyymmdd(start_dt)
+    if end_dt is None:
+        today = date.today()
+        try:
+            end_date = today.replace(year=today.year + 1)
+        except ValueError:  # 2/29
+            end_date = today.replace(year=today.year + 1, day=28)
+        end = end_date.strftime("%Y%m%d")
+    else:
+        end = _yyyymmdd(end_dt)
+    if start > end:
+        raise ValueError(f"start_dt must be <= end_dt: {start} > {end}")
+
+    pay_code = _resolve_pay_cost_type(pay_cost_type)
+    web_client = web_client or SeibroWebSquareClient()
+    if client is None:
+        try:
+            client = SeibroClient()
+        except ValueError:
+            client = None
+    stock = _resolve_stock(stock_code, client, web_client)
+
+    print(f"\n[Seibro] 대금지급일정 조회")
+    print(f"  -> {stock['company_name']} ({stock['stock_code']}, 고객번호: {stock['issuco_custno']})")
+    print(f"  기간(기준일): {start} ~ {end}, 대금종류: {PAY_COST_TYPES[pay_code]}")
+
+    payload = (
+        f'<reqParam action="{COST_PAYMENT_ACTION}" task="{TASK}">'
+        f'<ISSUCO_CUSTNO value="{stock["issuco_custno"]}"/>'
+        f'<CALTOT_MART_TPCD value="{_xml_escape(market)}"/>'
+        f'<PAY_COST_TPCD value="{pay_code}"/>'
+        f'<AG_ORG_TPCD value="{_xml_escape(ag_org)}"/>'
+        f'<RGT_STD_DT_FROM value="{start}"/>'
+        f'<RGT_STD_DT_TO value="{end}"/>'
+        '<STARTPAGE value="1"/>'
+        '<ENDPAGE value="100000"/>'
+        f'<MENU_NO value="{COST_PAYMENT_MENU_NO}"/>'
+        '<CMM_BTN_ABBR_NM value="total_search,openall,print,hwp,word,pdf,searchIcon,seach,xls,"/>'
+        f'<W2XPATH value="{COST_PAYMENT_W2X}"/>'
+        "</reqParam>"
+    )
+    response = web_client.session.post(
+        WEB_CALL_URL,
+        headers={
+            "Referer": (
+                "https://seibro.or.kr/websquare/control.jsp?"
+                f"w2xPath={COST_PAYMENT_W2X}&menuNo={COST_PAYMENT_MENU_NO}"
+            ),
+            "submissionid": "submission_" + COST_PAYMENT_ACTION,
+        },
+        data=payload.encode("utf-8"),
+        timeout=60,
+    )
+    response.raise_for_status()
+    rows = _parse_records(response.text)
+
+    if not rows:
+        print("  해당 기간 내 대금지급일정이 없습니다.")
+        return pd.DataFrame()
+
+    df = pd.DataFrame(rows).rename(columns=COST_PAYMENT_RENAME)
+    if "기준일" in df.columns:
+        df = df.sort_values("기준일").reset_index(drop=True)
+
+    ordered = [c for c in COST_PAYMENT_DISPLAY_ORDER if c in df.columns]
+    extras = [c for c in df.columns if c not in ordered]
+    df = df[ordered + extras]
+
+    print(f"  -> {len(df)}건 수집 완료")
+    if save_csv:
+        filename = f"cost_payment_{stock['stock_code']}_{start}_{end}.csv"
         df.to_csv(filename, index=False, encoding="utf-8-sig")
         print(f"  -> {filename} 저장 완료")
     return df
