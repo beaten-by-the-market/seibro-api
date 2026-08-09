@@ -25,6 +25,7 @@ seibro_api/
   stock_issue.py       # 주식수량 변동내역 조회 (Seibro API)
   stock_bond.py        # 주식관련사채 조회 (Seibro API + DART API)
   dividend.py          # 배당내역상세 조회 (Seibro 웹 WebSquare, key 불필요)
+  dividend_history.py  # 배당 이력(일정+금액) 기간 조회 (Seibro Open API, key 필요)
   issued_share_change.py  # 발행주식수증감내역 조회 (Seibro 웹 WebSquare, key 불필요)
   kofr.py              # KOFR 무위험지표금리 조회 (KSD kofr.kr WebSquare, key 불필요)
   dart_report.py       # 사업/반기보고서 XML 파싱 (CB/BW/EB/SUB_PIS)
@@ -42,6 +43,9 @@ seibro_api/
 |------|------|
 | `SeibroClient(api_key=None)` | 클라이언트 초기화. api_key 미입력 시 `.env`에서 자동 로드 |
 | `client.get_stock_registry(markets=None)` | 전체 상장종목 명부 조회 (종목코드 + 종목명 + 예탁원 고객번호) |
+| `client.get_issuco_custno(stock_code=None, isin=None)` | 종목코드 → 발행회사고객번호 (`getIssucoCustnoByIsin`) |
+| `client.get_dividend_schedules(...)` | 배당일정 원천 조회 (`getDivSchedulInfo`) |
+| `client.get_dividend_payouts(...)` | 배당분배금내역 원천 조회 (`getDivInfo`) |
 
 ```python
 from seibro_api import SeibroClient
@@ -224,6 +228,62 @@ python -m seibro_api.dividend 005930
 > **제약**: 서버가 **최신 4개 결산연도**만 하드코딩 반환합니다. 연도 파라미터
 > (`STD_YEAR`, `SETACC_YYMM` 등)는 무시되므로 이 API로는 5년 이전 과거치를
 > 조회할 수 없습니다.
+
+### dividend_history.py — 배당 이력(일정 + 금액) 기간 조회
+
+| 함수 | 데이터 소스 | 설명 |
+|------|:----------:|------|
+| `get_dividend_history(stock_code, start_dt, end_dt)` | Seibro Open API | 종목코드 → 고객번호 → 기간별 배당 일정·금액 통합 |
+| `get_market_dividend_schedules(std_dt, detail_sort_cd=None)` | Seibro Open API | 특정 권리기준일 하루치 전 상장사 배당일정 |
+
+공식 Open API 3종(`getIssucoCustnoByIsin` → `getDivSchedulInfo` + `getDivInfo`)을 묶은
+고수준 함수. **`SEIBRO_API_KEY` 필요.** 서버의 3년 조회 상한을 구간 분할로 우회하므로
+기간을 길게 줘도 된다.
+
+```python
+from seibro_api import get_dividend_history, get_market_dividend_schedules
+
+# 삼성전자 2015~2025 배당 이력 (보통주 + 우선주, 분기배당 포함)
+df = get_dividend_history("005930", "20150101", "20251231")
+
+# 고객번호를 이미 알면 조회 1회 절약
+df = get_dividend_history(issuco_custno=593, start_dt="20200101", end_dt="20251231")
+
+# 2024 결산 기준일에 배당일정이 있는 전 상장사 (1,084건)
+mkt = get_market_dividend_schedules("20241231")
+mkt = get_market_dividend_schedules("20241231", detail_sort_cd="01")  # 주식배당만
+```
+
+터미널에서 직접 실행:
+
+```bash
+python -m seibro_api.dividend_history 005930 20150101 20251231
+```
+
+**출력 칼럼 (28개):**
+
+| 칼럼 | 설명 |
+|------|------|
+| 종목코드 / 발행회사고객번호 / 회사명 | 입력 종목 및 발행회사 |
+| 표준코드 / 종목명 / 주식종류 | 보통주·우선주 등 종목 단위 식별 |
+| 권리기준일 / 권리락일 / 명부폐쇄시작일 / 명부폐쇄종료일 | 일정 |
+| 배당구분 | 현금배당 / 주식배당 / 동시배당 / 무배당 |
+| 결산구분 / 확정구분 / 배정방법 | 결산·반기·분기, 확정·예고·미정, 정율·정액 |
+| **주당배당금** / 시가배당률(%) / 현금배당지급일 | 현금배당 |
+| 주식배정비율(%) / 주식교부일 | 주식배당 |
+| 액면가(현재) / 현금배정비율(%) | 원천값(주의: 아래 참고) |
+| 대주주차등배당여부 / 자사주무배정여부 / 현금·주식·시가차등배당율 | 차등배당 |
+| 전자증권여부 | |
+
+> **주의 (실측 확인된 서버 동작)**
+> - **주당배당금은 `주당배당금`(CASH_ALOC_AMT)만 쓸 것.** `현금배정비율(%)`은 *당시*
+>   액면가 대비 %인데 `액면가(현재)`는 *현재* 액면가라, 둘을 곱해 역산하면
+>   액면분할 이전 구간에서 틀린다(삼성전자 2016년 행의 액면가가 100으로 나옴).
+> - **금액은 권리기준일 2003-06-30부터** 채워진다. 그 이전은 주당배당금·시가배당률이
+>   0이고 `현금배정비율(%)`만 있다. 데이터 자체는 1987년까지 소급된다.
+> - 같은 (종목, 권리기준일)에 2행이 나올 수 있다(주식배당·현금배당 별도 기록).
+> - 배당내역상세(`get_dividend_details`)와는 **대체가 아니라 보완** 관계다.
+>   그쪽은 최근 4개 결산연도 한정이지만 당기순이익·배당성향 등 재무항목을 준다.
 
 ### issued_share_change.py — 발행주식수증감내역 조회
 
