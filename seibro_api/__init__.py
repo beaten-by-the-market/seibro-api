@@ -11,9 +11,11 @@ __all__ = [
     "get_stock_issue_details",
     "get_schedule_reason_details",
     "get_bonus_issue_details",
+    "get_dividend_schedule_details",
     "get_face_value_split_details",
     "get_face_value_merge_details",
     "get_capital_reduction_details",
+    "get_company_schedules",
     "get_dividend_details",
     "get_issued_share_changes",
     "get_overseas_settlement_amounts",
@@ -33,6 +35,10 @@ def __getattr__(name):
         from .schedule_reason import get_bonus_issue_details
 
         return get_bonus_issue_details
+    if name == "get_dividend_schedule_details":
+        from .schedule_reason import get_dividend_schedule_details
+
+        return get_dividend_schedule_details
     if name == "get_face_value_split_details":
         from .schedule_reason import get_face_value_split_details
 
@@ -45,6 +51,10 @@ def __getattr__(name):
         from .schedule_reason import get_capital_reduction_details
 
         return get_capital_reduction_details
+    if name == "get_company_schedules":
+        from .schedule_reason import get_company_schedules
+
+        return get_company_schedules
     if name == "get_dividend_details":
         from .dividend import get_dividend_details
 
