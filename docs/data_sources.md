@@ -18,10 +18,13 @@
 | apiId | 용도 | 호출 함수 |
 |-------|------|----------|
 | `getShotnByMart` | 시장별 전체 상장종목 명부(종목코드·종목명·고객번호) | `get_stock_registry()` |
-| `getStkIncdceDetails` | 발행회사별 주식수량 변동내역(액면분할·무상증자 등) | `get_stock_issue_details()` |
-| `getStkStatInfo` | 종목 기본정보(단축코드→ISIN·고객번호) | 내부 조회 |
-| `getXrcStkStatInfo` | 종목에 연결된 주식관련사채(CB/BW/EB) 목록 | `get_stock_bonds()` |
-| `getBondStatInfo` | 사채별 상세(미상환잔액·전환가·신용등급·옵션 등 31개 칼럼) | `get_stock_bonds()` |
+| `getStkIncdecDetails` | 발행회사별 주식수량 변동내역(액면분할·무상증자 등) | `get_stock_issue_details()` |
+| `getStkStatInfo` | 종목 기본정보(단축코드→ISIN·고객번호·발행주식총수) | `SeibroClient.get_stock_info()` |
+| `getXrcStkStatInfo` | 종목에 연결된 주식관련사채(CB/BW/EB) 목록 | `get_stock_bonds()`, `SeibroClient.get_stock_linked_bonds()` |
+| `getBondStatInfo` | 사채별 상세(미상환잔액·금리·신용등급·옵션 등) | `get_stock_bonds()`, `SeibroClient.get_bond_detail()` |
+| `getXrcStkOptionXrcInfo` | 주식관련사채 권리행사 내역(행사일·행사금액·행사주식수·당시 행사가) | `SeibroClient.get_bond_exercises()`, `get_stock_linked_bond_status()` |
+| `getBondIssuInfo` | 발행일(하루) 또는 발행회사별 채권 발행 목록 | `SeibroClient.get_bond_issues()`, `get_issued_bonds()` |
+| `getSafeDpDutyDepoStatus` | 의무보호예수 예수(BIZ_TPCD=1)·반환(2) 내역, 조회기간 1년 이하 | `SeibroClient.get_lockup_status()`, `get_lockup_records()` |
 | `getIssucoCustnoByIsin` | 종목코드 → 발행회사고객번호·대표종목명 | `SeibroClient.get_issuco_custno()` |
 | `getDivSchedulInfo` | 배당일정(권리기준일·권리락일·명부폐쇄·확정구분), 금액 없음 | `SeibroClient.get_dividend_schedules()` |
 | `getDivInfo` | 배당분배금내역(주당배당금·시가배당률·지급일·차등배당) | `SeibroClient.get_dividend_payouts()` |
@@ -48,6 +51,7 @@
 | `rissuBasicInfoViewEL1` 외 3종 | BIP_CNTS01026V | 무상증자(102) 기준일별 상세 | `get_bonus_issue_details()` |
 | `entrDivResultsList` / `entrDivResultsList2` | BIP_CNTS01043V | 배당내역상세(보통주/우선주) | `get_dividend_details()` |
 | `chgDetailsListEL1` | BIP_CNTS01012V | 발행주식수증감내역(개별) — 기간 조회 지원 | `get_issued_share_changes()` |
+| `issuInfoViewEL1` / `exerInfoView` | BIP_CNTS03004V | 채권 종목상세 기본정보 / 행사정보(현재 행사가·BW 신주대금 납입방법) | `get_bond_web_info()` |
 
 일정사유 19종(정기/임시총회·유무상증자·배당·액면분할·합병·분할·주식교환·매수청구 등)은
 `SCHEDULE_REASONS`에 정의돼 있으나, **상세 조회가 구현된 것은 무상증자(102)뿐**이고
@@ -112,6 +116,28 @@ DART (별도 기관, key O)       → 사채 발행공시 이력 · 정기보고
 ```
 
 ## 참고: 알려진 제약
+
+### Open API 공통 (실측 2026-11)
+- 키가 URL 쿼리에 들어가고, **응답 XML에도 `vectorkey` 속성으로 키가 되돌아온다.** 원시 URL·응답을
+  출력하지 말 것. `_call_api`는 예외·출력 메시지에서 키를 `***`로 가린다.
+- 약 8% 확률로 `<header><error><code value="003"/>…서비스 호출 중 오류…</error></header>`가 온다.
+  같은 요청을 다시 부르면 정상. `_call_api`가 재시도한다.
+- 필수 파라미터 누락·기간 초과는 `<RES><validErrorMsg value="…"/></RES>`로 온다
+  (예: "조회기간은 1년을 초과 할 수 없습니다."). `SeibroAPIError("… 서버 오류: …")`로 올린다.
+- 주식수량 변동내역 apiId는 `getStkIncdecDetails`다. 예전 표기 `getStkIncdceDetails`는 vector 없는 응답만 준다.
+
+### 의무보호예수 (getSafeDpDutyDepoStatus)
+- 조회기간은 양 끝 포함 365일 이하. `get_lockup_records()`가 365일 구간으로 나눠 부른다.
+- 감자·액면분할·액면병합 뒤 예탁원은 기존 예수 기록을 반환 처리하지 않고 바뀐 수량으로 새로
+  예수한다. 미반환 잔량을 그냥 더하면 같은 주식을 여러 번 센다(scenarios/1_stock/01_dilution 참고).
+- `TOTAL_STK_CNT`는 조회 시점의 발행주식총수다(예수 당시 값이 아님).
+
+### 주식관련사채 행사가
+- `getXrcStkStatInfo`와 웹 `exerInfoView`의 `XRC_PRICE`는 현재 행사가다. 감자·분할 뒤 행사 실적이 없는
+  사채는 조정이 반영됐는지 이 데이터만으로 확인할 수 없다(예: 한울앤제주 12CB 18,540원).
+- `stock_bond.get_stock_bonds()`의 `전환가능_주식수`(= 미상환잔액 ÷ 행사가)는 CB에만 맞다. BW는
+  `get_stock_linked_bond_status()`의 `발행금액 − 누적행사금액`을 쓸 것. EB는 주식수를 늘리지 않는다.
+
 
 - **배당내역상세(BIP_CNTS01043V)**: 서버 task(`EntrFnafInfoPTask`)가 **최신 4개 결산연도**를
   하드코딩 반환한다. `STD_YEAR`/`SETACC_YYMM` 등 연도 파라미터를 넣어도 무시되므로,

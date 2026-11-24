@@ -24,6 +24,9 @@ __all__ = [
     "get_overseas_settlement_amounts",
     "get_overseas_holdings",
     "get_kofr_rates",
+    "get_lockup_records", "lockup_balance", "LOCKUP_REASONS",
+    "get_stock_linked_bond_status", "get_bond_web_info",
+    "get_issued_bonds",
     "get_sub_pis", "get_cb_from_report", "get_bw_from_report", "get_eb_from_report",
     "get_bonds_from_report",
 ]
@@ -90,4 +93,16 @@ def __getattr__(name):
         from .kofr import get_kofr_rates
 
         return get_kofr_rates
+    if name in ("get_lockup_records", "lockup_balance", "LOCKUP_REASONS"):
+        from . import lockup
+
+        return getattr(lockup, name)
+    if name in ("get_stock_linked_bond_status", "get_bond_web_info"):
+        from . import stock_linked
+
+        return getattr(stock_linked, name)
+    if name == "get_issued_bonds":
+        from .bond_issue import get_issued_bonds
+
+        return get_issued_bonds
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

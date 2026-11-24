@@ -18,6 +18,26 @@ class SeibroAPIError(RuntimeError):
     """
 
 
+class _TransientAPIError(RuntimeError):
+    """서버가 header/error(code 003 등)로 일시 오류를 알린 경우. _call_api 안에서 재시도한다."""
+
+
+def retry_transient(fn, *args, tries: int = 3, **kwargs):
+    """SeibroAPIError가 나면 잠깐 쉬고 다시 부른다.
+
+    서버 일시 오류(header error 003)는 _call_api가 이미 재시도한다. 이 함수는 그래도 실패했거나
+    원인 표시 없이 vector가 빠진 응답이 왔을 때 한 번 더 감싸는 바깥 재시도다.
+    서버가 validErrorMsg로 이유를 밝힌 오류("서버 오류")는 다시 불러도 같으므로 바로 올린다.
+    """
+    for attempt in range(tries):
+        try:
+            return fn(*args, **kwargs)
+        except SeibroAPIError as e:
+            if "서버 오류" in str(e) or attempt == tries - 1:
+                raise
+            sleep(1 + attempt)
+
+
 class SeibroClient:
     """Seibro Open API 클라이언트"""
 
@@ -42,11 +62,20 @@ class SeibroClient:
                 raise ValueError("SEIBRO_API_KEY가 .env 파일이나 환경변수에 없습니다.")
         self._xd = XMLtoDict()
 
+    def _redact(self, text: object) -> str:
+        """메시지에서 API 키를 가린다. Open API는 키를 URL 쿼리에 넣기 때문에
+        requests 예외 메시지(…?key=…)에 키가 그대로 들어간다."""
+        text = str(text)
+        return text.replace(self.api_key, "***") if self.api_key else text
+
     def _call_api(self, api_id: str, params: dict, max_retries: int = 3) -> pd.DataFrame:
         """Seibro API 공통 호출 메서드
 
         네트워크 에러, 타임아웃, 파싱 실패 시 max_retries 횟수만큼 재시도.
         재시도 간격은 점진적으로 증가 (1초, 2초, 3초...).
+
+        출력·예외 메시지에는 키를 넣지 않는다. 최종 실패는 원래 예외 대신
+        키를 가린 SeibroAPIError로 올린다(원래 예외는 URL을 담고 있어 체인도 끊는다).
         """
         params_str = ",".join(f"{k}:{v}" for k, v in params.items())
         url = f"{self.BASE_URL}?key={self.api_key}&apiId={api_id}&params={params_str}"
@@ -58,6 +87,19 @@ class SeibroClient:
                 data_dict = self._xd.parse(raw.content.decode("utf-8"))
                 api_root = data_dict.get("SeibroAPI") or {}
                 if "vector" not in api_root:
+                    # 일시 오류: <header><error><code value="003"/><content value="서비스 호출 중
+                    # 오류가 발생하였습니다."/></error></header> (실측 약 8%, 같은 요청 재시도로 회복)
+                    header = api_root.get("header") if isinstance(api_root, dict) else None
+                    herr = header.get("error") if isinstance(header, dict) else None
+                    if isinstance(herr, dict):
+                        code = (herr.get("code") or {}).get("@value", "")
+                        content = (herr.get("content") or {}).get("@value", "")
+                        raise _TransientAPIError(f"서버 일시 오류 {code} {content}")
+                    res = api_root.get("RES") if isinstance(api_root, dict) else None
+                    err = (res or {}).get("validErrorMsg") if isinstance(res, dict) else None
+                    server_msg = err.get("@value") if isinstance(err, dict) else None
+                    if server_msg:
+                        raise SeibroAPIError(f"[{api_id}] 서버 오류: {server_msg} {params}")
                     raise SeibroAPIError(
                         f"[{api_id}] 응답에 vector가 없습니다. 필수 파라미터 누락 가능성: {params}"
                     )
@@ -85,23 +127,26 @@ class SeibroClient:
                     requests.exceptions.Timeout,
                     requests.exceptions.HTTPError) as e:
                 wait = (attempt + 1) * 2
+                msg = self._redact(e)
                 if attempt < max_retries - 1:
-                    print(f"  [{api_id}] 네트워크 에러 (시도 {attempt+1}/{max_retries}): {e}")
+                    print(f"  [{api_id}] 네트워크 에러 (시도 {attempt+1}/{max_retries}): {msg}")
                     print(f"  → {wait}초 후 재시도...")
                     sleep(wait)
                 else:
-                    print(f"  [{api_id}] 네트워크 에러로 {max_retries}회 모두 실패: {e}")
-                    raise
+                    print(f"  [{api_id}] 네트워크 에러로 {max_retries}회 모두 실패: {msg}")
+                    raise SeibroAPIError(f"[{api_id}] 네트워크 에러: {msg}") from None
 
             except Exception as e:
                 wait = (attempt + 1) * 2
+                msg = self._redact(e)
                 if attempt < max_retries - 1:
-                    print(f"  [{api_id}] 시도 {attempt+1}/{max_retries} 실패: {e}")
-                    print(f"  → {wait}초 후 재시도...")
+                    if not isinstance(e, _TransientAPIError):  # 흔한 일시 오류는 조용히 재시도
+                        print(f"  [{api_id}] 시도 {attempt+1}/{max_retries} 실패: {msg}")
+                        print(f"  → {wait}초 후 재시도...")
                     sleep(wait)
                 else:
-                    print(f"  [{api_id}] {max_retries}회 모두 실패: {e}")
-                    raise
+                    print(f"  [{api_id}] {max_retries}회 모두 실패: {msg}")
+                    raise SeibroAPIError(f"[{api_id}] 호출 실패: {msg}") from None
 
     def get_stock_registry(self, markets: list[str] = None) -> pd.DataFrame:
         """전체 상장종목 명부 조회 (종목코드 + 종목명 + 예탁원 고객번호)
@@ -175,7 +220,7 @@ class SeibroClient:
     ) -> pd.DataFrame:
         """주식수량 변동내역 조회.
 
-        Seibro API ID: getStkIncdceDetails
+        Seibro API ID: getStkIncdecDetails
 
         Args:
             stock_code: 단축코드(SHOTN_ISIN). 예: "005930"
@@ -200,7 +245,7 @@ class SeibroClient:
         if not any(k in params for k in ("SHOTN_ISIN", "ISIN", "ISSUCO_CUSTNO")):
             raise ValueError("stock_code, isin, issuco_custno 중 하나 이상이 필요합니다.")
 
-        return self._call_api("getStkIncdceDetails", params)
+        return self._call_api("getStkIncdecDetails", params)
 
     def get_issuco_custno(self, stock_code: str = None, isin: str = None) -> dict:
         """종목코드 → 발행회사고객번호 조회.
@@ -333,3 +378,117 @@ class SeibroClient:
             params["EXPRY_STD_DT"] = str(end_dt).strip()
 
         return self._call_api("getDivInfo", params)
+
+    # ── 주식·채권 기본 조회 (원천 칼럼 그대로) ──────────────────────
+
+    def get_stock_info(self, stock_code: str = None, isin: str = None) -> pd.DataFrame:
+        """종목 기본정보 조회.
+
+        Seibro API ID: getStkStatInfo
+
+        Returns:
+            DataFrame (Seibro 원천 칼럼). 주요 칼럼: ISSUCO_CUSTNO, KOR_SECN_NM, ISIN,
+            SHOTN_ISIN, PVAL, SECN_KACD, TOTAL_STK_CNT(현재 발행주식총수 — 발행됐지만
+            아직 상장되지 않은 주식도 포함), ELTSC_YN
+        """
+        params = {}
+        if stock_code:
+            params["SHOTN_ISIN"] = str(stock_code).strip().zfill(6)
+        if isin:
+            params["ISIN"] = str(isin).strip()
+        if not params:
+            raise ValueError("stock_code 또는 isin 중 하나가 필요합니다.")
+        return self._call_api("getStkStatInfo", params)
+
+    def get_bond_issues(
+        self,
+        issue_dt: Union[str, int] = None,
+        issuco_custno: Union[str, int] = None,
+    ) -> pd.DataFrame:
+        """채권 발행 목록 조회 (발행일 하루치 또는 발행회사별).
+
+        Seibro API ID: getBondIssuInfo
+
+        서버 동작 (실측, 2026-11):
+          - ISSU_DT만 주면 그날 발행된 회사채(일반·P-CBO·CB·BW·EB 등) 목록.
+            2026년 10월 한 달 322건. 당일분은 다음 날에야 잡히기도 한다.
+          - ISSUCO_CUSTNO만 주면 그 회사의 발행 채권 목록.
+          - 둘을 같이 주면 빈 결과가 온다. 기간(from~to) 파라미터는 없다.
+
+        Returns:
+            DataFrame: ISSU_DT, ISSUCO_CUSTNO, ISSUCO_CUST_NM, ISIN, KOR_SECN_NM
+        """
+        params = {}
+        if issue_dt:
+            params["ISSU_DT"] = str(issue_dt).strip().replace("-", "")
+        if issuco_custno is not None:
+            params["ISSUCO_CUSTNO"] = str(issuco_custno).strip()
+        if not params:
+            raise ValueError("issue_dt 또는 issuco_custno 중 하나가 필요합니다.")
+        return self._call_api("getBondIssuInfo", params)
+
+    def get_bond_detail(self, isin: str) -> pd.DataFrame:
+        """채권 종목 상세(발행금액·미상환잔액·표면이자율·만기·옵션·신용등급 코드 등).
+
+        Seibro API ID: getBondStatInfo
+
+        일부 BW(예: 신종 비분리형 BW)는 서버가 vector 없는 응답을 줘서 SeibroAPIError가
+        난다. 그럴 땐 `stock_linked.get_bond_web_info()`(웹 화면 호출)로 대신 받을 수 있다.
+        """
+        return self._call_api("getBondStatInfo", {"ISIN": str(isin).strip()})
+
+    def get_stock_linked_bonds(self, stock_isin: str) -> pd.DataFrame:
+        """주식(행사대상) 표준코드 → 연결된 주식관련사채(CB/BW/EB) 목록.
+
+        Seibro API ID: getXrcStkStatInfo
+
+        Returns:
+            DataFrame: BOND_ISIN, BOND_SECN_NM, BOND_KIND_NM(CB/비분리형BW/분리형BW/EB),
+            XRC_STK_ISIN, STK_SECN_NM, WRTB_ISIN, XRC_RATIO, XRC_PRICE, ...
+        """
+        return self._call_api("getXrcStkStatInfo", {"XRC_STK_ISIN": str(stock_isin).strip()})
+
+    def get_bond_exercises(self, bond_isin: str) -> pd.DataFrame:
+        """주식관련사채 권리행사(전환·신주인수권 행사·교환) 내역.
+
+        Seibro API ID: getXrcStkOptionXrcInfo
+
+        Returns:
+            DataFrame: 행사 1건당 1행. BOND_ISIN, BOND_KOR_SECN_NM, BOND_KIND_NM,
+            XRC_STK_ISIN, RGT_STD_DT(행사일), XRC_POSS_BEGIN_DT/XRC_POSS_EXPRY_DT(행사기간),
+            XRC_AMT(행사금액), XRC_QTY(행사주식수), XRC_PRICE(당시 행사가), LIST_DT(신주 상장일)
+            행사가 한 번도 없으면 빈 DataFrame.
+        """
+        return self._call_api("getXrcStkOptionXrcInfo", {"BOND_ISIN": str(bond_isin).strip()})
+
+    def get_lockup_status(
+        self,
+        begin_dt: Union[str, int],
+        end_dt: Union[str, int],
+        biz_tpcd: Union[str, int] = 1,
+        issuco_custno: Union[str, int] = None,
+    ) -> pd.DataFrame:
+        """의무보호예수(의무보유) 예수·반환 현황.
+
+        Seibro API ID: getSafeDpDutyDepoStatus
+
+        서버 제약 (실측, 2026-11):
+          - 조회기간은 1년(양 끝 포함 365일) 이하. 넘으면 "조회기간은 1년을 초과 할 수
+            없습니다." 오류. 긴 기간은 `lockup.get_lockup_records()`처럼 나눠 부른다.
+          - biz_tpcd=1(예수): SAFEDP_DT(예수일)가 기간 안인 예수 건.
+            biz_tpcd=2(반환): RETURN_DT(반환일)가 기간 안인 반환 건. 반환 행에도 원래
+            예수일(SAFEDP_DT)과 사유코드가 있어 예수 건과 맞춰 볼 수 있다.
+          - issuco_custno를 빼면 전 종목.
+
+        Returns:
+            DataFrame: ISSUCO_CUSTNO, KOR_SECN_NM, SECN_KACD, SHOTN_ISIN, MART_TPCD,
+            OCCR_SEQ(1 예수/2 반환), SAFEDP_DT, SAFEDP_QTY, DUTY_SAFEDP_RACD(사유코드),
+            RETURN_DT, RETURN_QTY, TOTAL_STK_CNT(현재 발행주식총수. 예수 당시 값이 아니다)
+        """
+        params = {}
+        if issuco_custno is not None:
+            params["ISSUCO_CUSTNO"] = str(issuco_custno).strip()
+        params["BEGIN_DT"] = str(begin_dt).strip().replace("-", "")
+        params["EXPRY_DT"] = str(end_dt).strip().replace("-", "")
+        params["BIZ_TPCD"] = str(biz_tpcd).strip()
+        return self._call_api("getSafeDpDutyDepoStatus", params)

@@ -30,6 +30,9 @@ seibro_api/
   kofr.py              # KOFR 무위험지표금리 조회 (KSD kofr.kr WebSquare, key 불필요)
   dart_report.py       # 사업/반기보고서 XML 파싱 (CB/BW/EB/SUB_PIS)
   display.py           # 종합 조회 표출 스크립트
+  lockup.py            # 의무보유(보호예수) 예수·반환 기간 조회 (Seibro API)
+  stock_linked.py      # 주식관련사채별 잔액·현재 행사가·누적 행사 (Seibro API + 웹)
+  bond_issue.py        # 일자별 발행 채권 목록·상세 (Seibro API)
 ```
 
 > 데이터 소스(공식 Open API / 웹 WebSquare / DART)별 전체 구분은
@@ -74,7 +77,7 @@ df = load_corps(refresh=True)   # 강제 새로고침
 |------|:----------:|------|
 | `get_stock_issue_details(stock_code=None, isin=None, issuco_custno=None, issue_year=None)` | Seibro API | 발행회사별 주식수량 변동내역 조회 |
 
-Seibro API ID는 `getStkIncdceDetails`입니다. `stock_code`, `isin`, `issuco_custno` 중 하나 이상을 입력해야 하며, `issue_year`는 선택값입니다.
+Seibro API ID는 `getStkIncdecDetails`입니다. `stock_code`, `isin`, `issuco_custno` 중 하나 이상을 입력해야 하며, `issue_year`는 선택값입니다.
 
 ```python
 from seibro_api import get_stock_issue_details
@@ -363,6 +366,59 @@ python -m seibro_api.kofr
 > KOFR = Korea Overnight Financing Repo rate. 국채·통안증권 담보 익일물 RP 기반
 > 무위험지표금리(RFR, LIBOR 대체 한국판). 한국예탁결제원(KSD) 산출·공시.
 
+### lockup.py — 의무보유(보호예수) 예수·반환 조회
+
+| 함수 | 데이터 소스 | 설명 |
+|------|:----------:|------|
+| `get_lockup_records(stock_code=None, issuco_custno=None, start_dt=None, end_dt=None, years=5)` | Seibro API | 예수·반환 내역을 365일 구간으로 나눠 모음(서버 1년 상한 우회) |
+| `lockup_balance(records)` | - | 예수 건(사유·예수일)별 반환 수량을 빼서 잔여 수량 계산 |
+| `LOCKUP_REASONS` | - | 보호예수 사유코드 → 한글 |
+
+```python
+from seibro_api import get_lockup_records, lockup_balance
+
+recs = get_lockup_records(stock_code="276730", years=5)
+bal = lockup_balance(recs)          # 잔여주식수 > 0 인 행이 아직 묶인 물량
+```
+
+> 감자·액면분할·병합 뒤에는 기존 기록이 반환 없이 남고 새 수량으로 다시 예수된다.
+> 잔량을 그냥 더하면 중복된다. 조회 시작일 이전 예수분은 보이지 않는다.
+
+### stock_linked.py — 주식관련사채 잔여 행사물량
+
+| 함수 | 데이터 소스 | 설명 |
+|------|:----------:|------|
+| `get_stock_linked_bond_status(stock_code)` | Seibro API + 웹 | 사채별 발행금액·미상환잔액·현재 행사가·BW 납입방법·누적 행사금액/주식수 |
+| `get_bond_web_info(bond_isin)` | Seibro 웹 (key 불필요) | 채권 종목상세 기본정보 + 행사정보(`issuInfoViewEL1`, `exerInfoView`) |
+
+```python
+from seibro_api import get_stock_linked_bond_status
+
+df = get_stock_linked_bond_status("276730")
+# CB: 미상환잔액 × 행사비율 ÷ 현재행사가
+# BW: (발행금액 × 행사비율 − 누적행사금액) ÷ 현재행사가   ← 미상환잔액 기준은 현금납입 BW에서 틀림
+# EB: 기존 주식과 교환 → 발행주식수 불변
+```
+
+### bond_issue.py — 일자별 발행 채권
+
+| 함수 | 데이터 소스 | 설명 |
+|------|:----------:|------|
+| `get_issued_bonds(start_dt, end_dt=None, details=False)` | Seibro API | 발행일(기간이면 평일마다 호출) 채권 목록, `details=True`면 금액·금리·만기·등급 추가 |
+
+```python
+from seibro_api import get_issued_bonds
+
+df = get_issued_bonds("2026-11-23", details=True)
+df = get_issued_bonds("2026-11-02", "2026-11-24")   # 기간 (목록만)
+```
+
+### client.py 추가 메서드 (원천 칼럼)
+
+`get_stock_info` (getStkStatInfo), `get_bond_issues` (getBondIssuInfo), `get_bond_detail` (getBondStatInfo),
+`get_stock_linked_bonds` (getXrcStkStatInfo), `get_bond_exercises` (getXrcStkOptionXrcInfo),
+`get_lockup_status` (getSafeDpDutyDepoStatus).
+
 ## 데이터 소스 비교
 
 | 항목 | Seibro API | DART API | 정기보고서 XML |
@@ -379,6 +435,8 @@ python -m seibro_api.kofr
 | **공시URL** | X | O | X |
 
 ## Jupyter 노트북
+
+분석 질문별 Colab 시나리오 노트북은 [`scenarios/`](scenarios/README.md)에 있습니다(희석주식수 분석, 일자별 발행 채권).
 
 `bond_summary.ipynb`에서 종목코드만 바꾸면 전체 조회 결과를 시각적으로 확인할 수 있습니다.
 
