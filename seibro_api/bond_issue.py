@@ -19,7 +19,7 @@ from typing import Union
 
 import pandas as pd
 
-from .client import SeibroClient, SeibroAPIError, retry_transient
+from .openapi import SeibroClient, SeibroAPIError, retry_transient
 from .stock_bond import _decode_codes
 
 LIST_RENAME = {

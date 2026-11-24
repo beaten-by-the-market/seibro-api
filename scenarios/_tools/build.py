@@ -14,7 +14,7 @@
 2. 노트북을 실제로 실행해 출력까지 저장한다(--no-exec 이면 실행 안 함).
    실행 폴더는 레포 루트라서 로컬에서는 레포 .env 의 SEIBRO_API_KEY 를 쓴다.
    KRX 계정은 krx-data-api 를 편집 설치한 경우 그 레포의 .env 를 패키지가 직접 읽는다.
-3. 저장한 노트북에 SEIBRO 키 값이 들어 있으면 실패로 표시한다(Open API 는 키를 URL 에 넣음).
+3. 저장 전에 노트북의 코드와 출력에 자격증명 값이 들어 있는지 검사한다.
 
 사용
     python scenarios/_tools/build.py                 # 전체
@@ -24,14 +24,18 @@
 from __future__ import annotations
 
 import os
+import json
 import re
 import sys
+from importlib.util import find_spec
 from pathlib import Path
-from urllib.parse import quote
+from tempfile import NamedTemporaryFile
+from urllib.parse import quote, quote_plus
 
 import nbformat
 from nbclient import NotebookClient
 from nbclient.exceptions import CellExecutionError
+from dotenv import dotenv_values
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -47,6 +51,10 @@ GITHUB = "beaten-by-the-market/seibro-api"
 BRANCH = "main"
 SEIBRO_PKG = f"git+https://github.com/{GITHUB}.git"
 KRX_PKG = "git+https://github.com/beaten-by-the-market/krx-data-api.git"
+SECRET_NAMES = ("SEIBRO_API_KEY", "SEIBRO_SHARE_API_KEY", "DART_API_KEY", "KRX_ID", "KRX_PW")
+QUERY_SECRET = re.compile(
+    r"""(?i)(?:[?&](?:key|servicekey|crtfc_key)=|vectorkey\s*=\s*['"])[A-Za-z0-9%+/_=-]{8,}"""
+)
 
 
 def install_cell(needs_krx: bool) -> str:
@@ -79,17 +87,30 @@ def parse(src: str) -> list[tuple[str, str]]:
     return cells
 
 
-def _secret_values() -> list[str]:
-    """누출 검사용: 환경변수·레포 .env 의 키·비밀번호 값(출력하지 않음)."""
-    vals = [os.environ.get(n, "") for n in ("SEIBRO_API_KEY", "DART_API_KEY", "KRX_PW")]
-    env = REPO / ".env"
-    if env.is_file():
-        for line in env.read_text(encoding="utf-8-sig").splitlines():
-            if "=" in line and not line.strip().startswith("#"):
-                k, v = line.split("=", 1)
-                if k.strip() in ("SEIBRO_API_KEY", "DART_API_KEY"):
-                    vals.append(v.strip().strip('"').strip("'"))
-    return [v for v in vals if len(v) >= 8]
+def _secret_values() -> set[str]:
+    """프로세스와 패키지가 읽을 수 있는 .env의 자격증명을 모은다."""
+    configs = [os.environ, dotenv_values(REPO / ".env", encoding="utf-8-sig")]
+    krx = find_spec("krx_data_api")
+    if krx and krx.origin:
+        configs.append(dotenv_values(Path(krx.origin).resolve().parents[1] / ".env", encoding="utf-8-sig"))
+    return {
+        value
+        for config in configs
+        for name, value in config.items()
+        if value and len(value) >= 4 and (name in SECRET_NAMES or re.fullmatch(r"DART_API_KEY_\d+", name))
+    }
+
+
+def _contains_secret(notebook: str) -> bool:
+    # JSON 안의 이스케이프를 먼저 해제해 원문과 URL 인코딩을 모두 검사한다.
+    decoded = json.dumps(json.loads(notebook), ensure_ascii=False)
+    if QUERY_SECRET.search(notebook.replace(r'\"', '"')):
+        return True
+    for value in _secret_values():
+        for variant in {value, quote(value, safe=""), quote_plus(value)}:
+            if json.dumps(variant, ensure_ascii=False)[1:-1] in decoded:
+                return True
+    return False
 
 
 def build(src_path: Path, execute: bool = True) -> bool:
@@ -102,7 +123,12 @@ def build(src_path: Path, execute: bool = True) -> bool:
         raise SystemExit(f"{src_path}: 첫 셀은 제목 markdown 이어야 합니다")
 
     needs_krx = "krx_data_api" in text
-    secrets = ["SEIBRO_API_KEY"] + (["KRX_ID", "KRX_PW"] if needs_krx else [])
+    needs_dart = "DART_API_KEY" in text
+    secrets = ["SEIBRO_API_KEY"]
+    if needs_dart:
+        secrets.append("DART_API_KEY")
+    if needs_krx:
+        secrets.extend(["KRX_ID", "KRX_PW"])
     url = f"https://colab.research.google.com/github/{GITHUB}/blob/{BRANCH}/scenarios/{quote(rel.as_posix())}"
     badge = f"[![Colab에서 열기](https://colab.research.google.com/assets/colab-badge.svg)]({url})"
     helper = f"SECRETS = {secrets!r}\n" + (HERE / "seibro_helper.py").read_text(encoding="utf-8").strip()
@@ -123,25 +149,35 @@ def build(src_path: Path, execute: bool = True) -> bool:
     for kind, body in cells[1:]:
         nb.cells.append(nbformat.v4.new_markdown_cell(body) if kind == "markdown" else nbformat.v4.new_code_cell(body))
 
-    ok = True
     if execute:
         client = NotebookClient(nb, timeout=900, kernel_name="python3",
                                 resources={"metadata": {"path": str(REPO)}})
         try:
             client.execute()
-        except CellExecutionError as e:
-            ok = False
-            print(f"✗ {rel.as_posix()} — 실행 오류 (오류까지 저장함)\n{str(e)[-1500:]}")
-    nbformat.write(nb, out)
+        except CellExecutionError:
+            failed_cell = next(
+                (i for i, cell in enumerate(nb.cells, 1)
+                 if any(output.output_type == "error" for output in cell.get("outputs", []))),
+                None,
+            )
+            print(f"✗ {rel.as_posix()} — 셀 실행 실패 (셀 번호: {failed_cell or '알 수 없음'})")
+            return False
 
-    saved = out.read_text(encoding="utf-8")
-    leaked = [v for v in _secret_values() if v in saved]
-    if leaked:
-        ok = False
-        print(f"✗ {rel.as_posix()} — 노트북에 API 키 값이 들어 있습니다. 출력을 지우고 원인을 고치세요.")
-    if ok:
-        print(f"✓ {rel.as_posix()}")
-    return ok
+    serialized = nbformat.writes(nb)
+    if _contains_secret(serialized):
+        print(f"✗ {rel.as_posix()} — 자격증명으로 보이는 값이 있어 저장을 중단했습니다.")
+        return False
+
+    with NamedTemporaryFile(mode="w", encoding="utf-8", newline="\n",
+                            dir=out.parent, suffix=".tmp", delete=False) as tmp:
+        temp_path = Path(tmp.name)
+        tmp.write(serialized + "\n")
+    try:
+        temp_path.replace(out)
+    finally:
+        temp_path.unlink(missing_ok=True)
+    print(f"✓ {rel.as_posix()}")
+    return True
 
 
 def main() -> None:

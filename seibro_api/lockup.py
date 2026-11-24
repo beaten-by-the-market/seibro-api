@@ -22,7 +22,7 @@ from typing import Union
 
 import pandas as pd
 
-from .client import SeibroClient, retry_transient
+from .openapi import SeibroClient, retry_transient
 
 
 # 의무보호예수 사유코드(DUTY_SAFEDP_RACD).

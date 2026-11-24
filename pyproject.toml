@@ -20,7 +20,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest"]
+dev = ["pytest", "nbformat", "nbclient"]
 
 [tool.setuptools.packages.find]
 include = ["seibro_api*"]

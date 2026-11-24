@@ -1,6 +1,6 @@
 # seibro_api
 
-한국예탁결제원(Seibro) Open API와 DART 전자공시 API를 활용한 **주식관련사채(CB/BW/EB) 데이터 수집 모듈**.
+한국예탁결제원의 공식 SEIBRO Open API와 공개 WebSquare 화면에서 주식·채권·권리일정 데이터를 조회하는 Python 패키지입니다. 주식관련사채 분석은 DART 공시도 사용합니다.
 
 ## 설치
 
@@ -8,19 +8,16 @@
 pip install -r requirements.txt
 ```
 
-`.env` 파일에 API 키 설정:
-
-```
-SEIBRO_API_KEY=your_seibro_api_key
-DART_API_KEY=your_dart_api_key
-```
+로컬 환경에서는 [`.env.example`](.env.example)을 `.env`로 복사해 사용하는 키만 채웁니다. Colab에서는 노트북의 Secrets에 같은 이름으로 등록합니다. [시나리오 목록](scenarios/README.md)
 
 ## 파일 구성
 
 ```
 seibro_api/
   __init__.py          # 모듈 진입점 (공개 함수 export)
-  client.py            # Seibro Open API 기본 클라이언트
+  openapi/             # 공식 OpenPlatform 클라이언트 (SEIBRO_API_KEY)
+  web/                 # 공개 WebSquare 호출과 채권 상세 (키 없이 조회)
+  client.py            # 기존 SeibroClient import 경로
   corp_loader.py       # 법인정보 로더 (DART + Seibro 종목 맵핑)
   stock_issue.py       # 주식수량 변동내역 조회 (Seibro API)
   stock_bond.py        # 주식관련사채 조회 (Seibro API + DART API)
@@ -33,6 +30,7 @@ seibro_api/
   lockup.py            # 의무보유(보호예수) 예수·반환 기간 조회 (Seibro API)
   stock_linked.py      # 주식관련사채별 잔액·현재 행사가·누적 행사 (Seibro API + 웹)
   bond_issue.py        # 일자별 발행 채권 목록·상세 (Seibro API)
+  shareholder_meeting.py  # 종목별 주총 권리기준일·개최 정보·안건 (Seibro API)
 ```
 
 > 데이터 소스(공식 Open API / 웹 WebSquare / DART)별 전체 구분은
@@ -40,7 +38,7 @@ seibro_api/
 
 ## 함수 목록
 
-### client.py — Seibro API 클라이언트
+### openapi/client.py — SEIBRO Open API 클라이언트
 
 | 함수 | 설명 |
 |------|------|
@@ -49,6 +47,7 @@ seibro_api/
 | `client.get_issuco_custno(stock_code=None, isin=None)` | 종목코드 → 발행회사고객번호 (`getIssucoCustnoByIsin`) |
 | `client.get_dividend_schedules(...)` | 배당일정 원천 조회 (`getDivSchedulInfo`) |
 | `client.get_dividend_payouts(...)` | 배당분배금내역 원천 조회 (`getDivInfo`) |
+| `get_shareholder_meetings(stock_code, start_dt, end_dt)` | 종목별 주총 권리기준일·개최 정보·안건을 세 표로 조회. [예시](scenarios/1_stock/02_shareholder_meetings.md) |
 
 ```python
 from seibro_api import SeibroClient

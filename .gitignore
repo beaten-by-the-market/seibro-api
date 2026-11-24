@@ -5,9 +5,12 @@ __pycache__/
 build/
 dist/
 .pytest_cache/
+docs_cache/
 
 # Environment / secrets
 .env
+.env.*
+!.env.example
 
 # Claude Code
 .claude/

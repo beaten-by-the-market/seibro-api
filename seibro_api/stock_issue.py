@@ -3,7 +3,7 @@
 import pandas as pd
 from typing import Union
 
-from .client import SeibroClient
+from .openapi import SeibroClient
 
 
 SECN_KACD_MAP = {

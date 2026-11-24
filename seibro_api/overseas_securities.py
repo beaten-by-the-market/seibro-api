@@ -32,7 +32,8 @@ from datetime import date, datetime
 import pandas as pd
 import requests
 
-WEB_CALL_URL = "https://seibro.or.kr/websquare/engine/proworks/callServletService.jsp"
+from .web.client import post_xml
+
 TASK = "ksd.safe.bip.cnts.OvsSec.process.OvsSecIsinPTask"
 W2X_PATH = "/IPORTAL/user/ovsSec/BIP_CNTS10013V.xml"
 MENU_NO = "921"
@@ -166,16 +167,14 @@ def _call(
         f'<D_TYPE value="{d_type}"/>'
         "</reqParam>"
     )
-    response = session.post(
-        WEB_CALL_URL,
+    response = post_xml(
+        session,
+        payload,
         headers={
             "Referer": f"https://seibro.or.kr/websquare/control.jsp?w2xPath={W2X_PATH}&menuNo={MENU_NO}",
             "submissionid": "submission_" + action,
         },
-        data=payload.encode("utf-8"),
-        timeout=30,
     )
-    response.raise_for_status()
     root = ET.fromstring(response.content.decode("utf-8", errors="replace"))
     return [
         {child.tag: child.attrib.get("value", "") for child in result}

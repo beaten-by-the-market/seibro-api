@@ -26,7 +26,10 @@ def _init_dart():
     dart_key = os.getenv("DART_API_KEY")
     if not dart_key:
         raise ValueError("DART_API_KEY가 .env 파일이나 환경변수에 없습니다.")
-    return OpenDartReader(dart_key)
+    try:
+        return OpenDartReader(dart_key)
+    except Exception as exc:
+        raise RuntimeError(f"OpenDART 초기화 실패 ({type(exc).__name__})") from None
 
 
 def _get_rcept_no_new(rcept_no: str, report_nm: str) -> str:
@@ -224,7 +227,7 @@ def _fetch_report_xmls(stock_code: str) -> list[dict]:
     try:
         df_list = dart.list(corp=stock_code, kind="A", start=start_dt, end=end_dt, final=True)
     except Exception as e:
-        print(f"  조회 실패: {e}")
+        print(f"  조회 실패: {type(e).__name__}")
         return []
 
     if df_list is None or df_list.empty:
@@ -278,7 +281,7 @@ def _fetch_report_xmls(stock_code: str) -> list[dict]:
             t["xml_text"] = xml_text
             print(f"  OK {t['type']} ({rcept_no_new}) - {len(xml_text):,}자")
         except Exception as e:
-            print(f"  FAIL {t['type']} ({rcept_no_new}): {e}")
+            print(f"  FAIL {t['type']} ({rcept_no_new}): {type(e).__name__}")
             t["xml_text"] = None
         time.sleep(1)
 

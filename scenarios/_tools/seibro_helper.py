@@ -1,6 +1,7 @@
 # ── SEIBRO 공통 셀 (모든 시나리오 노트북 공통) ─────────────────────────────
 # Colab: 왼쪽 🔑(Secrets)에 아래 SECRETS 이름으로 값을 넣고 "노트북 액세스"를 켜세요.
 #        SEIBRO_API_KEY = 예탁결제원 SEIBRO Open API 인증키 (https://seibro.or.kr/OpenPlatform)
+#        DART_API_KEY = OpenDART 인증키 (DART 데이터를 쓰는 노트북만)
 #        KRX_ID / KRX_PW = KRX 정보데이터시스템 계정 (KRX 데이터를 쓰는 노트북만)
 # 로컬: 환경변수 또는 작업 폴더(레포 루트)의 .env 를 읽습니다.
 # 키·비밀번호 값은 어디에도 출력하지 않습니다. 있는지 여부만 보여 줍니다.
@@ -29,8 +30,11 @@ else:
     from dotenv import find_dotenv, load_dotenv
     load_dotenv(find_dotenv(usecwd=True))
 
-_missing = [n for n in SECRETS if not os.environ.get(n)]  # noqa: F821
-if _missing and "SEIBRO_API_KEY" in _missing:
+_missing = [
+    n for n in SECRETS  # noqa: F821
+    if not os.environ.get(n) and (IN_COLAB or not n.startswith("KRX_"))
+]
+if _missing:
     raise RuntimeError(f"{_missing} 가 없습니다. Colab Secrets 또는 .env 에 넣어 주세요.")
 
 pd.set_option("display.max_columns", 30)

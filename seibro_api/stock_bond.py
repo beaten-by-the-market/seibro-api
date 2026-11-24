@@ -7,7 +7,7 @@
 import pandas as pd
 from datetime import datetime, timedelta
 from time import sleep
-from .client import SeibroClient
+from .openapi import SeibroClient
 
 
 # ── 코드 디코딩 테이블 ──────────────────────────────────────
@@ -331,16 +331,9 @@ def get_dart_cb_events(stock_code: str, years: int = 5, save_csv: bool = True) -
     Returns:
         CB/BW/EB 발행 공시 내역이 통합된 DataFrame
     """
-    import OpenDartReader
-    import os
-    from dotenv import load_dotenv
+    from .dart_report import _init_dart
 
-    load_dotenv()
-    dart_key = os.getenv("DART_API_KEY")
-    if not dart_key:
-        raise ValueError("DART_API_KEY가 .env 파일이나 환경변수에 없습니다.")
-
-    dart = OpenDartReader(dart_key)
+    dart = _init_dart()
 
     end_dt = datetime.today().strftime("%Y%m%d")
     start_dt = (datetime.today() - timedelta(days=years * 365)).strftime("%Y%m%d")
@@ -362,7 +355,7 @@ def get_dart_cb_events(stock_code: str, years: int = 5, save_csv: bool = True) -
         try:
             df = dart.event(stock_code, event_name, start=start_dt, end=end_dt)
         except Exception as e:
-            print(f"    조회 실패: {e}")
+            print(f"    조회 실패: {type(e).__name__}")
             continue
 
         if df is None or df.empty:

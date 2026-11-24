@@ -15,7 +15,7 @@ from io import BytesIO
 from time import sleep
 from datetime import datetime
 from tqdm import tqdm
-from .client import SeibroClient
+from .openapi import SeibroClient
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)

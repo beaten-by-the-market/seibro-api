@@ -1,14 +1,16 @@
-from .client import SeibroClient, SeibroAPIError
+from .openapi import SeibroClient, SeibroAPIError
 from .corp_loader import load_corps
 from .stock_bond import get_stock_bonds, get_dart_cb_events
 from .stock_issue import get_stock_issue_details
 from .dart_report import get_sub_pis, get_cb_from_report, get_bw_from_report, get_eb_from_report, get_bonds_from_report
 from .display import display_bond_summary
+from .shareholder_meeting import get_shareholder_meetings
 
 __all__ = [
     "SeibroClient", "SeibroAPIError", "load_corps",
     "get_stock_bonds", "get_dart_cb_events",
     "get_stock_issue_details",
+    "get_shareholder_meetings",
     "get_schedule_reason_details",
     "get_bonus_issue_details",
     "get_dividend_schedule_details",

@@ -20,6 +20,8 @@ from datetime import date, datetime
 import pandas as pd
 import requests
 
+from .web.client import post_xml
+
 CALL_URL = "https://www.kofr.kr/websquare/engine/proworks/callServletService.jsp"
 TASK = "ksd.rfr.user.rate.process.RatePTask"
 ACTION = "getGridRateList"
@@ -84,9 +86,7 @@ def _fetch_page(session: requests.Session, start: str, end: str, page: int) -> t
         f'<FIX_RATE_TPCD value="{FIX_RATE_TPCD}"/>'
         f'<LANG value="kor"/></reqParam>'
     )
-    resp = session.post(CALL_URL, headers={"submissionid": SUBMISSION_ID},
-                        data=body.encode("utf-8"), timeout=30)
-    resp.raise_for_status()
+    resp = post_xml(session, body, headers={"submissionid": SUBMISSION_ID}, url=CALL_URL)
     root = ET.fromstring(resp.text)
     total = int(root.attrib.get("RECORD_COUNT", "0") or 0)
     rows = []

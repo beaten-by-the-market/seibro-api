@@ -11,9 +11,9 @@
 
 ## 1. SEIBRO 공식 Open API (key O)
 
-- 엔드포인트: `http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp`
+- 엔드포인트: `https://seibro.or.kr/OpenPlatform/callOpenAPI.jsp`
 - 인증: `.env`의 `SEIBRO_API_KEY`
-- 구현: [`client.py`](../seibro_api/client.py) `SeibroClient._call_api()` (XML→DataFrame, 3회 재시도)
+- 구현: [`openapi/client.py`](../seibro_api/openapi/client.py) `SeibroClient._call_api()` (XML→DataFrame, 인증서 검증)
 
 | apiId | 용도 | 호출 함수 |
 |-------|------|----------|
@@ -28,6 +28,7 @@
 | `getIssucoCustnoByIsin` | 종목코드 → 발행회사고객번호·대표종목명 | `SeibroClient.get_issuco_custno()` |
 | `getDivSchedulInfo` | 배당일정(권리기준일·권리락일·명부폐쇄·확정구분), 금액 없음 | `SeibroClient.get_dividend_schedules()` |
 | `getDivInfo` | 배당분배금내역(주당배당금·시가배당률·지급일·차등배당) | `SeibroClient.get_dividend_payouts()` |
+| `getStddtInfo`, `getGmeetInfo`, `getGmeetMeasureInfo` | 주총 권리기준일·개최 정보·안건 | `get_shareholder_meetings()` |
 
 특징: 코드값 20여 종을 한글로 자동 디코딩(`CODE_TABLES`, `CREDIT_GRADE_MAP`), 전환가능주식수 자동 계산.
 
@@ -41,8 +42,7 @@
 
 - 엔드포인트: `https://seibro.or.kr/websquare/engine/proworks/callServletService.jsp`
 - 방식: XML POST(`<reqParam action=… task=…>`) + 브라우저 헤더(Referer/submissionid)
-- 구현: [`schedule_reason.py`](../seibro_api/schedule_reason.py) `SeibroWebSquareClient`,
-  [`dividend.py`](../seibro_api/dividend.py)
+- 공통 전송·파싱: [`web/client.py`](../seibro_api/web/client.py). 화면별 조회와 두 경로를 함께 쓰는 함수는 도메인 모듈에서 제공합니다.
 
 | action | 페이지(w2xPath) | 용도 | 호출 함수 |
 |--------|-----------------|------|----------|
@@ -164,5 +164,5 @@ DART (별도 기관, key O)       → 사채 발행공시 이력 · 정기보고
     처리한다(`get_issuco_custno()`가 검증).
   - **필수 파라미터 누락 시 `<vector>` 없는 응답**: `<SeibroAPI><RES/></SeibroAPI>`만
     온다. `SeibroAPIError`로 즉시 올리고 재시도하지 않는다.
-- `resources/`의 Colab 노트북(`seibro_mandatory`=의무보유, `seibro_shmeeting`=주주총회 등)은
-  아직 패키지 함수로 승격되지 않은 영역의 연구 프로토타입이다.
+- `resources/`의 노트북은 연구 기록입니다. 의무보유·주총은 패키지와 [시나리오](../scenarios/README.md)에서 실행할 수 있습니다.
+- `resources/seibro1.ipynb`의 공유자원포털 연구 예제에는 별도 `SEIBRO_SHARE_API_KEY`가 필요합니다.
