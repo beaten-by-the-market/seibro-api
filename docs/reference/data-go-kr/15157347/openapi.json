@@ -1,0 +1,6188 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "본 서비스는 자본시장의 중앙 집중 예탁기관인 한국예탁결제원이 보유한 방대한 증권 데이터를 기반으로, 국내 자본시장의 흐름을 한눈에 파악할 수 있도록 돕는 전문 통계 정보 시스템입니다. 주식, 채권, 파생결합증권 등 다양한 금융상품의 발행부터 유통, 권리 행사에 이르기까지 증권의 전 생애주기에서 발생하는 공신력 있는 데이터를 실시간으로 제공합니다.\n\n사용자는 복잡한 시장 지표를 개별적으로 수집할 필요 없이, 이 서비스를 통해 의무보호예수 해제 현황, 증권별 발행 규모, 기업 배당 정보 등 투자 의사결정에 직결되는 핵심 지표들을 통합적으로 조회할 수 있습니다. 특히 한국예탁결제원의 시스템과 직접 연동된 원천 데이터를 기반으로 하므로 정보의 정밀도와 신뢰도가 매우 높으며, 민간 금융 플랫폼이나 핀테크 서비스 개발 시 기초 데이터로 활용하기에 최적화되어 있습니다.\n\n단순한 수치 제공을 넘어 국내 자본시장의 자금 흐름과 기업의 권리 관계를 투명하게 공개함으로써, 금융 시장의 정보 비대칭을 해소하고 일반 투자자부터 전문 분석가까지 누구나 양질의 금융 통계 자산에 평등하게 접근할 수 있도록 돕는 자본시장 데이터의 허브 역할을 수행합니다.",
+    "version": "1.0.0",
+    "title": "한국예탁결제원_증권예탁통계서비스_GW"
+  },
+  "host": "apis.data.go.kr/B552481/SecDepoStat",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getCvreqStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "bondCvreqAmt": {
+                              "type": "string",
+                              "description": "채권전환청구금액(단위: 백만 원)",
+                              "properties": {}
+                            },
+                            "cvreqStkqty": {
+                              "type": "string",
+                              "description": "전환청구 주식수(단위: 천주)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "월별 전환청구 현황 조회",
+        "description": "주식, 채권의 월별 전환청구 현황을 조회",
+        "operationId": "getCvreqStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schStdYymm",
+          "description": "조회기준연월(YYYYMMDD)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getDepoSecCusStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "rthingCusStkqty": {
+                              "type": "string",
+                              "description": "실물보관 주식수(단위: 주) (1행 : 합계, 2행 : 유가증권시장상장, 3행 : 기타)",
+                              "properties": {}
+                            },
+                            "rthingCusBondAmt": {
+                              "type": "string",
+                              "description": "실물보관 채권금액(단위: 백만원) (1행 : 합계, 2행 : 상장, 3행 : 비상장)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "월별 예탁증권 보관현황 조회",
+        "description": "예탁원에 보관된 예탁 증권(주식, 채권)의 보관현황을 월별로 조회",
+        "operationId": "getDepoSecCusStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schStdYymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getDeriCombiSecIssuStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "derisecDepoQty": {
+                              "type": "string",
+                              "description": "발행수량(단위:천)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "파생결합증권 발행현황 조회",
+        "description": "파생결합증권(DLB 제외)의 월별 발행수량을 조회",
+        "operationId": "getDeriCombiSecIssuStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schStdYymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getPledgStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "pledgBondAmt": {
+                              "type": "string",
+                              "description": "질권설정 채권금액(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "pledgStkqty": {
+                              "type": "string",
+                              "description": "질권설정 주식수(단위 : 주)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "월별 주식, 채권의 질권 설정 현황 조회",
+        "description": "주식, 채권의 월별 질권 설정 현황(설정 대상 주식수, 채권금액)을 조회",
+        "operationId": "getPledgStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schStdYymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getRthingSecSafedpReturnStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "returnStkqty": {
+                              "type": "string",
+                              "description": "반환주식수(단위: 천 주)",
+                              "properties": {}
+                            },
+                            "returnAmt": {
+                              "type": "string",
+                              "description": "반환채권금액(단위: 천 원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "실물증권 보호예수 반환 현황 조회",
+        "description": "월별 실물증권의 보호예수 반환 현황을 조회",
+        "operationId": "getRthingSecSafedpReturnStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schStdYymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getAcnttrStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "acnttrStockCount": {
+                              "type": "string",
+                              "description": "주식건수(단위 : 건)",
+                              "properties": {}
+                            },
+                            "acnttrBondCount": {
+                              "type": "string",
+                              "description": "채권건수(단위 : 건)",
+                              "properties": {}
+                            },
+                            "acnttrShortmFncegdCount": {
+                              "type": "string",
+                              "description": "단기금융상품건수(단위 : 건)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "증권별 계좌대체현황 조회",
+        "description": "주식, 채권, 단기금융상품의 계좌대체 건수를 월별로 조회",
+        "operationId": "getAcnttrStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getPartyIndtpListStkCusStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "etcIndtpCusQty": {
+                              "type": "string",
+                              "description": "기타업종 잔고현황(단위 : 천주)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "잔고현황 집계 기준연월(YYYYMM)",
+                              "properties": {}
+                            },
+                            "secucoIndtpCusQty": {
+                              "type": "string",
+                              "description": "증권회사 잔고현황(단위 : 천주)",
+                              "properties": {}
+                            },
+                            "bankIndtpCusQty": {
+                              "type": "string",
+                              "description": "은행 잔고현황(단위 : 천주)",
+                              "properties": {}
+                            },
+                            "frgnCorpIndtpCusQty": {
+                              "type": "string",
+                              "description": "외국법인 잔고현황(단위 : 천주)",
+                              "properties": {}
+                            },
+                            "insucoIndtpCusQty": {
+                              "type": "string",
+                              "description": "보험회사 잔고현황(단위 : 천주)",
+                              "properties": {}
+                            },
+                            "fnceSafeIndtpCusQty": {
+                              "type": "string",
+                              "description": "종금·금고 잔고현황(단위 : 천주)",
+                              "properties": {}
+                            },
+                            "fncecoIndtpCusQty": {
+                              "type": "string",
+                              "description": "금융투자업관계기관 잔고현황(단위 : 천주)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "참가자 업종별 상장주식 잔고(등록)현황",
+        "description": "한국예탁결제원에 전자등록되어 있는 상장주식의 참가자업종별 등록현황 조회",
+        "operationId": "getPartyIndtpListStkCusStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "newnListTpcd",
+          "description": "상장구분(110: 유가증권, 120: 코스닥, 140: 코넥스)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getListStkCusStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "issuQty": {
+                              "type": "string",
+                              "description": "발행량(단위: 천주)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "잔고현황 집계 기준연월(YYYYMM)",
+                              "properties": {}
+                            },
+                            "cusQty": {
+                              "type": "string",
+                              "description": "보관량(단위: 천주)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "상장주식 전자등록 잔고현황",
+        "description": "한국예탁결제원에 전자등록되어 있는 상장주식의 현황 조회",
+        "operationId": "getListStkCusStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "newnListTpcd",
+          "description": "상장구분(110: 유가증권, 120: 코스닥, 140: 코넥스)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getListBondCusStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "cusQty": {
+                              "type": "string",
+                              "description": "수량(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "잔고현황 집계 기준연월(YYYYMM)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "상장채권 잔고(등록)현황",
+        "description": "한국예탁결제원에 등록(보관) 중인 상장채권의 잔고(등록)현황 조회",
+        "operationId": "getListBondCusStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getListBondKindCusStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "cusAmt": {
+                              "type": "string",
+                              "description": "기타 보관금액(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "잔고현황 집계 기준연월(YYYYMM)",
+                              "properties": {}
+                            },
+                            "nbondCusAmt": {
+                              "type": "string",
+                              "description": "국채 보관금액(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "lbondCusAmt": {
+                              "type": "string",
+                              "description": "지방채 보관금액(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "sbondCusAmt": {
+                              "type": "string",
+                              "description": "특수채 보관금액(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "fbondCusAmt": {
+                              "type": "string",
+                              "description": "금융채 보관금액(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "cpbondCusAmt": {
+                              "type": "string",
+                              "description": "회사채 보관금액(단위 : 백만원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "상장채권 종류별 잔고(등록)현황",
+        "description": "한국예탁결제원에 등록(보관)중인 상장채권의 종류별 잔고(등록)현황 조회",
+        "operationId": "getListBondKindCusStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getPartyIndtpListBondCusStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "etcIndtpCusQty": {
+                              "type": "string",
+                              "description": "기타업종 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "secucoIndtpCusQty": {
+                              "type": "string",
+                              "description": "증권회사 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "bankIndtpCusQty": {
+                              "type": "string",
+                              "description": "은행 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "frgnCorpIndtpCusQty": {
+                              "type": "string",
+                              "description": "외국법인 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "insucoIndtpCusQty": {
+                              "type": "string",
+                              "description": "보험회사 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "fnceSafeIndtpCusQty": {
+                              "type": "string",
+                              "description": "종금·금고 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "fncecoIndtpCusQty": {
+                              "type": "string",
+                              "description": "금융투자업관계기관 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "잔고현황 집계 기준연월",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "참가자 업종별 상장채권 잔고(등록)현황",
+        "description": "한국예탁결제원에 등록(보관)중인 상장채권의 참가자업종별 잔고(등록)현황 조회",
+        "operationId": "getPartyIndtpListBondCusStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getPartyIndtpCPCusStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "etcIndtpCusQty": {
+                              "type": "string",
+                              "description": "기타업종 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "secucoIndtpCusQty": {
+                              "type": "string",
+                              "description": "증권회사 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "bankIndtpCusQty": {
+                              "type": "string",
+                              "description": "은행 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "frgnCorpIndtpCusQty": {
+                              "type": "string",
+                              "description": "외국법인 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "insucoIndtpCusQty": {
+                              "type": "string",
+                              "description": "보험회사 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "fnceSafeIndtpCusQty": {
+                              "type": "string",
+                              "description": "종금·금고 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "fncecoIndtpCusQty": {
+                              "type": "string",
+                              "description": "금융투자업관계기관 잔고현황(단위 : 백만원)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "잔고현황 집계 기준연월",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "참가자 업종별 기업어음(CP) 잔고현황",
+        "description": "한국예탁결제원에 보관중인 CP의 잔고현황 조회",
+        "operationId": "getPartyIndtpCPCusStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getListderivCombiElecRegiStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "derisecIssuQty": {
+                              "type": "string",
+                              "description": "파생결합증권 등록수량(단위 : 백만주)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "잔고현황 집계 기준연월(YYYYMM)",
+                              "properties": {}
+                            },
+                            "stkSecncnt": {
+                              "type": "string",
+                              "description": "주식 종목수(단위 : 종목)",
+                              "properties": {}
+                            },
+                            "stkIssuQty": {
+                              "type": "string",
+                              "description": "주식 등록수량(단위 : 백만주)",
+                              "properties": {}
+                            },
+                            "bondSecncnt": {
+                              "type": "string",
+                              "description": "채권 종목수(단위 : 종목)",
+                              "properties": {}
+                            },
+                            "bondIssuQty": {
+                              "type": "string",
+                              "description": "채권 등록수량(단위 : 백만주)",
+                              "properties": {}
+                            },
+                            "cdSecncnt": {
+                              "type": "string",
+                              "description": "CD 종목수(단위 : 종목)",
+                              "properties": {}
+                            },
+                            "cdIssuQty": {
+                              "type": "string",
+                              "description": "CD 등록수량(단위 : 백만주)",
+                              "properties": {}
+                            },
+                            "stbSecncnt": {
+                              "type": "string",
+                              "description": "단기사채 종목수(단위 : 종목)",
+                              "properties": {}
+                            },
+                            "stbIssuQty": {
+                              "type": "string",
+                              "description": "단기사채 등록수량(단위 : 백만주)",
+                              "properties": {}
+                            },
+                            "derisecSecncnt": {
+                              "type": "string",
+                              "description": "파생결합증권 종목수(단위 : 종목)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "상장증권 전자등록 잔고현황",
+        "description": "한국예탁결제원에 전자등록되어 있는 상장증권(주식, 채권,파생결합증권 등)의 잔고 현황 조회",
+        "operationId": "getListderivCombiElecRegiStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getEltscStkRegiErasStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "erasIssuQty": {
+                              "type": "string",
+                              "description": "말소처리 수량(단위 : 주)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "현황 집계 기준연월(YYYYMM)",
+                              "properties": {}
+                            },
+                            "regiIssucoQty": {
+                              "type": "string",
+                              "description": "등록처리 발행사수",
+                              "properties": {}
+                            },
+                            "regiSecncnt": {
+                              "type": "string",
+                              "description": "등록처리 종목수",
+                              "properties": {}
+                            },
+                            "regiIssuQty": {
+                              "type": "string",
+                              "description": "등록처리 수량(단위 : 주)",
+                              "properties": {}
+                            },
+                            "erasIssucoQty": {
+                              "type": "string",
+                              "description": "말소처리 발행사수",
+                              "properties": {}
+                            },
+                            "erasSecncnt": {
+                              "type": "string",
+                              "description": "말소처리 종목수",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "전자증권(상장주식) 등록·말소 현황",
+        "description": "한국예탁결제원을 통하여 전자증권 형태로 등록·말소된 상장주식 현황 조회",
+        "operationId": "getEltscStkRegiErasStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getCPDepoReturnStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "returnCpAmt": {
+                              "type": "string",
+                              "description": "반환금액(단위 : 천원)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "잔고현황 조회기준연월(YYYYMM)",
+                              "properties": {}
+                            },
+                            "depoCpCount": {
+                              "type": "string",
+                              "description": "예탁건수",
+                              "properties": {}
+                            },
+                            "depoCpAmt": {
+                              "type": "string",
+                              "description": "예탁금액(단위 : 천원)",
+                              "properties": {}
+                            },
+                            "returnCpCount": {
+                              "type": "string",
+                              "description": "반환건수",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "CP 예탁·반환현황",
+        "description": "한국예탁결제원을 통하여 예탁·반환된 CP 현황을 조회",
+        "operationId": "getCPDepoReturnStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getELSIssuRedRemqStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "derisecCusRemq": {
+                              "type": "string",
+                              "description": "잔량(단위 : 천원)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "현황 집계 기준연월(YYYYMM)",
+                              "properties": {}
+                            },
+                            "derisecDepoCount": {
+                              "type": "string",
+                              "description": "발행건수",
+                              "properties": {}
+                            },
+                            "derisecDepoQty": {
+                              "type": "string",
+                              "description": "발행수량(단위 : 천원)",
+                              "properties": {}
+                            },
+                            "derisecRedQty": {
+                              "type": "string",
+                              "description": "상환수량",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "주가연계증권 발행·상환 및 잔량현황",
+        "description": "주가연계증권의 발행·상환 및 잔량 현황 조회",
+        "operationId": "getELSIssuRedRemqStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getELWIssuRedRemqStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items\t",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "derisecCusRemq": {
+                              "type": "string",
+                              "description": "잔량(단위 : 천 워런트)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "현황 집계 기준연월(YYYYMM)",
+                              "properties": {}
+                            },
+                            "derisecDepoCount": {
+                              "type": "string",
+                              "description": "발행건수(단위 : 건)",
+                              "properties": {}
+                            },
+                            "derisecDepoQty": {
+                              "type": "string",
+                              "description": "발행수량(단위 : 천 워런트)",
+                              "properties": {}
+                            },
+                            "derisecRedQty": {
+                              "type": "string",
+                              "description": "상환수량단위 : 천 워런트)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "주식워런트증권 발행·상환 및 잔량현황",
+        "description": "주식워런트증권의 발행·상환 및 잔량 현황 조회",
+        "operationId": "getELWIssuRedRemqStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getFutrsubtStkStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "stkDoutQty": {
+                              "type": "string",
+                              "description": "인출수량(단위 : 주)",
+                              "properties": {}
+                            },
+                            "stdYymm": {
+                              "type": "string",
+                              "description": "현황 집계 기준연월(YYYYMM)",
+                              "properties": {}
+                            },
+                            "stkDepoQty": {
+                              "type": "string",
+                              "description": "예입수량(단위 : 주)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "선물대용증권(주식) 현황",
+        "description": "월별 선물대용증권(주식)의 예입·인출 현황 조회",
+        "operationId": "getFutrsubtStkStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getDrConvStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "drBstkTmnStkqty": {
+                              "type": "string",
+                              "description": "DR해지주식수(단위 : 주)",
+                              "properties": {}
+                            },
+                            "drBstkConvStkqty": {
+                              "type": "string",
+                              "description": "DR전환주식수(단위 : 주)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "DR 전환현황 조회",
+        "description": "DR 전환주식수를 월별로 조회",
+        "operationId": "getDrConvStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getOvsBondStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "frsecCusBondAmt": {
+                              "type": "string",
+                              "description": "보관채권금액(단위 : USD)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "외화채권 보관현황 조회",
+        "description": "월별 외화채권 보관금액을 조회",
+        "operationId": "getOvsBondStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getSecucoSecStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "stk": {
+                              "type": "string",
+                              "description": "주식(단위 : 천주)",
+                              "properties": {}
+                            },
+                            "bond": {
+                              "type": "string",
+                              "description": "채권(단위 : 백만원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "증권회사의 예탁증권 보관현황 조회",
+        "description": "증권회사의 예탁증권(주식, 채권)의 보관현황을 월별로 조회(전자증권제도 시행('19.9월) 이전 정보만 조회 가능)",
+        "operationId": "getSecucoSecStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getSlbTrStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "slbStkTrQty": {
+                              "type": "string",
+                              "description": "주식대차거래량(단위 : 주)",
+                              "properties": {}
+                            },
+                            "slbBondTrQty": {
+                              "type": "string",
+                              "description": "채권대차거래량(단위 : 천원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "월별 대차거래 현황 조회",
+        "description": "주식, 채권의 월별 대차거래에 따른 거래량을 조회",
+        "operationId": "getSlbTrStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getSlbTrBondColatSetupStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "bondColatSetupAmt": {
+                              "type": "string",
+                              "description": "채권담보설정액(단위:천 원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "월별 대차거래 채권담보 설정현황 조회",
+        "description": "월별 대차거래 채권담보 설정현황을 조회",
+        "operationId": "getSlbTrBondColatSetupStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schStdYymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getOrgSetlQty": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "stkisetlSetlQty": {
+                              "type": "string",
+                              "description": "주식결제 거래량(단위: 천주)",
+                              "properties": {}
+                            },
+                            "bondisetlSetlAmt": {
+                              "type": "string",
+                              "description": "채권결제 거래량(채권 액면금액의 합계(단위: 백만 원))",
+                              "properties": {}
+                            },
+                            "shortmInsetlSetlQty": {
+                              "type": "string",
+                              "description": "단기금융상품결제 거래량(단위: 억원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "증권별 기관결제 현황 조회",
+        "description": "주식, 채권, 단기금융상품의 기관결제 거래량을 월별로 조회",
+        "operationId": "getOrgSetlQty",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schStdYymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getBondDepositStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "bondCusAmt": {
+                              "type": "string",
+                              "description": "채권총보관금액(단위: 백만 원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "채권 예탁현황 조회",
+        "description": "예탁채권의 전체 금액을 월별로 조회",
+        "operationId": "getBondDepositStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getBokBondRepoStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "bokoRepoBondQty": {
+                              "type": "string",
+                              "description": "채권결제량(단위: 백만 원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "한은 채권 REPO 거래현황 조회",
+        "description": "한국은행 채권 REPO 결제량을 월별로 조회",
+        "operationId": "getBokBondRepoStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getStkWrntStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "derisecTrQty": {
+                              "type": "string",
+                              "description": "결제수량(단위: 천 워런트)",
+                              "properties": {}
+                            },
+                            "derisecSetlCount": {
+                              "type": "string",
+                              "description": "결제건수(단위: 건)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "월별 주식워런트증권 거래현황 조회",
+        "description": "주식워런트증권의 결제건수를 월별로 조회",
+        "operationId": "getStkWrntStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getListSecSetlStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "stkTdSetlQty": {
+                              "type": "string",
+                              "description": "유가증권시장 주식등 결제량(단위: 천주)",
+                              "properties": {}
+                            },
+                            "bondTdSetlQty": {
+                              "type": "string",
+                              "description": "유가증권시장 채권결제량(단위: 백만 원)",
+                              "properties": {}
+                            },
+                            "kosdaqMartSktTdSetlQty": {
+                              "type": "string",
+                              "description": "코스닥시장 주식결제량(단위: 천주)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "상장증권 결제현황 조회",
+        "description": "유가증권, 코스닥 시장에 상장된 증권의 결제현황을 조회. 유가증권은 채권, 주식 등(주권, ELW, ETF, ETN, 신주인수권증서, 신주인수권증권, KDR, 수익증권)으로 구분 결제됨",
+        "operationId": "getListSecSetlStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getCdExecStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "exerCdPrcp": {
+                              "type": "string",
+                              "description": "권리행사 원금(단위: 백만 원)",
+                              "properties": {}
+                            },
+                            "exerCdInt": {
+                              "type": "string",
+                              "description": "권리행사 이자(단위: 백만 원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "CD 권리행사 현황 조회",
+        "description": "CD 권리행사 현황을 월별로 조회",
+        "operationId": "getCdExecStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getNbondDepoStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "bondRegiSecncnt": {
+                              "type": "string",
+                              "description": "채권등록 종목수",
+                              "properties": {}
+                            },
+                            "bondRegiRema": {
+                              "type": "string",
+                              "description": "채권등록잔액",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "월별 채권 등록 현황",
+        "description": "채권 등록 종목 수 및 잔액을 채권구분 및 월별로 조회",
+        "operationId": "getNbondDepoStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "item_type_cd",
+          "description": "항목구분코드(1: 국채, 2: 지방채, 3: 특수채, 4: 금융채, 5: 회사채, 6: 기타)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getOvsWrtbStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "frsecWrtTdCount": {
+                              "type": "string",
+                              "description": "미주시장 신주인수권 매매건수(단위: 건)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "해외(미주시장) 신주인수권 매매건수 조회",
+        "description": "미주시장에서 거래된 신주인수권 매매건수를 조회",
+        "operationId": "getOvsWrtbStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getBondSafedpStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "rthingBondRemAmt": {
+                              "type": "string",
+                              "description": "실물채권(단위: 천원)",
+                              "properties": {}
+                            },
+                            "regiBondRemAmt": {
+                              "type": "string",
+                              "description": "등록(예탁)채권(단위: 천원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "채권 의무보유(보호예수) 현황 조회",
+        "description": "한국예탁결제원에 의무보유(보호예수)된 채권금액을 월별로 조회(누적x)",
+        "operationId": "getBondSafedpStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getSecDepoStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "vctfListDepoStkqty": {
+                              "type": "string",
+                              "description": "유가증권시장 상장주식 예탁주식수(단위: 주)",
+                              "properties": {}
+                            },
+                            "listBondDepoAmt": {
+                              "type": "string",
+                              "description": "상장채권 예탁금액(단위: 천원)",
+                              "properties": {}
+                            },
+                            "unlsBondDepoAmt": {
+                              "type": "string",
+                              "description": "비상장채권 예탁금액(단위: 천원)",
+                              "properties": {}
+                            },
+                            "unlsDepoStkqty": {
+                              "type": "string",
+                              "description": " 기타주식 예탁 주식수(단위: 주)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "증권별 예탁 현황 조회",
+        "description": "한국예탁결제원에 예탁된 주식, 채권의 예탁 현황을 조회",
+        "operationId": "getSecDepoStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "sch_std_yymm",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getCvreqStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "bondCvreqAmt": {
+                      "type": "string",
+                      "description": "채권전환청구금액(단위: 백만 원)"
+                    },
+                    "cvreqStkqty": {
+                      "type": "string",
+                      "description": "전환청구 주식수(단위: 천주)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getDepoSecCusStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "rthingCusStkqty": {
+                      "type": "string",
+                      "description": "실물보관 주식수(단위: 주) (1행 : 합계, 2행 : 유가증권시장상장, 3행 : 기타)"
+                    },
+                    "rthingCusBondAmt": {
+                      "type": "string",
+                      "description": "실물보관 채권금액(단위: 백만원) (1행 : 합계, 2행 : 상장, 3행 : 비상장)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getDeriCombiSecIssuStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "derisecDepoQty": {
+                      "type": "string",
+                      "description": "발행수량(단위:천)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getPledgStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "pledgBondAmt": {
+                      "type": "string",
+                      "description": "질권설정 채권금액(단위 : 백만원)"
+                    },
+                    "pledgStkqty": {
+                      "type": "string",
+                      "description": "질권설정 주식수(단위 : 주)"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            }
+          }
+        }
+      }
+    },
+    "getRthingSecSafedpReturnStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "returnStkqty": {
+                      "type": "string",
+                      "description": "반환주식수(단위: 천 주)"
+                    },
+                    "returnAmt": {
+                      "type": "string",
+                      "description": "반환채권금액(단위: 천 원)"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            }
+          }
+        }
+      }
+    },
+    "getAcnttrStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "acnttrStockCount": {
+                      "type": "string",
+                      "description": "주식건수(단위 : 건)"
+                    },
+                    "acnttrBondCount": {
+                      "type": "string",
+                      "description": "채권건수(단위 : 건)"
+                    },
+                    "acnttrShortmFncegdCount": {
+                      "type": "string",
+                      "description": "단기금융상품건수(단위 : 건)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getPartyIndtpListStkCusStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "etcIndtpCusQty": {
+                      "type": "string",
+                      "description": "기타업종 잔고현황(단위 : 천주)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "잔고현황 집계 기준연월(YYYYMM)"
+                    },
+                    "secucoIndtpCusQty": {
+                      "type": "string",
+                      "description": "증권회사 잔고현황(단위 : 천주)"
+                    },
+                    "bankIndtpCusQty": {
+                      "type": "string",
+                      "description": "은행 잔고현황(단위 : 천주)"
+                    },
+                    "frgnCorpIndtpCusQty": {
+                      "type": "string",
+                      "description": "외국법인 잔고현황(단위 : 천주)"
+                    },
+                    "insucoIndtpCusQty": {
+                      "type": "string",
+                      "description": "보험회사 잔고현황(단위 : 천주)"
+                    },
+                    "fnceSafeIndtpCusQty": {
+                      "type": "string",
+                      "description": "종금·금고 잔고현황(단위 : 천주)"
+                    },
+                    "fncecoIndtpCusQty": {
+                      "type": "string",
+                      "description": "금융투자업관계기관 잔고현황(단위 : 천주)"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getListStkCusStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "issuQty": {
+                      "type": "string",
+                      "description": "발행량(단위: 천주)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "잔고현황 집계 기준연월(YYYYMM)"
+                    },
+                    "cusQty": {
+                      "type": "string",
+                      "description": "보관량(단위: 천주)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getListBondCusStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "cusQty": {
+                      "type": "string",
+                      "description": "수량(단위 : 백만원)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "잔고현황 집계 기준연월(YYYYMM)"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getListBondKindCusStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "cusAmt": {
+                      "type": "string",
+                      "description": "기타 보관금액(단위 : 백만원)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "잔고현황 집계 기준연월(YYYYMM)"
+                    },
+                    "nbondCusAmt": {
+                      "type": "string",
+                      "description": "국채 보관금액(단위 : 백만원)"
+                    },
+                    "lbondCusAmt": {
+                      "type": "string",
+                      "description": "지방채 보관금액(단위 : 백만원)"
+                    },
+                    "sbondCusAmt": {
+                      "type": "string",
+                      "description": "특수채 보관금액(단위 : 백만원)"
+                    },
+                    "fbondCusAmt": {
+                      "type": "string",
+                      "description": "금융채 보관금액(단위 : 백만원)"
+                    },
+                    "cpbondCusAmt": {
+                      "type": "string",
+                      "description": "회사채 보관금액(단위 : 백만원)"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getPartyIndtpListBondCusStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "etcIndtpCusQty": {
+                      "type": "string",
+                      "description": "기타업종 잔고현황(단위 : 백만원)"
+                    },
+                    "secucoIndtpCusQty": {
+                      "type": "string",
+                      "description": "증권회사 잔고현황(단위 : 백만원)"
+                    },
+                    "bankIndtpCusQty": {
+                      "type": "string",
+                      "description": "은행 잔고현황(단위 : 백만원)"
+                    },
+                    "frgnCorpIndtpCusQty": {
+                      "type": "string",
+                      "description": "외국법인 잔고현황(단위 : 백만원)"
+                    },
+                    "insucoIndtpCusQty": {
+                      "type": "string",
+                      "description": "보험회사 잔고현황(단위 : 백만원)"
+                    },
+                    "fnceSafeIndtpCusQty": {
+                      "type": "string",
+                      "description": "종금·금고 잔고현황(단위 : 백만원)"
+                    },
+                    "fncecoIndtpCusQty": {
+                      "type": "string",
+                      "description": "금융투자업관계기관 잔고현황(단위 : 백만원)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "잔고현황 집계 기준연월"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            }
+          }
+        }
+      }
+    },
+    "getPartyIndtpCPCusStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "etcIndtpCusQty": {
+                      "type": "string",
+                      "description": "기타업종 잔고현황(단위 : 백만원)"
+                    },
+                    "secucoIndtpCusQty": {
+                      "type": "string",
+                      "description": "증권회사 잔고현황(단위 : 백만원)"
+                    },
+                    "bankIndtpCusQty": {
+                      "type": "string",
+                      "description": "은행 잔고현황(단위 : 백만원)"
+                    },
+                    "frgnCorpIndtpCusQty": {
+                      "type": "string",
+                      "description": "외국법인 잔고현황(단위 : 백만원)"
+                    },
+                    "insucoIndtpCusQty": {
+                      "type": "string",
+                      "description": "보험회사 잔고현황(단위 : 백만원)"
+                    },
+                    "fnceSafeIndtpCusQty": {
+                      "type": "string",
+                      "description": "종금·금고 잔고현황(단위 : 백만원)"
+                    },
+                    "fncecoIndtpCusQty": {
+                      "type": "string",
+                      "description": "금융투자업관계기관 잔고현황(단위 : 백만원)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "잔고현황 집계 기준연월"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            }
+          }
+        }
+      }
+    },
+    "getListderivCombiElecRegiStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "derisecIssuQty": {
+                      "type": "string",
+                      "description": "파생결합증권 등록수량(단위 : 백만주)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "잔고현황 집계 기준연월(YYYYMM)"
+                    },
+                    "stkSecncnt": {
+                      "type": "string",
+                      "description": "주식 종목수(단위 : 종목)"
+                    },
+                    "stkIssuQty": {
+                      "type": "string",
+                      "description": "주식 등록수량(단위 : 백만주)"
+                    },
+                    "bondSecncnt": {
+                      "type": "string",
+                      "description": "채권 종목수(단위 : 종목)"
+                    },
+                    "bondIssuQty": {
+                      "type": "string",
+                      "description": "채권 등록수량(단위 : 백만주)"
+                    },
+                    "cdSecncnt": {
+                      "type": "string",
+                      "description": "CD 종목수(단위 : 종목)"
+                    },
+                    "cdIssuQty": {
+                      "type": "string",
+                      "description": "CD 등록수량(단위 : 백만주)"
+                    },
+                    "stbSecncnt": {
+                      "type": "string",
+                      "description": "단기사채 종목수(단위 : 종목)"
+                    },
+                    "stbIssuQty": {
+                      "type": "string",
+                      "description": "단기사채 등록수량(단위 : 백만주)"
+                    },
+                    "derisecSecncnt": {
+                      "type": "string",
+                      "description": "파생결합증권 종목수(단위 : 종목)"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            }
+          }
+        }
+      }
+    },
+    "getEltscStkRegiErasStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "erasIssuQty": {
+                      "type": "string",
+                      "description": "말소처리 수량(단위 : 주)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "현황 집계 기준연월(YYYYMM)"
+                    },
+                    "regiIssucoQty": {
+                      "type": "string",
+                      "description": "등록처리 발행사수"
+                    },
+                    "regiSecncnt": {
+                      "type": "string",
+                      "description": "등록처리 종목수"
+                    },
+                    "regiIssuQty": {
+                      "type": "string",
+                      "description": "등록처리 수량(단위 : 주)"
+                    },
+                    "erasIssucoQty": {
+                      "type": "string",
+                      "description": "말소처리 발행사수"
+                    },
+                    "erasSecncnt": {
+                      "type": "string",
+                      "description": "말소처리 종목수"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getCPDepoReturnStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "returnCpAmt": {
+                      "type": "string",
+                      "description": "반환금액(단위 : 천원)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "잔고현황 조회기준연월(YYYYMM)"
+                    },
+                    "depoCpCount": {
+                      "type": "string",
+                      "description": "예탁건수"
+                    },
+                    "depoCpAmt": {
+                      "type": "string",
+                      "description": "예탁금액(단위 : 천원)"
+                    },
+                    "returnCpCount": {
+                      "type": "string",
+                      "description": "반환건수"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            }
+          }
+        }
+      }
+    },
+    "getELSIssuRedRemqStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "derisecCusRemq": {
+                      "type": "string",
+                      "description": "잔량(단위 : 천원)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "현황 집계 기준연월(YYYYMM)"
+                    },
+                    "derisecDepoCount": {
+                      "type": "string",
+                      "description": "발행건수"
+                    },
+                    "derisecDepoQty": {
+                      "type": "string",
+                      "description": "발행수량(단위 : 천원)"
+                    },
+                    "derisecRedQty": {
+                      "type": "string",
+                      "description": "상환수량"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            }
+          }
+        }
+      }
+    },
+    "getELWIssuRedRemqStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items\t",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "derisecCusRemq": {
+                      "type": "string",
+                      "description": "잔량(단위 : 천 워런트)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "현황 집계 기준연월(YYYYMM)"
+                    },
+                    "derisecDepoCount": {
+                      "type": "string",
+                      "description": "발행건수(단위 : 건)"
+                    },
+                    "derisecDepoQty": {
+                      "type": "string",
+                      "description": "발행수량(단위 : 천 워런트)"
+                    },
+                    "derisecRedQty": {
+                      "type": "string",
+                      "description": "상환수량단위 : 천 워런트)"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getFutrsubtStkStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "stkDoutQty": {
+                      "type": "string",
+                      "description": "인출수량(단위 : 주)"
+                    },
+                    "stdYymm": {
+                      "type": "string",
+                      "description": "현황 집계 기준연월(YYYYMM)"
+                    },
+                    "stkDepoQty": {
+                      "type": "string",
+                      "description": "예입수량(단위 : 주)"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getDrConvStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "drBstkTmnStkqty": {
+                      "type": "string",
+                      "description": "DR해지주식수(단위 : 주)"
+                    },
+                    "drBstkConvStkqty": {
+                      "type": "string",
+                      "description": "DR전환주식수(단위 : 주)"
+                    }
+                  }
+                }
+              }
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getOvsBondStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "frsecCusBondAmt": {
+                      "type": "string",
+                      "description": "보관채권금액(단위 : USD)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getSecucoSecStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "stk": {
+                      "type": "string",
+                      "description": "주식(단위 : 천주)"
+                    },
+                    "bond": {
+                      "type": "string",
+                      "description": "채권(단위 : 백만원)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getSlbTrStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "slbStkTrQty": {
+                      "type": "string",
+                      "description": "주식대차거래량(단위 : 주)"
+                    },
+                    "slbBondTrQty": {
+                      "type": "string",
+                      "description": "채권대차거래량(단위 : 천원)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getSlbTrBondColatSetupStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "bondColatSetupAmt": {
+                      "type": "string",
+                      "description": "채권담보설정액(단위:천 원)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getOrgSetlQty_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "stkisetlSetlQty": {
+                      "type": "string",
+                      "description": "주식결제 거래량(단위: 천주)"
+                    },
+                    "bondisetlSetlAmt": {
+                      "type": "string",
+                      "description": "채권결제 거래량(채권 액면금액의 합계(단위: 백만 원))"
+                    },
+                    "shortmInsetlSetlQty": {
+                      "type": "string",
+                      "description": "단기금융상품결제 거래량(단위: 억원)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getBondDepositStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "bondCusAmt": {
+                      "type": "string",
+                      "description": "채권총보관금액(단위: 백만 원)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getBokBondRepoStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "bokoRepoBondQty": {
+                      "type": "string",
+                      "description": "채권결제량(단위: 백만 원)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getStkWrntStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "derisecTrQty": {
+                      "type": "string",
+                      "description": "결제수량(단위: 천 워런트)"
+                    },
+                    "derisecSetlCount": {
+                      "type": "string",
+                      "description": "결제건수(단위: 건)"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getListSecSetlStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "stkTdSetlQty": {
+                      "type": "string",
+                      "description": "유가증권시장 주식등 결제량(단위: 천주)"
+                    },
+                    "bondTdSetlQty": {
+                      "type": "string",
+                      "description": "유가증권시장 채권결제량(단위: 백만 원)"
+                    },
+                    "kosdaqMartSktTdSetlQty": {
+                      "type": "string",
+                      "description": "코스닥시장 주식결제량(단위: 천주)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getCdExecStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "exerCdPrcp": {
+                      "type": "string",
+                      "description": "권리행사 원금(단위: 백만 원)"
+                    },
+                    "exerCdInt": {
+                      "type": "string",
+                      "description": "권리행사 이자(단위: 백만 원)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getNbondDepoStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "bondRegiSecncnt": {
+                      "type": "string",
+                      "description": "채권등록 종목수"
+                    },
+                    "bondRegiRema": {
+                      "type": "string",
+                      "description": "채권등록잔액"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getOvsWrtbStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "frsecWrtTdCount": {
+                      "type": "string",
+                      "description": "미주시장 신주인수권 매매건수(단위: 건)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getBondSafedpStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "rthingBondRemAmt": {
+                      "type": "string",
+                      "description": "실물채권(단위: 천원)"
+                    },
+                    "regiBondRemAmt": {
+                      "type": "string",
+                      "description": "등록(예탁)채권(단위: 천원)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getSecDepoStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "vctfListDepoStkqty": {
+                      "type": "string",
+                      "description": "유가증권시장 상장주식 예탁주식수(단위: 주)"
+                    },
+                    "listBondDepoAmt": {
+                      "type": "string",
+                      "description": "상장채권 예탁금액(단위: 천원)"
+                    },
+                    "unlsBondDepoAmt": {
+                      "type": "string",
+                      "description": "비상장채권 예탁금액(단위: 천원)"
+                    },
+                    "unlsDepoStkqty": {
+                      "type": "string",
+                      "description": " 기타주식 예탁 주식수(단위: 주)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

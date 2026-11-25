@@ -1,0 +1,1353 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "채권권리행사정보는 기준일자, 법인등록번호, 채권발행인명을 기준으로 채권 관련 권리행사 내역을 조회할 수 있는 데이터입니다.\n\n<데이터 조회 시 유의사항>\n파라미터 없이 조회 시 데이터 조회 시간이 오래걸려 timeout이 발생하게 되어 필수 파라미터를 지정하였습니다.\n- 파라미터 조건 : 조회 시 아래의 필수 파라미터 중 최소 1개 이상을 반드시 입력해야 합니다.\n- 기본값 안내 : 필수 파라미터를 입력하지 않은 경우, 기준일자(basDt)는 자동으로 가장 최신 날짜로 설정되어 조회됩니다.\n\n[서비스별 필수 파라미터 목록]\n- 조기행사옵션조회 : basDt, isinCd, crno\n- 옵션부채권조기상환조회, 옵션행사가조정내역조회, 옵션행사내역조회 : 없음\n\n총 4가지 오퍼레이션 정보가 제공되며, 각각 다음과 같은 내용을 포함합니다.\n\n1. 조기행사 옵션 조회 : 기준일자, 법인등록번호, 채권발행인명을 통하여 옵션유형코드, 옵션행사시작일자, 옵션행사금액등을 조회하는 조기행사옵션조회 기능\n2. 옵션 부채권 조기 상환 조회 : 옵션부채권조기상환일자, 법인등록번호, 옵션부채권발행인명을 통하여 옵션부채권발행금액, 옵션부채권이자지급금액, 채권발행금액, 옵션행사비율등을 조회하는 옵션부채권조기상환조회 기능\n3. 옵션 행사가 조정내역 조회 : 준일자, 법인등록번호를 통하여 옵션행사가, 납입구분코드, 권리행사가격조정일자, 권리변경전행사가등을 조회하는 옵션행사가조정내역조회 기능\n4. 옵션행사 내역조회 : 기준일자, 법인등록번호를 통하여 옵션행사가, 행사가격, 행사금액, 행사주식수, 상장일자등을 조회하는 옵션행사내역조회 기능\n\n※ 데이터 갱신주기는 일 1회입니다.\n※ 금융위원회의 모든 API는 데이터 보유기관으로부터 데이터를 연계받아 수집 후 개방하고 있습니다.\n금융위원회에서 제공하는 모든 서비스는 실시간이 아니며, 데이터 갱신은 기준일자로부터 영업일 하루 뒤 오후 1시 이후에 업데이트됩니다.\n예를 들어, 금요일 데이터는 차주 월요일에 제공됩니다. (월요일이 공휴일인 경우, 다음 영업일에 제공됩니다)\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_채권권리행사정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetBondRedeInfoService_V2",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getEarlExerOpti_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "bondIsurNm": {
+                              "type": "string",
+                              "description": "채권을 발행한 발행 회사의 명칭",
+                              "properties": {}
+                            },
+                            "optnTcd": {
+                              "type": "string",
+                              "description": "Call, Put 등 옵션의 유형을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "optnTcdNm": {
+                              "type": "string",
+                              "description": "Call, Put 등 옵션의 유형을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "optnExertSttgDt": {
+                              "type": "string",
+                              "description": "옵션 행사의 행사 시작 일자",
+                              "properties": {}
+                            },
+                            "optnExertEdDt": {
+                              "type": "string",
+                              "description": "옵션 행사의 행사 종료 일자",
+                              "properties": {}
+                            },
+                            "clrdDt": {
+                              "type": "string",
+                              "description": "만기 전 조기상환한 일자",
+                              "properties": {}
+                            },
+                            "optnExertAmt": {
+                              "type": "string",
+                              "description": "옵션 행사의 행사 금액",
+                              "properties": {}
+                            },
+                            "optnExertRto": {
+                              "type": "string",
+                              "description": "옵션 행사의 행사 비율",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "조기행사옵션조회",
+        "description": "기준일자, 법인등록번호, 채권발행인명을 통하여 옵션유형코드, 옵션행사시작일자, 옵션행사금액등을 조회하는 조기행사옵션조회 기능",
+        "operationId": "getEarlExerOpti_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지 번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "bondIsurNm",
+          "description": "채권을 발행한 발행 회사의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getBondWithOptiCallRede_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "opbdClrdDt": {
+                              "type": "string",
+                              "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 중도상환일자",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "opbdIsurNm": {
+                              "type": "string",
+                              "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 발행회사 명",
+                              "properties": {}
+                            },
+                            "bondIssuFrmtNm": {
+                              "type": "string",
+                              "description": "채권 발행 형태에 대한 명칭",
+                              "properties": {}
+                            },
+                            "opbdIssuDt": {
+                              "type": "string",
+                              "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)을 발행한 일자",
+                              "properties": {}
+                            },
+                            "opbdExprDt": {
+                              "type": "string",
+                              "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 만기 혹은 상환일자",
+                              "properties": {}
+                            },
+                            "opbdIssuAmt": {
+                              "type": "string",
+                              "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 최초 발행 금액",
+                              "properties": {}
+                            },
+                            "opbdPamtPayAmt": {
+                              "type": "string",
+                              "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 원금 지급액",
+                              "properties": {}
+                            },
+                            "opbdIntPayAmt": {
+                              "type": "string",
+                              "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 이자 지급액",
+                              "properties": {}
+                            },
+                            "intCmpuMcd": {
+                              "type": "string",
+                              "description": "이자 산정시 산출 방법을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "intCmpuMcdNm": {
+                              "type": "string",
+                              "description": "이자 산정시 산출 방법을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "bondIssuAmt": {
+                              "type": "string",
+                              "description": "채권 발행 잔액",
+                              "properties": {}
+                            },
+                            "optnTcd": {
+                              "type": "string",
+                              "description": "Call, Put 등 옵션의 유형을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "optnTcdNm": {
+                              "type": "string",
+                              "description": "Call, Put 등 옵션의 유형을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "optnExertRto": {
+                              "type": "string",
+                              "description": "옵션 행사의 행사 비율",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "옵션부채권조기상환조회",
+        "description": "옵션부채권조기상환일자, 법인등록번호, 옵션부채권발행인명을 통하여 옵션부채권발행금액, 옵션부채권이자지급금액, 채권발행금액, 옵션행사비율등을 조회하는 옵션부채권조기상환조회 기능",
+        "operationId": "getBondWithOptiCallRede_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지 번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "opbdClrdDt",
+          "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 중도상환일자",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "opbdIsurNm",
+          "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 발행회사 명",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getOptiExerPricAdju_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "scrsIsurNm": {
+                              "type": "string",
+                              "description": "유가증권 발행사의 명칭",
+                              "properties": {}
+                            },
+                            "trgtStckIsinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "trgtStckIsinCdNm": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭",
+                              "properties": {}
+                            },
+                            "optnExertPrc": {
+                              "type": "string",
+                              "description": "행사대상종목의 행사가격",
+                              "properties": {}
+                            },
+                            "optnExertRto": {
+                              "type": "string",
+                              "description": "옵션 행사의 행사 비율",
+                              "properties": {}
+                            },
+                            "rgscHndvBcd": {
+                              "type": "string",
+                              "description": "주식의 권리를 교부할때 기준이 되는 코드",
+                              "properties": {}
+                            },
+                            "rgscHndvBcdNm": {
+                              "type": "string",
+                              "description": "주식의 권리를 교부할때 기준이 되는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "pymtDcd": {
+                              "type": "string",
+                              "description": "현금납입, 대용증권납입등 납입 방식을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "pymtDcdNm": {
+                              "type": "string",
+                              "description": "현금납입, 대용증권납입등 납입 방식을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "shcpPymtPlcNm": {
+                              "type": "string",
+                              "description": "주식회사를 설립할 때나 신주를 발행할 때 주식을 받기 위해 출자하는 금액을 납입한 장소의 명칭",
+                              "properties": {}
+                            },
+                            "rltnBondIsinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "rltnBondIsinCdNm": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭",
+                              "properties": {}
+                            },
+                            "rgtExertPricAdjDt": {
+                              "type": "string",
+                              "description": "옵션 행사 가격을 조정한 일자",
+                              "properties": {}
+                            },
+                            "rgtBchgExertPrc": {
+                              "type": "string",
+                              "description": "권리행사 가격을 변경하기 전의 행사 가격",
+                              "properties": {}
+                            },
+                            "rgtAchgExertPrc": {
+                              "type": "string",
+                              "description": "권리행사 가격을 변경한 후의 행사 가격",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "옵션행사가조정내역조회",
+        "description": "기준일자, 법인등록번호를 통하여 옵션행사가, 납입구분코드, 권리행사가격조정일자, 권리변경전행사가등을 조회하는 옵션행사가조정내역조회 기능",
+        "operationId": "getOptiExerPricAdju_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지 번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getOptiExer_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "scrsIsurNm": {
+                              "type": "string",
+                              "description": "유가증권 발행사의 명칭",
+                              "properties": {}
+                            },
+                            "trgtStckIsinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "trgtStckIsinCdNm": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭",
+                              "properties": {}
+                            },
+                            "optnExertPrc": {
+                              "type": "string",
+                              "description": "행사대상종목의 행사가격",
+                              "properties": {}
+                            },
+                            "optnExertRto": {
+                              "type": "string",
+                              "description": "옵션 행사의 행사 비율",
+                              "properties": {}
+                            },
+                            "rgscHndvBcd": {
+                              "type": "string",
+                              "description": "주식의 권리를 교부할때 기준이 되는 코드",
+                              "properties": {}
+                            },
+                            "rgscHndvBcdNm": {
+                              "type": "string",
+                              "description": "주식의 권리를 교부할때 기준이 되는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "pymtDcd": {
+                              "type": "string",
+                              "description": "현금납입, 대용증권납입등 납입 방식을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "pymtDcdNm": {
+                              "type": "string",
+                              "description": "현금납입, 대용증권납입등 납입 방식을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "shcpPymtPlcNm": {
+                              "type": "string",
+                              "description": "주식회사를 설립할 때나 신주를 발행할 때 주식을 받기 위해 출자하는 금액을 납입한 장소의 명칭",
+                              "properties": {}
+                            },
+                            "rltnBondIsinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "rltnBondIsinCdNm": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭",
+                              "properties": {}
+                            },
+                            "rgtOccrBasDt": {
+                              "type": "string",
+                              "description": "권리가 발생되는 기준 일자",
+                              "properties": {}
+                            },
+                            "exertPric": {
+                              "type": "string",
+                              "description": "옵션 행사시 행사 가격",
+                              "properties": {}
+                            },
+                            "exertAmt": {
+                              "type": "string",
+                              "description": "옵션 행사시 행사 금액",
+                              "properties": {}
+                            },
+                            "exertStckCnt": {
+                              "type": "string",
+                              "description": "옵션 행사시 주식의 수량",
+                              "properties": {}
+                            },
+                            "lstgDt": {
+                              "type": "string",
+                              "description": "종목상장 적용일자(상장일자)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "옵션행사내역조회",
+        "description": "기준일자, 법인등록번호를 통하여 옵션행사가, 행사가격, 행사금액, 행사주식수, 상장일자등을 조회하는 옵션행사내역조회 기능",
+        "operationId": "getOptiExer_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지 번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getEarlExerOpti_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "bondIsurNm": {
+                      "type": "string",
+                      "description": "채권을 발행한 발행 회사의 명칭"
+                    },
+                    "optnTcd": {
+                      "type": "string",
+                      "description": "Call, Put 등 옵션의 유형을 관리하는 코드"
+                    },
+                    "optnTcdNm": {
+                      "type": "string",
+                      "description": "Call, Put 등 옵션의 유형을 관리하는 코드의 명칭"
+                    },
+                    "optnExertSttgDt": {
+                      "type": "string",
+                      "description": "옵션 행사의 행사 시작 일자"
+                    },
+                    "optnExertEdDt": {
+                      "type": "string",
+                      "description": "옵션 행사의 행사 종료 일자"
+                    },
+                    "clrdDt": {
+                      "type": "string",
+                      "description": "만기 전 조기상환한 일자"
+                    },
+                    "optnExertAmt": {
+                      "type": "string",
+                      "description": "옵션 행사의 행사 금액"
+                    },
+                    "optnExertRto": {
+                      "type": "string",
+                      "description": "옵션 행사의 행사 비율"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getBondWithOptiCallRede_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "opbdClrdDt": {
+                      "type": "string",
+                      "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 중도상환일자"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "opbdIsurNm": {
+                      "type": "string",
+                      "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 발행회사 명"
+                    },
+                    "bondIssuFrmtNm": {
+                      "type": "string",
+                      "description": "채권 발행 형태에 대한 명칭"
+                    },
+                    "opbdIssuDt": {
+                      "type": "string",
+                      "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)을 발행한 일자"
+                    },
+                    "opbdExprDt": {
+                      "type": "string",
+                      "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 만기 혹은 상환일자"
+                    },
+                    "opbdIssuAmt": {
+                      "type": "string",
+                      "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 최초 발행 금액"
+                    },
+                    "opbdPamtPayAmt": {
+                      "type": "string",
+                      "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 원금 지급액"
+                    },
+                    "opbdIntPayAmt": {
+                      "type": "string",
+                      "description": "옵션부채권(채권을 발행할 때 발행 채권의 일부 또는 전부에 대해 만기일 이전에 정해진 조건으로 상환할 수 있는 조건이 첨부된 채권)의 이자 지급액"
+                    },
+                    "intCmpuMcd": {
+                      "type": "string",
+                      "description": "이자 산정시 산출 방법을 관리하는 코드"
+                    },
+                    "intCmpuMcdNm": {
+                      "type": "string",
+                      "description": "이자 산정시 산출 방법을 관리하는 코드의 명칭"
+                    },
+                    "bondIssuAmt": {
+                      "type": "string",
+                      "description": "채권 발행 잔액"
+                    },
+                    "optnTcd": {
+                      "type": "string",
+                      "description": "Call, Put 등 옵션의 유형을 관리하는 코드"
+                    },
+                    "optnTcdNm": {
+                      "type": "string",
+                      "description": "Call, Put 등 옵션의 유형을 관리하는 코드의 명칭"
+                    },
+                    "optnExertRto": {
+                      "type": "string",
+                      "description": "옵션 행사의 행사 비율"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getOptiExerPricAdju_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "scrsIsurNm": {
+                      "type": "string",
+                      "description": "유가증권 발행사의 명칭"
+                    },
+                    "trgtStckIsinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "trgtStckIsinCdNm": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭"
+                    },
+                    "optnExertPrc": {
+                      "type": "string",
+                      "description": "행사대상종목의 행사가격"
+                    },
+                    "optnExertRto": {
+                      "type": "string",
+                      "description": "옵션 행사의 행사 비율"
+                    },
+                    "rgscHndvBcd": {
+                      "type": "string",
+                      "description": "주식의 권리를 교부할때 기준이 되는 코드"
+                    },
+                    "rgscHndvBcdNm": {
+                      "type": "string",
+                      "description": "주식의 권리를 교부할때 기준이 되는 코드의 명칭"
+                    },
+                    "pymtDcd": {
+                      "type": "string",
+                      "description": "현금납입, 대용증권납입등 납입 방식을 구분하는 코드"
+                    },
+                    "pymtDcdNm": {
+                      "type": "string",
+                      "description": "현금납입, 대용증권납입등 납입 방식을 구분하는 코드의 명칭"
+                    },
+                    "shcpPymtPlcNm": {
+                      "type": "string",
+                      "description": "주식회사를 설립할 때나 신주를 발행할 때 주식을 받기 위해 출자하는 금액을 납입한 장소의 명칭"
+                    },
+                    "rltnBondIsinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "rltnBondIsinCdNm": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭"
+                    },
+                    "rgtExertPricAdjDt": {
+                      "type": "string",
+                      "description": "옵션 행사 가격을 조정한 일자"
+                    },
+                    "rgtBchgExertPrc": {
+                      "type": "string",
+                      "description": "권리행사 가격을 변경하기 전의 행사 가격"
+                    },
+                    "rgtAchgExertPrc": {
+                      "type": "string",
+                      "description": "권리행사 가격을 변경한 후의 행사 가격"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getOptiExer_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "scrsIsurNm": {
+                      "type": "string",
+                      "description": "유가증권 발행사의 명칭"
+                    },
+                    "trgtStckIsinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "trgtStckIsinCdNm": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭"
+                    },
+                    "optnExertPrc": {
+                      "type": "string",
+                      "description": "행사대상종목의 행사가격"
+                    },
+                    "optnExertRto": {
+                      "type": "string",
+                      "description": "옵션 행사의 행사 비율"
+                    },
+                    "rgscHndvBcd": {
+                      "type": "string",
+                      "description": "주식의 권리를 교부할때 기준이 되는 코드"
+                    },
+                    "rgscHndvBcdNm": {
+                      "type": "string",
+                      "description": "주식의 권리를 교부할때 기준이 되는 코드의 명칭"
+                    },
+                    "pymtDcd": {
+                      "type": "string",
+                      "description": "현금납입, 대용증권납입등 납입 방식을 구분하는 코드"
+                    },
+                    "pymtDcdNm": {
+                      "type": "string",
+                      "description": "현금납입, 대용증권납입등 납입 방식을 구분하는 코드의 명칭"
+                    },
+                    "shcpPymtPlcNm": {
+                      "type": "string",
+                      "description": "주식회사를 설립할 때나 신주를 발행할 때 주식을 받기 위해 출자하는 금액을 납입한 장소의 명칭"
+                    },
+                    "rltnBondIsinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "rltnBondIsinCdNm": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭"
+                    },
+                    "rgtOccrBasDt": {
+                      "type": "string",
+                      "description": "권리가 발생되는 기준 일자"
+                    },
+                    "exertPric": {
+                      "type": "string",
+                      "description": "옵션 행사시 행사 가격"
+                    },
+                    "exertAmt": {
+                      "type": "string",
+                      "description": "옵션 행사시 행사 금액"
+                    },
+                    "exertStckCnt": {
+                      "type": "string",
+                      "description": "옵션 행사시 주식의 수량"
+                    },
+                    "lstgDt": {
+                      "type": "string",
+                      "description": "종목상장 적용일자(상장일자)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    }
+  }
+}

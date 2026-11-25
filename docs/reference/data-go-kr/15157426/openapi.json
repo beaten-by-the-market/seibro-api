@@ -1,0 +1,796 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "한국예탁결제원을 통해 체결되는 주식과 채권의 종목별 대차거래현황 정보, 채권대차 체결 종목 순위, 주식 대차 체결 종목 순위에 대한 정보를 제공 증권대차업무(Securities Lending and Borrowing, SLB)는 주식이나 채권 등 유가증권을 소유한 투자자가 이를 필요한 다른 투자자에게 대여하는 금융 활동입니다. 대여자는 자산을 대출해주는 역할을 하며 차입자는 일정 기간 동안 해당 증권을 사용합니다. 이 과정에서 차입자는 대여자에게 차입에 따른 수수료를 지급하고, 대여자는 차입자로부터 현금이나 국채 등 담보를 제공받아 거래의 안전성을 보장합니다. 일반적으로 증권대차는 공매도와 같은 전략적 거래를 위해 활용되며, 대차 계약 체결 후 담보 제공과 증권 반환 등의 절차를 통해 이루어집니다. 거래 만료 시점에 차입자가 증권을 반환하고 거래가 종료됩니다. 주요 참여자로는 대여자(연기금, 보험사 등), 차입자(헤지펀드, 증권사 등), 그리고 중개기관이 있으며, 이를 통해 거래가 성사됩니다.",
+    "version": "1.0.0",
+    "title": "한국예탁결제원_증권대차서비스_GW"
+  },
+  "host": "apis.data.go.kr/B552481/SlbSvc",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getSlbDealingByIsin": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "slbTrRemQty": {
+                              "type": "string",
+                              "description": "대차 잔고 주식수",
+                              "properties": {}
+                            },
+                            "stdDt": {
+                              "type": "string",
+                              "description": "기준일(YYYYMMDD)",
+                              "properties": {}
+                            },
+                            "matcQty": {
+                              "type": "string",
+                              "description": "대차 체결 주식수",
+                              "properties": {}
+                            },
+                            "redQty": {
+                              "type": "string",
+                              "description": "대차 상환 주식수",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "종목별대차거래현황",
+        "description": "종목별대차거래현황",
+        "operationId": "getSlbDealingByIsin",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "isin",
+          "description": "종목코드(KR표준코드)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getSlbBondRank": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "rnum": {
+                              "type": "string",
+                              "description": "순위",
+                              "properties": {}
+                            },
+                            "isin": {
+                              "type": "string",
+                              "description": "종목코드(표준코드)",
+                              "properties": {}
+                            },
+                            "issuRema": {
+                              "type": "string",
+                              "description": "발행잔액(단위: 백만원)",
+                              "properties": {}
+                            },
+                            "korSecnNm": {
+                              "type": "string",
+                              "description": "종목명",
+                              "properties": {}
+                            },
+                            "matcAmt": {
+                              "type": "string",
+                              "description": "체결금액(단위: 백만원)",
+                              "properties": {}
+                            },
+                            "redamtVal": {
+                              "type": "string",
+                              "description": "상환금액(단위: 백만원)",
+                              "properties": {}
+                            },
+                            "remAmt": {
+                              "type": "string",
+                              "description": "잔고금액(단위: 백만원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "채권대차종목순위",
+        "description": "채권대차 종목순위를 조회한다.",
+        "operationId": "getSlbBondRank",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "stdDt",
+          "description": "기준일(YYYYMMDD)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "rankTpcd",
+          "description": "순위조건(1:대차잔고금액, 2:체결금액, 3:상환금액)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getSlbStockRank": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "shotnIsin": {
+                              "type": "string",
+                              "description": "KSD 자체 단축코드",
+                              "properties": {}
+                            },
+                            "slbTrRemQty": {
+                              "type": "string",
+                              "description": "대차체결 이후 상환되지 않은 주식수",
+                              "properties": {}
+                            },
+                            "isin": {
+                              "type": "string",
+                              "description": "종목코드(KR표준코드)",
+                              "properties": {}
+                            },
+                            "korSecnNm": {
+                              "type": "string",
+                              "description": "한글종목명",
+                              "properties": {}
+                            },
+                            "matcQty": {
+                              "type": "string",
+                              "description": "대차거래 체결 주수",
+                              "properties": {}
+                            },
+                            "recallRedQty": {
+                              "type": "string",
+                              "description": "대차거래 중 리콜 상환 주수",
+                              "properties": {}
+                            },
+                            "redQty": {
+                              "type": "string",
+                              "description": "대차거래 이후 상환된 주식 수",
+                              "properties": {}
+                            },
+                            "remAmt": {
+                              "type": "string",
+                              "description": "대차거래 잔고금액(원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "주식대차종목순위",
+        "description": "주식대차 종목순위를 조회한다.",
+        "operationId": "getSlbStockRank",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "stdDt",
+          "description": "기준일(YYYYMMDD)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "rankTpcd",
+          "description": "순위조건(1:대차잔고금액, 2:체결금액, 3:상환금액, 4:일잔고변동율)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getSlbDealingByIsin_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "slbTrRemQty": {
+                      "type": "string",
+                      "description": "대차 잔고 주식수"
+                    },
+                    "stdDt": {
+                      "type": "string",
+                      "description": "기준일(YYYYMMDD)"
+                    },
+                    "matcQty": {
+                      "type": "string",
+                      "description": "대차 체결 주식수"
+                    },
+                    "redQty": {
+                      "type": "string",
+                      "description": "대차 상환 주식수"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSlbBondRank_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "rnum": {
+                      "type": "string",
+                      "description": "순위"
+                    },
+                    "isin": {
+                      "type": "string",
+                      "description": "종목코드(표준코드)"
+                    },
+                    "issuRema": {
+                      "type": "string",
+                      "description": "발행잔액(단위: 백만원)"
+                    },
+                    "korSecnNm": {
+                      "type": "string",
+                      "description": "종목명"
+                    },
+                    "matcAmt": {
+                      "type": "string",
+                      "description": "체결금액(단위: 백만원)"
+                    },
+                    "redamtVal": {
+                      "type": "string",
+                      "description": "상환금액(단위: 백만원)"
+                    },
+                    "remAmt": {
+                      "type": "string",
+                      "description": "잔고금액(단위: 백만원)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSlbStockRank_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "shotnIsin": {
+                      "type": "string",
+                      "description": "KSD 자체 단축코드"
+                    },
+                    "slbTrRemQty": {
+                      "type": "string",
+                      "description": "대차체결 이후 상환되지 않은 주식수"
+                    },
+                    "isin": {
+                      "type": "string",
+                      "description": "종목코드(KR표준코드)"
+                    },
+                    "korSecnNm": {
+                      "type": "string",
+                      "description": "한글종목명"
+                    },
+                    "matcQty": {
+                      "type": "string",
+                      "description": "대차거래 체결 주수"
+                    },
+                    "recallRedQty": {
+                      "type": "string",
+                      "description": "대차거래 중 리콜 상환 주수"
+                    },
+                    "redQty": {
+                      "type": "string",
+                      "description": "대차거래 이후 상환된 주식 수"
+                    },
+                    "remAmt": {
+                      "type": "string",
+                      "description": "대차거래 잔고금액(원)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "swaggerOprtinVOs": [
+    {
+      "oprtinUrl": "https://seibro.or.kr/openapi/SlbSvc/getSlbStockRank",
+      "oprtinNm": "주식대차종목순위",
+      "oprtinDc": "주식대차 종목순위를 조회한다.",
+      "gwSvcNm": "getSlbStockRank",
+      "operationId": "getSlbStockRank",
+      "publicDataTyDetailCode": "PRDE02",
+      "reqList": [
+        {
+          "paramtrNm": "serviceKey",
+          "paramtrDc": "공공데이터포털에서 받은 인증키",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        },
+        {
+          "paramtrNm": "pageNo",
+          "paramtrDc": "페이지번호",
+          "paramtrBassValue": "1",
+          "paramtrTy": "string",
+          "paramtrDivision": "옵션",
+          "ck": true
+        },
+        {
+          "paramtrNm": "numOfRows",
+          "paramtrDc": "한 페이지 결과 수",
+          "paramtrBassValue": "10",
+          "paramtrTy": "string",
+          "paramtrDivision": "옵션",
+          "ck": true
+        },
+        {
+          "paramtrNm": "stdDt",
+          "paramtrDc": "기준일",
+          "paramtrBassValue": "20131231",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        },
+        {
+          "paramtrNm": "rankTpcd",
+          "paramtrDc": "순위조건(1:대차잔고금액, 2:체결금액, 3:상환금액, 4:일잔고변동율)",
+          "paramtrBassValue": "1",
+          "paramtrTy": "string",
+          "paramtrDivision": "옵션",
+          "ck": true
+        }
+      ],
+      "resList": [
+        {
+          "paramtrNm": "header",
+          "paramtrDc": "header",
+          "arrayYn": "N",
+          "paramtrDefNm": "#/definitions/getSlbStockRank_header",
+          "subDefNm": "getSlbStockRank_header",
+          "paramtrTy": "object",
+          "paramtrDivision": "필수",
+          "ck": true,
+          "subParam": [
+            {
+              "paramtrNm": "resultCode",
+              "paramtrDc": "결과코드",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            },
+            {
+              "paramtrNm": "resultMsg",
+              "paramtrDc": "결과메세지",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            }
+          ]
+        },
+        {
+          "paramtrNm": "body",
+          "paramtrDc": "body",
+          "arrayYn": "N",
+          "paramtrDefNm": "#/definitions/getSlbStockRank_body",
+          "subDefNm": "getSlbStockRank_body",
+          "paramtrTy": "object",
+          "paramtrDivision": "필수",
+          "ck": true,
+          "subParam": [
+            {
+              "paramtrNm": "items",
+              "paramtrDc": "items",
+              "arrayYn": "N",
+              "paramtrDefNm": "#/definitions/getSlbStockRank_items",
+              "subDefNm": "getSlbStockRank_items",
+              "paramtrTy": "object",
+              "paramtrDivision": "필수",
+              "ck": true,
+              "subParam": [
+                {
+                  "paramtrNm": "item",
+                  "paramtrDc": "item",
+                  "arrayYn": "N",
+                  "paramtrDefNm": "#/definitions/getSlbStockRank_item",
+                  "subDefNm": "getSlbStockRank_item",
+                  "paramtrTy": "object",
+                  "paramtrDivision": "필수",
+                  "ck": true,
+                  "subParam": [
+                    {
+                      "paramtrNm": "isin",
+                      "paramtrDc": "한국거래소 ISIN 코드",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "korSecnNm",
+                      "paramtrDc": "한글종목명",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "matcQty",
+                      "paramtrDc": "대차거래 체결 주수",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "recallRedQty",
+                      "paramtrDc": "대차거래 중 리콜 상환 주수",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "redQty",
+                      "paramtrDc": "대차거래 이후 상환된 주식 수",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "remAmt",
+                      "paramtrDc": "대차거래 잔고금액(단위: 백만원)",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "shotnIsin",
+                      "paramtrDc": "KSD 자체 단축코드",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "slbTrRemQty",
+                      "paramtrDc": "대차체결 이후 상환되지 않은 주식수",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

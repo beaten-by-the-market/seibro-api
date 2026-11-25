@@ -1,0 +1,1306 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "신주인수권증권발행정보는 법인등록번호, 기준일자, 신주인수권 발행인명 등을 기준으로 신주인수권 관련 다양한 정보를 제공합니다.\n이 데이터는 4가지 오퍼레이션(조회기능)을 통해 다음과 같은 항목을 조회할 수 있습니다:\n\n① 신주인수권증권기본정보: 종목코드, 발행일자, 행사기간, 행사가격, 상장구분 등\n② 신주인수권증권기초자산정보: 기초자산 식별정보(ISIN, 종목코드), 액면가, 상장시장 등\n③ 신주인수권증권연관채권정보: 연관채권의 발행일, 만기일, 금리, 옵션 유형, 보증 여부, 상장일 등\n④ 신주인수권증권행사가격정보: 행사 적용일자 기준의 행사비율, 가격변동사유 등\n\n이 데이터는 신주인수권증권의 발행 및 행사 구조, 연계 채권과 기초자산의 특성을 파악하고, 투자 분석, 시장감시, 기업의 자금조달 수단 평가 등의 용도로 활용될 수 있습니다.\n\n※ 데이터 갱신주기는 일 1회입니다.\n※ 금융위원회의 모든 API는 데이터 보유기관으로부터 데이터를 연계받아 수집 후 개방하고 있습니다.\n금융위원회에서 제공하는 모든 서비스는 실시간이 아니며, 데이터 갱신은 기준일자로부터 영업일 하루 뒤 오후 1시 이후에 업데이트됩니다.\n예를 들어, 금요일 데이터는 차주 월요일에 제공됩니다. (월요일이 공휴일인 경우, 다음 영업일에 제공됩니다)\n※ 자주 묻는 질문(FAQ)은 https://www.fsc.go.kr/in060501 에서 확인하실 수 있습니다.\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_신주인수권증권발행정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetPreeRighSecuIssuInfoService_V2",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getPreeRighSecuBasiInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "itmsShrtnCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호",
+                              "properties": {}
+                            },
+                            "prmrIsurNm": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명",
+                              "properties": {}
+                            },
+                            "lstgDcd": {
+                              "type": "string",
+                              "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "lstgDcdNm": {
+                              "type": "string",
+                              "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "prmrExertPrc": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 권리 행사 가격",
+                              "properties": {}
+                            },
+                            "prmrIssuDt": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리) 발행 일자",
+                              "properties": {}
+                            },
+                            "prmrExertPsblSttgDt": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 행사 가능 시작일자",
+                              "properties": {}
+                            },
+                            "prmrExertPsblEdDt": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 행사 가능 종료일자",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "신주인수권증권기본정보조회",
+        "description": "기준일자, 법인등록번호, 신주인수원발행인명을 통하여 종목단축코드, 신주인수권행사가, 신주인수권발행일자등을 조회하는 신주인수권증권기본정보조회 기능",
+        "operationId": "getPreeRighSecuBasiInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "prmrIsurNm",
+          "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getPreeRighSecuUndeAsseInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "itmsShrtnCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호",
+                              "properties": {}
+                            },
+                            "prmrIsurNm": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명",
+                              "properties": {}
+                            },
+                            "udasIsinCdNm": {
+                              "type": "string",
+                              "description": "기초자산(선물 또는 선도, 옵션계약의 거래대상이 되는 상품)의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭",
+                              "properties": {}
+                            },
+                            "udasIsinCd": {
+                              "type": "string",
+                              "description": "기초자산(선물 또는 선도, 옵션계약의 거래대상이 되는 상품)의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "udasItmsShrtnCd": {
+                              "type": "string",
+                              "description": "기초자산(선물 또는 선도, 옵션계약의 거래대상이 되는 상품)의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "lstgDcd": {
+                              "type": "string",
+                              "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "lstgDcdNm": {
+                              "type": "string",
+                              "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "udasParPrc": {
+                              "type": "string",
+                              "description": "기초자산(선물 또는 선도, 옵션계약의 거래대상이 되는 상품)의 액면가",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "신주인수권증권기초자산정보조회",
+        "description": "기준일자, 법인등록번호, 신주인수권발행인명을 통하여 상장구분코드, 기초자산액면가, 기초자산종목단축코드등을 조회하는 신주인수권증권기초자산정보조회 기능",
+        "operationId": "getPreeRighSecuUndeAsseInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "prmrIsurNm",
+          "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getPreeRighSecuRelaBondInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "itmsShrtnCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호",
+                              "properties": {}
+                            },
+                            "prmrIsurNm": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명",
+                              "properties": {}
+                            },
+                            "rltnBondIsinCdNm": {
+                              "type": "string",
+                              "description": "연관채권의 종목 명",
+                              "properties": {}
+                            },
+                            "rltnBondMngDcnt": {
+                              "type": "string",
+                              "description": "연관 채권의 관리 차수 (발행차수와 별도로 관리하는 차수)",
+                              "properties": {}
+                            },
+                            "rltnBondIsinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "rltnBondIssuDt": {
+                              "type": "string",
+                              "description": "연관채권의 발행 일자",
+                              "properties": {}
+                            },
+                            "rltnBondExprDt": {
+                              "type": "string",
+                              "description": "연관채권의 만기 일자",
+                              "properties": {}
+                            },
+                            "rltnBondSrfcIrt": {
+                              "type": "string",
+                              "description": "연관 채권의 표면 금리",
+                              "properties": {}
+                            },
+                            "bondIntTcd": {
+                              "type": "string",
+                              "description": "채권별 이자 유형이 이표채인지, 할인채인지등을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "bondIntTcdNm": {
+                              "type": "string",
+                              "description": "채권별 이자 유형이 이표채인지, 할인채인지등을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "rltnBondIssuAmt": {
+                              "type": "string",
+                              "description": "연관채권의 채권 발행 금액",
+                              "properties": {}
+                            },
+                            "rltnBondBal": {
+                              "type": "string",
+                              "description": "연관채권의 발행 잔액",
+                              "properties": {}
+                            },
+                            "rltnBondLstgDt": {
+                              "type": "string",
+                              "description": "연관채권의 종목이 상장된 일자",
+                              "properties": {}
+                            },
+                            "optnTcd": {
+                              "type": "string",
+                              "description": "Call, Put 등 옵션의 유형을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "optnTcdNm": {
+                              "type": "string",
+                              "description": "Call, Put 등 옵션의 유형을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "prmrOffrMcd": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리) 모집시 모집 방법에 대한 코드",
+                              "properties": {}
+                            },
+                            "prmrOffrMcdNm": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리) 모집시 모집 방법에 대한 코드의 명칭",
+                              "properties": {}
+                            },
+                            "grnDcd": {
+                              "type": "string",
+                              "description": "보증의 종류를 구분하는 코드",
+                              "properties": {}
+                            },
+                            "grnDcdNm": {
+                              "type": "string",
+                              "description": "보증의 종류를 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "bondRnknDcd": {
+                              "type": "string",
+                              "description": "채권의 우선순위를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "bondRnknDcdNm": {
+                              "type": "string",
+                              "description": "채권의 우선순위를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "txtnDcd": {
+                              "type": "string",
+                              "description": "과세, 비과세, 부분과세등 과세 종류를 구분하는 코드",
+                              "properties": {}
+                            },
+                            "txtnDcdNm": {
+                              "type": "string",
+                              "description": "과세, 비과세, 부분과세등 과세 종류를 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "bondRegsDcd": {
+                              "type": "string",
+                              "description": "해당 채권이 기명인지, 무기명인지, 혼합형인지를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "bondRegsDcdNm": {
+                              "type": "string",
+                              "description": "해당 채권이 기명인지, 무기명인지, 혼합형인지를 관리하는 코드의 명칭",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "신주인수권증권연관채권정보조회",
+        "description": "기준일자, 법인등록번호, 신주인수권발행인명을 통하여 연관채권잔액, 연관채권발행금액, 연관채권상장일자등을 조회하는 신주인수권증권연관채권정보조회 기능",
+        "operationId": "getPreeRighSecuRelaBondInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "ServiceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "prmrIsurNm",
+          "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getPreeRighSecuStriPricInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "prmrExertPricAplDt": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 권리행사 가격 적용 일자",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "itmsShrtnCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호",
+                              "properties": {}
+                            },
+                            "prmrIsurNm": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명",
+                              "properties": {}
+                            },
+                            "prmrExertPrc": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 권리 행사 가격",
+                              "properties": {}
+                            },
+                            "prmrExertRto": {
+                              "type": "string",
+                              "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 권리 행사 비율",
+                              "properties": {}
+                            },
+                            "pricChngRcd": {
+                              "type": "string",
+                              "description": "가격 변동시 그 사유를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "pricChngRcdNm": {
+                              "type": "string",
+                              "description": "가격 변동시 그 사유를 관리하는 코드의 명칭",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "신주인수권증권행사가격조회",
+        "description": "신주인수권행사가격적용일자, 법인등록번호, 신주인수권발행인명을 통하여 신주인수권행사가, 가격변동사유코드, 종목단축코드등을 조회하는 신주인수권증권행사가격조회 기능",
+        "operationId": "getPreeRighSecuStriPricInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "prmrExertPricAplDt",
+          "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 권리행사 가격 적용 일자",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "prmrIsurNm",
+          "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getPreeRighSecuBasiInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "itmsShrtnCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호"
+                    },
+                    "prmrIsurNm": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명"
+                    },
+                    "lstgDcd": {
+                      "type": "string",
+                      "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드"
+                    },
+                    "lstgDcdNm": {
+                      "type": "string",
+                      "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드의 명칭"
+                    },
+                    "prmrExertPrc": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 권리 행사 가격"
+                    },
+                    "prmrIssuDt": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리) 발행 일자"
+                    },
+                    "prmrExertPsblSttgDt": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 행사 가능 시작일자"
+                    },
+                    "prmrExertPsblEdDt": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 행사 가능 종료일자"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getPreeRighSecuUndeAsseInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "itmsShrtnCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호"
+                    },
+                    "prmrIsurNm": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명"
+                    },
+                    "udasIsinCdNm": {
+                      "type": "string",
+                      "description": "기초자산(선물 또는 선도, 옵션계약의 거래대상이 되는 상품)의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭"
+                    },
+                    "udasIsinCd": {
+                      "type": "string",
+                      "description": "기초자산(선물 또는 선도, 옵션계약의 거래대상이 되는 상품)의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "udasItmsShrtnCd": {
+                      "type": "string",
+                      "description": "기초자산(선물 또는 선도, 옵션계약의 거래대상이 되는 상품)의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "lstgDcd": {
+                      "type": "string",
+                      "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드"
+                    },
+                    "lstgDcdNm": {
+                      "type": "string",
+                      "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드의 명칭"
+                    },
+                    "udasParPrc": {
+                      "type": "string",
+                      "description": "기초자산(선물 또는 선도, 옵션계약의 거래대상이 되는 상품)의 액면가"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getPreeRighSecuRelaBondInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "itmsShrtnCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호"
+                    },
+                    "prmrIsurNm": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명"
+                    },
+                    "rltnBondIsinCdNm": {
+                      "type": "string",
+                      "description": "연관채권의 종목 명"
+                    },
+                    "rltnBondMngDcnt": {
+                      "type": "string",
+                      "description": "연관 채권의 관리 차수 (발행차수와 별도로 관리하는 차수)"
+                    },
+                    "rltnBondIsinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "rltnBondIssuDt": {
+                      "type": "string",
+                      "description": "연관채권의 발행 일자"
+                    },
+                    "rltnBondExprDt": {
+                      "type": "string",
+                      "description": "연관채권의 만기 일자"
+                    },
+                    "rltnBondSrfcIrt": {
+                      "type": "string",
+                      "description": "연관 채권의 표면 금리"
+                    },
+                    "bondIntTcd": {
+                      "type": "string",
+                      "description": "채권별 이자 유형이 이표채인지, 할인채인지등을 관리하는 코드"
+                    },
+                    "bondIntTcdNm": {
+                      "type": "string",
+                      "description": "채권별 이자 유형이 이표채인지, 할인채인지등을 관리하는 코드의 명칭"
+                    },
+                    "rltnBondIssuAmt": {
+                      "type": "string",
+                      "description": "연관채권의 채권 발행 금액"
+                    },
+                    "rltnBondBal": {
+                      "type": "string",
+                      "description": "연관채권의 발행 잔액"
+                    },
+                    "rltnBondLstgDt": {
+                      "type": "string",
+                      "description": "연관채권의 종목이 상장된 일자"
+                    },
+                    "optnTcd": {
+                      "type": "string",
+                      "description": "Call, Put 등 옵션의 유형을 관리하는 코드"
+                    },
+                    "optnTcdNm": {
+                      "type": "string",
+                      "description": "Call, Put 등 옵션의 유형을 관리하는 코드의 명칭"
+                    },
+                    "prmrOffrMcd": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리) 모집시 모집 방법에 대한 코드"
+                    },
+                    "prmrOffrMcdNm": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리) 모집시 모집 방법에 대한 코드의 명칭"
+                    },
+                    "grnDcd": {
+                      "type": "string",
+                      "description": "보증의 종류를 구분하는 코드"
+                    },
+                    "grnDcdNm": {
+                      "type": "string",
+                      "description": "보증의 종류를 구분하는 코드의 명칭"
+                    },
+                    "bondRnknDcd": {
+                      "type": "string",
+                      "description": "채권의 우선순위를 관리하는 코드"
+                    },
+                    "bondRnknDcdNm": {
+                      "type": "string",
+                      "description": "채권의 우선순위를 관리하는 코드의 명칭"
+                    },
+                    "txtnDcd": {
+                      "type": "string",
+                      "description": "과세, 비과세, 부분과세등 과세 종류를 구분하는 코드"
+                    },
+                    "txtnDcdNm": {
+                      "type": "string",
+                      "description": "과세, 비과세, 부분과세등 과세 종류를 구분하는 코드의 명칭"
+                    },
+                    "bondRegsDcd": {
+                      "type": "string",
+                      "description": "해당 채권이 기명인지, 무기명인지, 혼합형인지를 관리하는 코드"
+                    },
+                    "bondRegsDcdNm": {
+                      "type": "string",
+                      "description": "해당 채권이 기명인지, 무기명인지, 혼합형인지를 관리하는 코드의 명칭"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getPreeRighSecuStriPricInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "prmrExertPricAplDt": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 권리행사 가격 적용 일자"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "itmsShrtnCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호"
+                    },
+                    "prmrIsurNm": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 발행인 명"
+                    },
+                    "prmrExertPrc": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 권리 행사 가격"
+                    },
+                    "prmrExertRto": {
+                      "type": "string",
+                      "description": "신주인수권(증자를 위하여 신주가 발행되는 경우 우선적으로 인수를 청구할 수 있는 권리)의 권리 행사 비율"
+                    },
+                    "pricChngRcd": {
+                      "type": "string",
+                      "description": "가격 변동시 그 사유를 관리하는 코드"
+                    },
+                    "pricChngRcdNm": {
+                      "type": "string",
+                      "description": "가격 변동시 그 사유를 관리하는 코드의 명칭"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1359 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "본 API 서비스는 국제에서 거래되는 종목들의 거래 정보를 확인할 수 있는 서비스입니다. 구체적으로 종목별 전환 가능 주식수, DR의 월별 전환 및 해지 현황 정보를 조회할 수 있습니다. 그리고 국가코드도 조회가 가능하며, DR 전환가능 대상 종목 또한 조회 가능합니다. 추가로 연도별 미국주식 결제처리 현황을 조회할 수 있습니다. DR의 월별 전환/해지 현황 정보는 조회 기준 연월과 DR전환건수, DR전환주수(원주), DR해지건수, DR해지주수(원주)를 알 수 있습니다. 국가코드 조회시, 한글 국가명과 영문 국가명을 결과 값으로 받을 수 있습니다. DR 전환 가능대상 종목 조회시, DR 전환 비율과 총 원주수, DR 종목코드, 발행회사명을 알 수 있습니다. 연도별 미국주식 결제처리 현황 조회에서는 미국시장 매수 및 매도 결제건수를 결과 값으로 받아보실 수 있습니다.",
+    "version": "1.0.0",
+    "title": "한국예탁결제원_국제거래정보서비스_GW"
+  },
+  "host": "apis.data.go.kr/B552481/OverseaSvc",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getOvsDrSecnInfo": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "drStkmkCd": {
+                              "type": "string",
+                              "description": "거래시장(기술문서 첨부파일 참조)",
+                              "properties": {}
+                            },
+                            "drTpcd": {
+                              "type": "string",
+                              "description": "DR 구분(1: ADR, 2: GDR, 3: PADR, 4: JDR)",
+                              "properties": {}
+                            },
+                            "bstkSecnCd": {
+                              "type": "string",
+                              "description": "원주종목코드(KR표준코드)",
+                              "properties": {}
+                            },
+                            "bstkSecnNm": {
+                              "type": "string",
+                              "description": "원주종목명(예:삼성전자)",
+                              "properties": {}
+                            },
+                            "bstkTpcd": {
+                              "type": "string",
+                              "description": "원주 종류(보통주, 우선주 등)",
+                              "properties": {}
+                            },
+                            "drSecnCd": {
+                              "type": "string",
+                              "description": "DR종목코드",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "해외DR 종목 기본정보 조회",
+        "description": "DR형태로 해외에 상장된 국내 주식의 DR 기본정보를 조회",
+        "operationId": "getOvsDrSecnInfo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "isin",
+          "description": "DR ISIN 코드",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getConvPossDRInfo": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "drIsin": {
+                              "type": "string",
+                              "description": "DR종목코드",
+                              "properties": {}
+                            },
+                            "issucoNm": {
+                              "type": "string",
+                              "description": "발행회사명",
+                              "properties": {}
+                            },
+                            "convRatioac": {
+                              "type": "string",
+                              "description": "DR 전환비율(원주:DR)",
+                              "properties": {}
+                            },
+                            "drConvPossQty": {
+                              "type": "string",
+                              "description": "DR 전환가능 총 원주수",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "DR 전환가능대상 종목 조회",
+        "description": "종목별 DR전환 정보(종목코드, 전환비율, 전환가능 총 원주수)를 일별로 조회",
+        "operationId": "getConvPossDRInfo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schStdDt",
+          "description": "조회기준연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getOvsStkSetlCount": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "usSellSetlCount": {
+                              "type": "string",
+                              "description": "미국시장 매도결제건수",
+                              "properties": {}
+                            },
+                            "usBuySetlCount": {
+                              "type": "string",
+                              "description": "미국시장 매수결제건수",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "연도별 미국주식 결제처리 현황 조회",
+        "description": "미국 주식의 결제처리 건수를 연도별로 조회",
+        "operationId": "getOvsStkSetlCount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schStdYy",
+          "description": "조회기준연도(YYYY)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getDRMmbyConvStat": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "drTmnStkqty": {
+                              "type": "string",
+                              "description": "DR해지주수(원주)",
+                              "properties": {}
+                            },
+                            "stdYearMm": {
+                              "type": "string",
+                              "description": "조회기준연월(YYYYMM)",
+                              "properties": {}
+                            },
+                            "drConvCount": {
+                              "type": "string",
+                              "description": "DR전환건수",
+                              "properties": {}
+                            },
+                            "drConvStkqty": {
+                              "type": "string",
+                              "description": "DR전환주수(원주)",
+                              "properties": {}
+                            },
+                            "drTmnCount": {
+                              "type": "string",
+                              "description": "DR해지건수",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "DR 월별 전환/해지 현황 정보 조회",
+        "description": "DR 월별 전환/해지 현황 정보 조회",
+        "operationId": "getDRMmbyConvStat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "schBeginYearMm",
+          "description": "조회시작연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "schExpryYearMm",
+          "description": "조회종료연월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getNationCdSch": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "nationEngNm": {
+                              "type": "string",
+                              "description": "국가영문명(예: Germany)",
+                              "properties": {}
+                            },
+                            "nationCd": {
+                              "type": "string",
+                              "description": "국가코드(예: DE)",
+                              "properties": {}
+                            },
+                            "nationNm": {
+                              "type": "string",
+                              "description": "국가명(예: 독일)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "국가코드조회",
+        "description": "한국예탁결제원에서 사용하는 국가코드, 국가명, 국가영문명 조회",
+        "operationId": "getNationCdSch",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "nationCd",
+          "description": "국가코드(미선택 시 데이터 전체 조회)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getDrConvQtyList": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "stkKanm": {
+                              "type": "string",
+                              "description": "원주종류",
+                              "properties": {}
+                            },
+                            "acNm": {
+                              "type": "string",
+                              "description": "예탁기관",
+                              "properties": {}
+                            },
+                            "convPossQty": {
+                              "type": "string",
+                              "description": "현재DR전환가능주식수(원주->DR)",
+                              "properties": {}
+                            },
+                            "drOvsTrIsin": {
+                              "type": "string",
+                              "description": "DR 종목코드",
+                              "properties": {}
+                            },
+                            "drSecnShotnCd": {
+                              "type": "string",
+                              "description": "DR Ticker",
+                              "properties": {}
+                            },
+                            "drStdQtyBstkQty": {
+                              "type": "string",
+                              "description": "원주 대 DR비율",
+                              "properties": {}
+                            },
+                            "drStkmkNm": {
+                              "type": "string",
+                              "description": "거래시장명",
+                              "properties": {}
+                            },
+                            "drTpnm": {
+                              "type": "string",
+                              "description": "DR구분명",
+                              "properties": {}
+                            },
+                            "isin": {
+                              "type": "string",
+                              "description": "원주표준코드(주식정보서비스 참조)",
+                              "properties": {}
+                            },
+                            "issuLmtStkqty": {
+                              "type": "string",
+                              "description": "총DR전환가능한도",
+                              "properties": {}
+                            },
+                            "issucoCustno": {
+                              "type": "string",
+                              "description": "발행회사번호(기업정보서비스 참조, 예: 594)",
+                              "properties": {}
+                            },
+                            "repSecnNm": {
+                              "type": "string",
+                              "description": "발행회사명",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "종목별전환가능주식수 조회 ",
+        "description": "종목별전환가능주식수 조회한다.",
+        "operationId": "getDrConvQtyList",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getOvsDrSecnInfo_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "drStkmkCd": {
+                      "type": "string",
+                      "description": "거래시장(기술문서 첨부파일 참조)"
+                    },
+                    "drTpcd": {
+                      "type": "string",
+                      "description": "DR 구분(1: ADR, 2: GDR, 3: PADR, 4: JDR)"
+                    },
+                    "bstkSecnCd": {
+                      "type": "string",
+                      "description": "원주종목코드(KR표준코드)"
+                    },
+                    "bstkSecnNm": {
+                      "type": "string",
+                      "description": "원주종목명(예:삼성전자)"
+                    },
+                    "bstkTpcd": {
+                      "type": "string",
+                      "description": "원주 종류(보통주, 우선주 등)"
+                    },
+                    "drSecnCd": {
+                      "type": "string",
+                      "description": "DR종목코드"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "integer",
+              "description": "전체 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getConvPossDRInfo_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "drIsin": {
+                      "type": "string",
+                      "description": "DR종목코드"
+                    },
+                    "issucoNm": {
+                      "type": "string",
+                      "description": "발행회사명"
+                    },
+                    "convRatioac": {
+                      "type": "string",
+                      "description": "DR 전환비율(원주:DR)"
+                    },
+                    "drConvPossQty": {
+                      "type": "string",
+                      "description": "DR 전환가능 총 원주수"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            }
+          }
+        }
+      }
+    },
+    "getOvsStkSetlCount_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "usSellSetlCount": {
+                      "type": "string",
+                      "description": "미국시장 매도결제건수"
+                    },
+                    "usBuySetlCount": {
+                      "type": "string",
+                      "description": "미국시장 매수결제건수"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getDRMmbyConvStat_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "drTmnStkqty": {
+                      "type": "string",
+                      "description": "DR해지주수(원주)"
+                    },
+                    "stdYearMm": {
+                      "type": "string",
+                      "description": "조회기준연월(YYYYMM)"
+                    },
+                    "drConvCount": {
+                      "type": "string",
+                      "description": "DR전환건수"
+                    },
+                    "drConvStkqty": {
+                      "type": "string",
+                      "description": "DR전환주수(원주)"
+                    },
+                    "drTmnCount": {
+                      "type": "string",
+                      "description": "DR해지건수"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getNationCdSch_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "nationEngNm": {
+                      "type": "string",
+                      "description": "국가영문명(예: Germany)"
+                    },
+                    "nationCd": {
+                      "type": "string",
+                      "description": "국가코드(예: DE)"
+                    },
+                    "nationNm": {
+                      "type": "string",
+                      "description": "국가명(예: 독일)"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getDrConvQtyList_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "stkKanm": {
+                      "type": "string",
+                      "description": "원주종류"
+                    },
+                    "acNm": {
+                      "type": "string",
+                      "description": "예탁기관"
+                    },
+                    "convPossQty": {
+                      "type": "string",
+                      "description": "현재DR전환가능주식수(원주->DR)"
+                    },
+                    "drOvsTrIsin": {
+                      "type": "string",
+                      "description": "DR 종목코드"
+                    },
+                    "drSecnShotnCd": {
+                      "type": "string",
+                      "description": "DR Ticker"
+                    },
+                    "drStdQtyBstkQty": {
+                      "type": "string",
+                      "description": "원주 대 DR비율"
+                    },
+                    "drStkmkNm": {
+                      "type": "string",
+                      "description": "거래시장명"
+                    },
+                    "drTpnm": {
+                      "type": "string",
+                      "description": "DR구분명"
+                    },
+                    "isin": {
+                      "type": "string",
+                      "description": "원주표준코드(주식정보서비스 참조)"
+                    },
+                    "issuLmtStkqty": {
+                      "type": "string",
+                      "description": "총DR전환가능한도"
+                    },
+                    "issucoCustno": {
+                      "type": "string",
+                      "description": "발행회사번호(기업정보서비스 참조, 예: 594)"
+                    },
+                    "repSecnNm": {
+                      "type": "string",
+                      "description": "발행회사명"
+                    }
+                  }
+                }
+              }
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    }
+  },
+  "swaggerOprtinVOs": [
+    {
+      "oprtinUrl": "https://seibro.or.kr/openapi/OverseaSvc/getOvsDrSecnInfo",
+      "oprtinNm": "해외DR 종목 기본정보 조회",
+      "oprtinDc": "DR형태로 해외에 상장된 국내 주식의 DR 기본정보를 조회",
+      "gwSvcNm": "getOvsDrSecnInfo",
+      "operationId": "getOvsDrSecnInfo",
+      "publicDataTyDetailCode": "PRDE02",
+      "reqList": [
+        {
+          "paramtrNm": "serviceKey",
+          "paramtrDc": "공공데이터포털에서 받은 인증키",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        },
+        {
+          "paramtrNm": "pageNo",
+          "paramtrDc": "페이지번호",
+          "paramtrBassValue": "1",
+          "paramtrTy": "string",
+          "paramtrDivision": "옵션",
+          "ck": true
+        },
+        {
+          "paramtrNm": "numOfRows",
+          "paramtrDc": "한 페이지 결과 수",
+          "paramtrBassValue": "10",
+          "paramtrTy": "string",
+          "paramtrDivision": "옵션",
+          "ck": true
+        },
+        {
+          "paramtrNm": "isin",
+          "paramtrDc": "종목코드",
+          "paramtrBassValue": "US48241A1051",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        }
+      ],
+      "resList": [
+        {
+          "paramtrNm": "header",
+          "paramtrDc": "header",
+          "arrayYn": "N",
+          "paramtrDefNm": "#/definitions/header",
+          "subDefNm": "header",
+          "paramtrTy": "object",
+          "paramtrDivision": "필수",
+          "ck": true,
+          "subParam": [
+            {
+              "paramtrNm": "resultCode",
+              "paramtrDc": "결과코드",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            },
+            {
+              "paramtrNm": "resultMsg",
+              "paramtrDc": "결과메세지",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            }
+          ]
+        },
+        {
+          "paramtrNm": "body",
+          "paramtrDc": "body",
+          "arrayYn": "N",
+          "paramtrDefNm": "#/definitions/body",
+          "subDefNm": "body",
+          "paramtrTy": "object",
+          "paramtrDivision": "필수",
+          "ck": true,
+          "subParam": [
+            {
+              "paramtrNm": "items",
+              "paramtrDc": "items",
+              "arrayYn": "N",
+              "paramtrDefNm": "#/definitions/oper-1-items",
+              "subDefNm": "oper-1-items",
+              "paramtrTy": "object",
+              "paramtrDivision": "필수",
+              "ck": true
+            }
+          ]
+        }
+      ],
+      "oprtinNo": 1
+    }
+  ]
+}

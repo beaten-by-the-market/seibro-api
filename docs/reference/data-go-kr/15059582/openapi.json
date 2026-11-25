@@ -1,0 +1,654 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "국제거래종목정보는 기준일자와 법인등록번호 등을 기반으로 해외 발행 DR(대체증권, Depositary Receipt) 관련 정보를 제공하는 데이터입니다.\n총 2가지 오퍼레이션으로 구성되어 있으며,\n\n① DR종목 조회를 통해 DR 발행회사명, 주식종류, 종목단축코드, ISIN코드, 거래소 정보, 예탁기관명, 전환비율, 전환가능주식 수 등의 정보를 제공하고,\n② 사유별 일정정보 조회에서는 권리행사사유(예: 배당, 분배 등), 신규상장구분, DR 종목 및 원주의 상세 정보를 확인할 수 있습니다.\n\n※ 데이터 갱신주기는 일 1회입니다.\n※ 금융위원회의 모든 API는 데이터 보유기관으로부터 데이터를 연계받아 수집 후 개방하고 있습니다.\n금융위원회에서 제공하는 모든 서비스는 실시간이 아니며, 데이터 갱신은 기준일자로부터 영업일 하루 뒤 오후 1시 이후에 업데이트됩니다.\n예를 들어, 금요일 데이터는 차주 월요일에 제공됩니다. (월요일이 공휴일인 경우, 다음 영업일에 제공됩니다)\n※ 자주 묻는 질문(FAQ)은 https://www.fsc.go.kr/in060501 에서 확인하실 수 있습니다.\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_국제거래종목정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetDrTradItemInfoService_V2",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getDepoReceItem_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "drIssuCmpyNm": {
+                              "type": "string",
+                              "description": "대체증권(DR)의 발행회사명",
+                              "properties": {}
+                            },
+                            "stckKcd": {
+                              "type": "string",
+                              "description": "주식의 종류를 관리하는 코드(우선주, 보통주, 후배주, 혼합주 등)",
+                              "properties": {}
+                            },
+                            "stckKcdNm": {
+                              "type": "string",
+                              "description": "주식의 종류를 관리하는 코드의 명칭(우선주, 보통주, 후배주, 혼합주 등)",
+                              "properties": {}
+                            },
+                            "orshIsinCd": {
+                              "type": "string",
+                              "description": "원주의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "orshIsinCdNm": {
+                              "type": "string",
+                              "description": "원주의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭",
+                              "properties": {}
+                            },
+                            "itmsShrtnCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호",
+                              "properties": {}
+                            },
+                            "itmsShrtnCdNm": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호의 명칭",
+                              "properties": {}
+                            },
+                            "orshDrRto": {
+                              "type": "string",
+                              "description": "원주와 DR(대체증권)의 비율",
+                              "properties": {}
+                            },
+                            "drDcd": {
+                              "type": "string",
+                              "description": "대체증권(DR)의 구분코드",
+                              "properties": {}
+                            },
+                            "drDcdNm": {
+                              "type": "string",
+                              "description": "대체증권(DR)의 구분코드의 명칭",
+                              "properties": {}
+                            },
+                            "drCnvrPsblLmtTsumCnt": {
+                              "type": "string",
+                              "description": "대체증권(DR)으로 전환 가능한 총 주식수",
+                              "properties": {}
+                            },
+                            "drCnvrPsblStckCnt": {
+                              "type": "string",
+                              "description": "대체증권(DR)으로 전환 가능한 총 주식수 중 전환 가능한 주식 수",
+                              "properties": {}
+                            },
+                            "drCnvrOrshCnt": {
+                              "type": "string",
+                              "description": "대체증권(DR)으로 전환한 원 주식수",
+                              "properties": {}
+                            },
+                            "drXchgDcd": {
+                              "type": "string",
+                              "description": "대체증권(DR)이 거래되는 거래소의 구분코드",
+                              "properties": {}
+                            },
+                            "drXchgDcdNm": {
+                              "type": "string",
+                              "description": "대체증권(DR)이 거래되는 거래소의 구분코드의 명칭",
+                              "properties": {}
+                            },
+                            "drDpsgInstNm": {
+                              "type": "string",
+                              "description": "대체증권(DR)의 예탁기관명",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "DR종목조회",
+        "description": "기준일자, 법인등록번호를 통하여 DR발행회사명, 주식종류코드, 종목단축코드등을 조회하는 DR종목조회 기능",
+        "operationId": "getDepoReceItem_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지 번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getReasScheInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "issrNo": {
+                              "type": "string",
+                              "description": "발행사번호",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "innnTrIssuCmpyNm": {
+                              "type": "string",
+                              "description": "국제 거래에서 발행한 회사 이름",
+                              "properties": {}
+                            },
+                            "rgtExertRcd": {
+                              "type": "string",
+                              "description": "옵션등의 권리행사시 그 사유를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "rgtExertRcdNm": {
+                              "type": "string",
+                              "description": "옵션등의 권리행사시 그 사유를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "orshIsinCdNm": {
+                              "type": "string",
+                              "description": "원주의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호 명칭",
+                              "properties": {}
+                            },
+                            "newLstgClsfNm": {
+                              "type": "string",
+                              "description": "신규로 상장되는 유가증권의 거래소 및 상태등을 구분하는 명칭",
+                              "properties": {}
+                            },
+                            "drItmsShrtnCd": {
+                              "type": "string",
+                              "description": "대체증권(DR) 국제인증 고유번호 코드",
+                              "properties": {}
+                            },
+                            "drIsinCd": {
+                              "type": "string",
+                              "description": "대체증권(DR) 국제인증 고유번호 코드",
+                              "properties": {}
+                            },
+                            "drIsinCdNm": {
+                              "type": "string",
+                              "description": "대체증권(DR) 국제인증 고유번호의 명칭 코드의 명칭",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "사유별일정정보조회",
+        "description": "기준일자, 법인등록번호, 국제거래발행회사명을 통하여 신규상장구분명, 권리행사사유코드, DR종목단축코드등을 조회하는 사유별일정정보조회 기능",
+        "operationId": "getReasScheInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지 번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "innnTrIssuCmpyNm",
+          "description": "국제 거래에서 발행한 회사 이름",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getDepoReceItem_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "drIssuCmpyNm": {
+                      "type": "string",
+                      "description": "대체증권(DR)의 발행회사명"
+                    },
+                    "stckKcd": {
+                      "type": "string",
+                      "description": "주식의 종류를 관리하는 코드(우선주, 보통주, 후배주, 혼합주 등)"
+                    },
+                    "stckKcdNm": {
+                      "type": "string",
+                      "description": "주식의 종류를 관리하는 코드의 명칭(우선주, 보통주, 후배주, 혼합주 등)"
+                    },
+                    "orshIsinCd": {
+                      "type": "string",
+                      "description": "원주의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "orshIsinCdNm": {
+                      "type": "string",
+                      "description": "원주의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 명칭"
+                    },
+                    "itmsShrtnCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호"
+                    },
+                    "itmsShrtnCdNm": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호의 명칭"
+                    },
+                    "orshDrRto": {
+                      "type": "string",
+                      "description": "원주와 DR(대체증권)의 비율"
+                    },
+                    "drDcd": {
+                      "type": "string",
+                      "description": "대체증권(DR)의 구분코드"
+                    },
+                    "drDcdNm": {
+                      "type": "string",
+                      "description": "대체증권(DR)의 구분코드의 명칭"
+                    },
+                    "drCnvrPsblLmtTsumCnt": {
+                      "type": "string",
+                      "description": "대체증권(DR)으로 전환 가능한 총 주식수"
+                    },
+                    "drCnvrPsblStckCnt": {
+                      "type": "string",
+                      "description": "대체증권(DR)으로 전환 가능한 총 주식수 중 전환 가능한 주식 수"
+                    },
+                    "drCnvrOrshCnt": {
+                      "type": "string",
+                      "description": "대체증권(DR)으로 전환한 원 주식수"
+                    },
+                    "drXchgDcd": {
+                      "type": "string",
+                      "description": "대체증권(DR)이 거래되는 거래소의 구분코드"
+                    },
+                    "drXchgDcdNm": {
+                      "type": "string",
+                      "description": "대체증권(DR)이 거래되는 거래소의 구분코드의 명칭"
+                    },
+                    "drDpsgInstNm": {
+                      "type": "string",
+                      "description": "대체증권(DR)의 예탁기관명"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getReasScheInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "issrNo": {
+                      "type": "string",
+                      "description": "발행사번호"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "innnTrIssuCmpyNm": {
+                      "type": "string",
+                      "description": "국제 거래에서 발행한 회사 이름"
+                    },
+                    "rgtExertRcd": {
+                      "type": "string",
+                      "description": "옵션등의 권리행사시 그 사유를 관리하는 코드"
+                    },
+                    "rgtExertRcdNm": {
+                      "type": "string",
+                      "description": "옵션등의 권리행사시 그 사유를 관리하는 코드의 명칭"
+                    },
+                    "orshIsinCdNm": {
+                      "type": "string",
+                      "description": "원주의 국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호 명칭"
+                    },
+                    "newLstgClsfNm": {
+                      "type": "string",
+                      "description": "신규로 상장되는 유가증권의 거래소 및 상태등을 구분하는 명칭"
+                    },
+                    "drItmsShrtnCd": {
+                      "type": "string",
+                      "description": "대체증권(DR) 국제인증 고유번호 코드"
+                    },
+                    "drIsinCd": {
+                      "type": "string",
+                      "description": "대체증권(DR) 국제인증 고유번호 코드"
+                    },
+                    "drIsinCdNm": {
+                      "type": "string",
+                      "description": "대체증권(DR) 국제인증 고유번호의 명칭 코드의 명칭"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1323 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "단기금융증권정보서비스 단기사채는 기업이 단기 자금 조달을 목적으로 만기 1년 이하 등 일정한 요건을 갖추고 전자등록기관(한국예탁결제원)을 통하여 발행·유통·권리행사 등이 전자적으로 이루어지는 사채입니다. 단기사채는 기업어음(CP)의 법적·실무적 한계 극복, 전자증권제도 도입기반 마련, 단기금융시장 선진화 등을 위해 2013년 도입되었습니다. 단기사채 발행요건(주식·사채 등의 전자등록에 관한 법률 제59조) ① 각 사채의 금액이 1억원 이상일 것 ② 만기가 1년 이내일 것 ③ 사채금액을 한꺼번에 납입할 것 ④ 만기에 원리금 전액을 한꺼번에 지급한다는 취지가 정하여져 있을 것 ⑤ 전환권 등 다른 증권을 취득할 수 있는 권리가 부여되지 아니할 것 ⑥ 사채에 물상담보를 붙이지 아니할 것 CD 종목 기본정보",
+    "version": "1.0.0",
+    "title": "한국예탁결제원_단기금융증권정보서비스_GW"
+  },
+  "host": "apis.data.go.kr/B552481/ShortmSvc",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getShortmSecRema": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "estbIssuRema": {
+                              "type": "string",
+                              "description": "단기사채(단위: 억원)",
+                              "properties": {}
+                            },
+                            "abcpIssuRema": {
+                              "type": "string",
+                              "description": "ABCP(단위: 억원)",
+                              "properties": {}
+                            },
+                            "cpIssuRema": {
+                              "type": "string",
+                              "description": "CP(단위: 억원)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "단기금융증권(잔존만기 1년 이상) 발행잔액 조회",
+        "description": "만기가 1년 이상인 CP, ABCP, 단기사채의 발행잔액을 당일을 기준으로 조회",
+        "operationId": "getShortmSecRema",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getCdSecnInfo": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "xpirDt": {
+                              "type": "string",
+                              "description": "만기일(YYYYMMDD)",
+                              "properties": {}
+                            },
+                            "issuAmt": {
+                              "type": "string",
+                              "description": "발행금액",
+                              "properties": {}
+                            },
+                            "issuDt": {
+                              "type": "string",
+                              "description": "발행일(YYYYMMDD)",
+                              "properties": {}
+                            },
+                            "korSecnNm": {
+                              "type": "string",
+                              "description": "종목명",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "CD 종목 기본정보 조회",
+        "description": "CD 종목의 기본정보를 조회",
+        "operationId": "getCdSecnInfo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "isin",
+          "description": "CD 종목코드(KR표준코드)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getSTBInfo": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "payinAmt": {
+                              "type": "string",
+                              "description": "발행금액",
+                              "properties": {}
+                            },
+                            "issucoCustno": {
+                              "type": "string",
+                              "description": "발행회사고객번호",
+                              "properties": {}
+                            },
+                            "isin": {
+                              "type": "string",
+                              "description": "단기사채 종목번호(KR표준코드)",
+                              "properties": {}
+                            },
+                            "korSecnNm": {
+                              "type": "string",
+                              "description": "종목명",
+                              "properties": {}
+                            },
+                            "xpirDt": {
+                              "type": "string",
+                              "description": "만기일자(YYYYMMDD)",
+                              "properties": {}
+                            },
+                            "issuCurCd": {
+                              "type": "string",
+                              "description": "발행통화코드(예 : KRW)",
+                              "properties": {}
+                            },
+                            "issucoNm": {
+                              "type": "string",
+                              "description": "발행회사명",
+                              "properties": {}
+                            },
+                            "issuDt": {
+                              "type": "string",
+                              "description": "발행일자(YYYYMMDD)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "단기사채 종목 정보",
+        "description": "종목별 단기사채 발행정보를 조회",
+        "operationId": "getSTBInfo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "isin",
+          "description": "단기사채 종목번호(KR표준코드)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getShortmIssucoRedAmtN1": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "xpirYymm": {
+                              "type": "string",
+                              "description": "만기도래년월(YYYYMM)",
+                              "properties": {}
+                            },
+                            "abcpFaceAmt": {
+                              "type": "string",
+                              "description": "ABCP만기금액",
+                              "properties": {}
+                            },
+                            "cpFaceAmt": {
+                              "type": "string",
+                              "description": "CP만기금액",
+                              "properties": {}
+                            },
+                            "escpFaceAmt": {
+                              "type": "string",
+                              "description": "전자단기사채만기금액",
+                              "properties": {}
+                            },
+                            "totSum": {
+                              "type": "string",
+                              "description": "합계금액",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "단기금융증권 발행자별 단기금융증권현황 월별만기금액 조회",
+        "description": "조회년월, 발행회사번호, 업종구분을 기준으로 ABCP, CP, 전자단기사채 월별 만기금액 조회",
+        "operationId": "getShortmIssucoRedAmtN1",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "yyyymm",
+          "description": "조회년월(YYYYMM)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "issucoCustno",
+          "description": "발행회사번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "indType",
+          "description": "업종구분(한국표준산업분류코드 앞1자리)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getShortmIssucoRedTermStatusN1": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "colSum": {
+                              "type": "string",
+                              "description": "합계",
+                              "properties": {}
+                            },
+                            "rowTp": {
+                              "type": "string",
+                              "description": "행구분명(예: 종목수, 금액 등)",
+                              "properties": {}
+                            },
+                            "secnTpnm": {
+                              "type": "string",
+                              "description": "증권구분명(예: 일반CP, 전자단기사채 등)",
+                              "properties": {}
+                            },
+                            "col_1to10": {
+                              "type": "string",
+                              "description": "1~10일",
+                              "properties": {}
+                            },
+                            "col_11to29": {
+                              "type": "string",
+                              "description": "11~29일",
+                              "properties": {}
+                            },
+                            "col_30to89": {
+                              "type": "string",
+                              "description": "30~89일",
+                              "properties": {}
+                            },
+                            "col_90to179": {
+                              "type": "string",
+                              "description": "90~179일",
+                              "properties": {}
+                            },
+                            "col_180to364": {
+                              "type": "string",
+                              "description": "180~364일",
+                              "properties": {}
+                            },
+                            "colOveryear": {
+                              "type": "string",
+                              "description": "1년이상",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "단기금융증권 발행사별 단기금융증권현황 만기별 발행잔액 조회",
+        "description": "발행회사번호, 업종구분을 기준으로 만기별 발행잔액 조회",
+        "operationId": "getShortmIssucoRedTermStatusN1",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "issucoCustno",
+          "description": "발행회사번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "indType",
+          "description": "업종구분(한국표준산업분류코드 앞 1자리)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getEstbIssuLmtN1": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "unredRemAmt": {
+                              "type": "string",
+                              "description": "미상환잔액(통화구분에 따른 해당국가 통화로 표시)",
+                              "properties": {}
+                            },
+                            "apprvDt": {
+                              "type": "string",
+                              "description": "인가일(YYYYMMDD)",
+                              "properties": {}
+                            },
+                            "curCd": {
+                              "type": "string",
+                              "description": "통화구분(KRW(원화), USD(달러), JPY(엔화),  EUR(유로), CNY(위안화))",
+                              "properties": {}
+                            },
+                            "issuLmtAmt": {
+                              "type": "string",
+                              "description": "발행한도(통화구분에 따른 해당국가 통화로 표시)",
+                              "properties": {}
+                            },
+                            "issuLmtXcesYn": {
+                              "type": "string",
+                              "description": "발행한도 초과여부(Y/N)",
+                              "properties": {}
+                            },
+                            "issuPossAmt": {
+                              "type": "string",
+                              "description": "발행가능액(통화구분에 따른 해당국가 통화로 표시)",
+                              "properties": {}
+                            },
+                            "recentIssuDt": {
+                              "type": "string",
+                              "description": "최근발행일(YYYYMMDD)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "단기금융증권 전자단기사채 발행한도조회",
+        "description": "발행회사번호를 이용해 발행한도, 초과여부, 발행가능액 및 미상환잔액 등 단기금융증권 전자단기사채 발행한도를 조회",
+        "operationId": "getEstbIssuLmtN1",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "issucoCustno",
+          "description": "발행회사번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getShortmSecRema_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "estbIssuRema": {
+                      "type": "string",
+                      "description": "단기사채(단위: 억원)"
+                    },
+                    "abcpIssuRema": {
+                      "type": "string",
+                      "description": "ABCP(단위: 억원)"
+                    },
+                    "cpIssuRema": {
+                      "type": "string",
+                      "description": "CP(단위: 억원)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getCdSecnInfo_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "xpirDt": {
+                      "type": "string",
+                      "description": "만기일(YYYYMMDD)"
+                    },
+                    "issuAmt": {
+                      "type": "string",
+                      "description": "발행금액"
+                    },
+                    "issuDt": {
+                      "type": "string",
+                      "description": "발행일(YYYYMMDD)"
+                    },
+                    "korSecnNm": {
+                      "type": "string",
+                      "description": "종목명"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getSTBInfo_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "payinAmt": {
+                      "type": "string",
+                      "description": "발행금액"
+                    },
+                    "issucoCustno": {
+                      "type": "string",
+                      "description": "발행회사고객번호"
+                    },
+                    "isin": {
+                      "type": "string",
+                      "description": "단기사채 종목번호(KR표준코드)"
+                    },
+                    "korSecnNm": {
+                      "type": "string",
+                      "description": "종목명"
+                    },
+                    "xpirDt": {
+                      "type": "string",
+                      "description": "만기일자(YYYYMMDD)"
+                    },
+                    "issuCurCd": {
+                      "type": "string",
+                      "description": "발행통화코드(예 : KRW)"
+                    },
+                    "issucoNm": {
+                      "type": "string",
+                      "description": "발행회사명"
+                    },
+                    "issuDt": {
+                      "type": "string",
+                      "description": "발행일자(YYYYMMDD)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            }
+          }
+        }
+      }
+    },
+    "getShortmIssucoRedAmtN1_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "xpirYymm": {
+                      "type": "string",
+                      "description": "만기도래년월(YYYYMM)"
+                    },
+                    "abcpFaceAmt": {
+                      "type": "string",
+                      "description": "ABCP만기금액"
+                    },
+                    "cpFaceAmt": {
+                      "type": "string",
+                      "description": "CP만기금액"
+                    },
+                    "escpFaceAmt": {
+                      "type": "string",
+                      "description": "전자단기사채만기금액"
+                    },
+                    "totSum": {
+                      "type": "string",
+                      "description": "합계금액"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getShortmIssucoRedTermStatusN1_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "colSum": {
+                      "type": "string",
+                      "description": "합계"
+                    },
+                    "rowTp": {
+                      "type": "string",
+                      "description": "행구분명(예: 종목수, 금액 등)"
+                    },
+                    "secnTpnm": {
+                      "type": "string",
+                      "description": "증권구분명(예: 일반CP, 전자단기사채 등)"
+                    },
+                    "col_1to10": {
+                      "type": "string",
+                      "description": "1~10일"
+                    },
+                    "col_11to29": {
+                      "type": "string",
+                      "description": "11~29일"
+                    },
+                    "col_30to89": {
+                      "type": "string",
+                      "description": "30~89일"
+                    },
+                    "col_90to179": {
+                      "type": "string",
+                      "description": "90~179일"
+                    },
+                    "col_180to364": {
+                      "type": "string",
+                      "description": "180~364일"
+                    },
+                    "colOveryear": {
+                      "type": "string",
+                      "description": "1년이상"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getEstbIssuLmtN1_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "unredRemAmt": {
+                      "type": "string",
+                      "description": "미상환잔액(통화구분에 따른 해당국가 통화로 표시)"
+                    },
+                    "apprvDt": {
+                      "type": "string",
+                      "description": "인가일(YYYYMMDD)"
+                    },
+                    "curCd": {
+                      "type": "string",
+                      "description": "통화구분(KRW(원화), USD(달러), JPY(엔화),  EUR(유로), CNY(위안화))"
+                    },
+                    "issuLmtAmt": {
+                      "type": "string",
+                      "description": "발행한도(통화구분에 따른 해당국가 통화로 표시)"
+                    },
+                    "issuLmtXcesYn": {
+                      "type": "string",
+                      "description": "발행한도 초과여부(Y/N)"
+                    },
+                    "issuPossAmt": {
+                      "type": "string",
+                      "description": "발행가능액(통화구분에 따른 해당국가 통화로 표시)"
+                    },
+                    "recentIssuDt": {
+                      "type": "string",
+                      "description": "최근발행일(YYYYMMDD)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "swaggerOprtinVOs": [
+    {
+      "oprtinUrl": "https://seibro.or.kr/openapi/ShortmSvc/getShortmSecRema",
+      "oprtinNm": "단기금융증권(잔존만기 1년 이상) 발행잔액 조회",
+      "oprtinDc": "만기가 1년 이상인 CP, ABCP, 단기사채의 발행잔액을 당일을 기준으로 조회",
+      "gwSvcNm": "getShortmSecRema",
+      "operationId": "getShortmSecRema",
+      "publicDataTyDetailCode": "PRDE02",
+      "reqList": [
+        {
+          "paramtrNm": "serviceKey",
+          "paramtrDc": "공공데이터포털에서 받은 인증키",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        },
+        {
+          "paramtrNm": "pageNo",
+          "paramtrDc": "페이지번호",
+          "paramtrBassValue": "1",
+          "paramtrTy": "string",
+          "paramtrDivision": "옵션",
+          "ck": true
+        },
+        {
+          "paramtrNm": "numOfRows",
+          "paramtrDc": "한 페이지 결과 수",
+          "paramtrBassValue": "10",
+          "paramtrTy": "string",
+          "paramtrDivision": "옵션",
+          "ck": true
+        }
+      ],
+      "resList": [
+        {
+          "paramtrNm": "header",
+          "paramtrDc": "header",
+          "arrayYn": "N",
+          "paramtrDefNm": "#/definitions/oper-1-header",
+          "subDefNm": "oper-1-header",
+          "paramtrTy": "object",
+          "paramtrDivision": "필수",
+          "ck": true,
+          "subParam": [
+            {
+              "paramtrNm": "resultCode",
+              "paramtrDc": "결과코드",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            },
+            {
+              "paramtrNm": "resultMsg",
+              "paramtrDc": "결과메세지",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            }
+          ]
+        },
+        {
+          "paramtrNm": "body",
+          "paramtrDc": "body",
+          "arrayYn": "N",
+          "paramtrDefNm": "#/definitions/oper-1-body",
+          "subDefNm": "oper-1-body",
+          "paramtrTy": "object",
+          "paramtrDivision": "필수",
+          "ck": true,
+          "subParam": [
+            {
+              "paramtrNm": "items",
+              "paramtrDc": "items",
+              "arrayYn": "N",
+              "paramtrDefNm": "#/definitions/oper-1-items",
+              "subDefNm": "oper-1-items",
+              "paramtrTy": "object",
+              "paramtrDivision": "필수",
+              "ck": true,
+              "subParam": [
+                {
+                  "paramtrNm": "item",
+                  "paramtrDc": "item",
+                  "arrayYn": "N",
+                  "paramtrDefNm": "#/definitions/oper-1-item",
+                  "subDefNm": "oper-1-item",
+                  "paramtrTy": "object",
+                  "paramtrDivision": "필수",
+                  "ck": true,
+                  "subParam": [
+                    {
+                      "paramtrNm": "abcpIssuRema",
+                      "paramtrDc": "ABCP(단위: 억원)",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "cpIssuRema",
+                      "paramtrDc": "CP(단위: 억원)",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "estbIssuRema",
+                      "paramtrDc": "단기사채(단위: 억원)",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "oprtinNo": 1
+    }
+  ]
+}

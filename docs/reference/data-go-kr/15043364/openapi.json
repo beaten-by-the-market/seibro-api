@@ -1,0 +1,582 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "주식분포및사고주권정보는 주식 발행기업의 권리행사 기준일자를 중심으로 주식의 분포 현황과 사고주권 발생 여부를 조회할 수 있는 데이터입니다. \n\n주식분포 항목에는 주주 인원 수, 인원 비율, 발행 주식 수, 주식 분포 지역 등이 포함되며, 사고주권 항목에는 사고증권 번호, 사고구분 사유(예: 제권판결, 압류 등), 주식 발행 일련번호 등의 정보가 제공됩니다. \n\n2개 오퍼레이션으로 구성되어 있으며 세부 내용은 다음과 같습니다.\n① 사고주권여부조회 : 기준일자, 법인등록번호, 주식발행회사명을 통하여 주식발행일련번호, 사고증권번호구분명, 사고증권번호, 사고주권종류수 등을 조회하는 사고주권여부조회 기능\n② 주식분포내역조회 : 권리행사자격기준일자, 주식발행회사명을 통하여 주주인원수, 주주인원비율, 발행주식수, 발행주식비율 등을 조회하는 주식분포내역조회 기능\n\n해당 데이터는 투자자 보호 및 자본시장 투명성 확보에 기초 자료로 활용할 수 있습니다.\n\n<데이터 조회 시 유의사항>\n파라미터 없이 조회 시 데이터 조회 시간이 오래걸려 timeout이 발생하게 되어 필수 파라미터를 지정하였습니다.\n- 파라미터 조건 : 조회 시 아래의 필수 파라미터 중 최소 1개 이상을 반드시 입력해야 합니다.\n- 기본값 안내 : 필수 파라미터를 입력하지 않은 경우, 기준일자(basDt)는 자동으로 가장 최신 날짜로 설정되어 조회됩니다.\n\n[서비스별 필수 파라미터 목록]\n- 사고주권여부조회 : basDt\n- 주식분포내역조회 : 없음\n\n※ 데이터 갱신주기는 일 1회입니다.\n※ 금융위원회의 모든 API는 데이터 보유기관으로부터 데이터를 연계받아 수집 후 개방하고 있습니다.\n금융위원회에서 제공하는 모든 서비스는 실시간이 아니며, 데이터 갱신은 기준일자로부터 영업일 하루 뒤 오후 1시 이후에 업데이트됩니다.\n예를 들어, 금요일 데이터는 차주 월요일에 제공됩니다. (월요일이 공휴일인 경우, 다음 영업일에 제공됩니다)\n※ 자주 묻는 질문(FAQ)은 https://www.fsc.go.kr/in060501 에서 확인하실 수 있습니다.\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_주식분포및사고주권정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetStocTradInfoService_V2",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getIrreRigforSecu_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "stckIssuCmpyNm": {
+                              "type": "string",
+                              "description": "주식발행사의 명칭",
+                              "properties": {}
+                            },
+                            "scrsDcd": {
+                              "type": "string",
+                              "description": "채권, 어음, CD등 유가증권을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "scrsDcdNm": {
+                              "type": "string",
+                              "description": "채권, 어음, CD등 유가증권을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "stckAcdnDcd": {
+                              "type": "string",
+                              "description": "위조 혹은 가압류등 사고주식의 경우, 그 사유를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "stckAcdnDcdNm": {
+                              "type": "string",
+                              "description": "위조 혹은 가압류등 사고주식의 경우, 그 사유를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "stckIssuSqno": {
+                              "type": "string",
+                              "description": "회사가주식을발행하는과정에서발행이력을 관리하기 위하여 발행시 마다 부여하는 순차 번호",
+                              "properties": {}
+                            },
+                            "acdnScrtNoClsfNm": {
+                              "type": "string",
+                              "description": "일정수량별발행순서를구분하기위해CD는'가','나',CP의경우 '자가', '자나' 와 같이 기번호 앞에 붙는 문자",
+                              "properties": {}
+                            },
+                            "acdnScrtNo": {
+                              "type": "string",
+                              "description": "사고증권에 고유하게 부여된 기번호",
+                              "properties": {}
+                            },
+                            "acdnRgscKindCnt": {
+                              "type": "string",
+                              "description": "사고 주권의 종류 수",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "사고주권여부조회",
+        "description": "기준일자, 법인등록번호, 주식발행회사명을 통하여 주식발행일련번호, 사고증권번호구분명, 사고증권번호, 사고주권종류수 등을 조회하는 사고주권여부조회 기능",
+        "operationId": "getIrreRigforSecu_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "stckIssuCmpyNm",
+          "description": "주식발행사의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getStocDistInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "rgtExertQualBasDt": {
+                              "type": "string",
+                              "description": "회사가 일정한 날을 정하여 주주명부에 기재되어 있는 주주를 권리행사의 자격자로서 간주하게 되는 기준이 되는 날",
+                              "properties": {}
+                            },
+                            "issuCmpyKsdCustNo": {
+                              "type": "string",
+                              "description": "한국예탁결제원에서 부여한 전자단기사채(전자등록기관(한국예탁결제원)을 통하여 발행․유통하는 단기 회사채)의 발행회사의 번호",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "stckIssuCmpyNm": {
+                              "type": "string",
+                              "description": "주식발행사의 명칭",
+                              "properties": {}
+                            },
+                            "stckDbtnDcd": {
+                              "type": "string",
+                              "description": "주식 분포에 따른 기준별 관리 코드",
+                              "properties": {}
+                            },
+                            "stckDbtnDcdNm": {
+                              "type": "string",
+                              "description": "주식 분포에 따른 기준별 관리 코드 명칭",
+                              "properties": {}
+                            },
+                            "sthdNopeCnt": {
+                              "type": "string",
+                              "description": "주식을 소유하고 있는 주주의 인원 수",
+                              "properties": {}
+                            },
+                            "sthdNopeRto": {
+                              "type": "string",
+                              "description": "주식을 소유하고 있는 주주의 인원 비율",
+                              "properties": {}
+                            },
+                            "issuStckCnt": {
+                              "type": "string",
+                              "description": "발행 주식의 총 수량",
+                              "properties": {}
+                            },
+                            "issuStckRto": {
+                              "type": "string",
+                              "description": "주식 총 수 대비 발행주식 비율",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "주식분포내역조회",
+        "description": "권리행사자격기준일자, 주식발행회사명을 통하여 주주인원수, 주주인원비율, 발행주식수, 발행주식비율 등을 조회하는 주식분포내역조회 기능",
+        "operationId": "getStocDistInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "rgtExertQualBasDt",
+          "description": "회사가 일정한 날을 정하여 주주명부에 기재되어 있는 주주를 권리행사의 자격자로서 간주하게 되는 기준이 되는 날",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "stckIssuCmpyNm",
+          "description": "주식발행사의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getIrreRigforSecu_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "stckIssuCmpyNm": {
+                      "type": "string",
+                      "description": "주식발행사의 명칭"
+                    },
+                    "scrsDcd": {
+                      "type": "string",
+                      "description": "채권, 어음, CD등 유가증권을 구분하는 코드"
+                    },
+                    "scrsDcdNm": {
+                      "type": "string",
+                      "description": "채권, 어음, CD등 유가증권을 구분하는 코드의 명칭"
+                    },
+                    "stckAcdnDcd": {
+                      "type": "string",
+                      "description": "위조 혹은 가압류등 사고주식의 경우, 그 사유를 관리하는 코드"
+                    },
+                    "stckAcdnDcdNm": {
+                      "type": "string",
+                      "description": "위조 혹은 가압류등 사고주식의 경우, 그 사유를 관리하는 코드의 명칭"
+                    },
+                    "stckIssuSqno": {
+                      "type": "string",
+                      "description": "회사가주식을발행하는과정에서발행이력을 관리하기 위하여 발행시 마다 부여하는 순차 번호"
+                    },
+                    "acdnScrtNoClsfNm": {
+                      "type": "string",
+                      "description": "일정수량별발행순서를구분하기위해CD는'가','나',CP의경우 '자가', '자나' 와 같이 기번호 앞에 붙는 문자"
+                    },
+                    "acdnScrtNo": {
+                      "type": "string",
+                      "description": "사고증권에 고유하게 부여된 기번호"
+                    },
+                    "acdnRgscKindCnt": {
+                      "type": "string",
+                      "description": "사고 주권의 종류 수"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getStocDistInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "rgtExertQualBasDt": {
+                      "type": "string",
+                      "description": "회사가 일정한 날을 정하여 주주명부에 기재되어 있는 주주를 권리행사의 자격자로서 간주하게 되는 기준이 되는 날"
+                    },
+                    "issuCmpyKsdCustNo": {
+                      "type": "string",
+                      "description": "한국예탁결제원에서 부여한 전자단기사채(전자등록기관(한국예탁결제원)을 통하여 발행․유통하는 단기 회사채)의 발행회사의 번호"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "stckIssuCmpyNm": {
+                      "type": "string",
+                      "description": "주식발행사의 명칭"
+                    },
+                    "stckDbtnDcd": {
+                      "type": "string",
+                      "description": "주식 분포에 따른 기준별 관리 코드"
+                    },
+                    "stckDbtnDcdNm": {
+                      "type": "string",
+                      "description": "주식 분포에 따른 기준별 관리 코드 명칭"
+                    },
+                    "sthdNopeCnt": {
+                      "type": "string",
+                      "description": "주식을 소유하고 있는 주주의 인원 수"
+                    },
+                    "sthdNopeRto": {
+                      "type": "string",
+                      "description": "주식을 소유하고 있는 주주의 인원 비율"
+                    },
+                    "issuStckCnt": {
+                      "type": "string",
+                      "description": "발행 주식의 총 수량"
+                    },
+                    "issuStckRto": {
+                      "type": "string",
+                      "description": "주식 총 수 대비 발행주식 비율"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    }
+  }
+}

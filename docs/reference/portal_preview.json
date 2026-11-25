@@ -1,0 +1,173 @@
+{
+  "checked_on": "2026-11-25",
+  "source": "https://openplatform.seibro.or.kr/websquare/startup_control.jsp?w2xPath=/startup/api/BIP_SUAW3001.xml",
+  "apis": {
+    "getIssucoCustnoByIsin": {"records": 1},
+    "getStddtInfo": {
+      "records": 3,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getStddtInfo&params=ISSUCO_CUSTNO:593,BEGIN_STD_DT:20161231,EXPRY_STD_DT:20181231,RGT_RACD:001",
+      "samples": {
+        "BEGIN_STD_DT": "20161231",
+        "EXPRY_STD_DT": "20181231",
+        "RGT_RACD": "001"
+      }
+    },
+    "getGmeetInfo": {
+      "records": 1,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getGmeetInfo&params=ISSUCO_CUSTNO:593,ISSUIN_NO:00593,RGT_STD_DT:20171231"
+    },
+    "getGmeetMeasureInfo": {
+      "records": 11,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getGmeetMeasureInfo&params=ISSUCO_CUSTNO:593,ISSUIN_NO:00593,RGT_STD_DT:20171231"
+    },
+    "getFmnmAltInfo": {"records": 1},
+    "getCostPaySchedul": {
+      "records": 124,
+      "added_fields": {
+        "RGT_RACD_NM": [
+          6,
+          "권리사유명"
+        ]
+      },
+      "notes": [
+        "포털 TEST의 XML에서 출력 필드 `RGT_RACD_NM`을 확인했습니다."
+      ]
+    },
+    "getDivSchedulInfo": {
+      "records": 9,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getDivSchedulInfo&params=ISSUCO_CUSTNO:593,BEGIN_STD_DT:20161231,EXPRY_STD_DT:20181231,RGT_RSN_DTAIL_SORT_CD:02"
+    },
+    "getDivInfo": {
+      "records": 18,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getDivInfo&params=ISSUCO_CUSTNO:593,BEGIN_STD_DT:20161231,EXPRY_STD_DT:20181231"
+    },
+    "getOddLotInfo": {
+      "records": 1,
+      "required": {
+        "ISSUCO_CUSTNO": "필수선택",
+        "TH1_PAY_TERM_BEGIN_DT": "필수선택"
+      },
+      "notes": [
+        "포털은 두 변수를 `필수선택`으로 표시합니다. 두 변수를 함께 넣은 기본 TEST는 1건을 반환했고, HTTPS로 각 변수만 넣은 두 요청은 각각 0건을 반환했습니다."
+      ]
+    },
+    "getStkStatInfo": {
+      "records": 1,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getStkStatInfo&params=SHOTN_ISIN:005930,ISIN:KR7005930003,ISSUCO_CUSTNO:593,STD_DT:20180921"
+    },
+    "getUnlistCirclInfo": {
+      "records": 1,
+      "renamed_fields": {
+        "SECN_KACA_NM": "SECN_KACD_NM"
+      },
+      "notes": [
+        "종목종류 필드의 엑셀 표기는 `SECN_KACA_NM`입니다. 포털 출력 표와 TEST XML에서 `SECN_KACD_NM`을 확인했습니다."
+      ]
+    },
+    "getSlbDealingByIsin": {"records": 1},
+    "getShotnByMart": {"records": 130},
+    "getStkListInfo": {"records": 252},
+    "getXrcStkStatInfo": {
+      "records": 1,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getXrcStkStatInfo&params=BOND_ISIN:KR6474171G56,XRC_STK_ISIN:KR7474170008",
+      "samples": {
+        "BOND_ISIN": "KR6474171G56",
+        "XRC_STK_ISIN": "KR7474170008"
+      }
+    },
+    "getXrcStkOptionXrcInfo": {
+      "records": 1,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getXrcStkOptionXrcInfo&params=RGT_STD_DT:20260901,BOND_ISIN:KR6067171G17,XRC_POSS_BEGIN_DT:20260212",
+      "samples": {
+        "RGT_STD_DT": "20260901",
+        "BOND_ISIN": "KR6067171G17",
+        "XRC_POSS_BEGIN_DT": "20260212"
+      }
+    },
+    "getStkIncdecDetails": {
+      "records": 3,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getStkIncdecDetails&params=SHOTN_ISIN:005930,ISIN:KR7005930003,ISSUCO_CUSTNO:593,ISSU_YEAR:2018"
+    },
+    "getSafeDpDutyDepoStatus": {
+      "records": 1,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getSafeDpDutyDepoStatus&params=BEGIN_DT:20190221,EXPRY_DT:20190227,MART_TPCD:11,BIZ_TPCD:1",
+      "required": {
+        "EXPRY_DT": "필수",
+        "BIZ_TPCD": "필수"
+      },
+      "notes": [
+        "포털은 `EXPRY_DT`와 `BIZ_TPCD`를 필수로 표시합니다. 아래 네 변수를 넣은 TEST에서 1건을 확인했습니다."
+      ]
+    },
+    "getBondIssuInfo": {"records": 1},
+    "getBondStatInfo": {"records": 1},
+    "getIntPayInfo": {
+      "records": 1,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getIntPayInfo&params=ISIN:KR6017812G82",
+      "samples": {
+        "ISIN": "KR6017812G82"
+      }
+    },
+    "getBondOptionXrcInfo": {"records": 1},
+    "getShortmIssuInfo": {"records": 290},
+    "getCDInfo": {
+      "records": 1,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getCDInfo&params=ISIN:KRZE03901G8S",
+      "samples": {
+        "ISIN": "KRZE03901G8S"
+      }
+    },
+    "getCPInfo": {
+      "records": 0,
+      "notes": [
+        "연속 순회 중 직전에 테스트한 CD 종목코드 `KRZE03901G8S`가 URL에 남아 0건이었습니다. 채권정보 메뉴를 새로고침한 뒤 이 API를 먼저 TEST하니 아래 예시의 `ISIN:KRZF30300A87`로 1건을 반환했습니다. 같은 종목코드의 HTTPS 응답에서도 1건과 출력 필드 20개를 확인했습니다."
+      ]
+    },
+    "getESTBInfo": {"records": 1},
+    "getDerivCombiIssuInfo": {
+      "records": 54,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getDerivCombiIssuInfo&params=ISSU_DT:20180702,SECN_KACD:4101"
+    },
+    "getBassetUnredScale": {"records": 1},
+    "getDerivCombiIsinInfo": {
+      "records": 0,
+      "result_element": "RESULT",
+      "notes": [
+        "연속 순회 중 직전에 테스트한 `getBassetUnredScale`의 호출변수가 URL에 남아 0건이었습니다. 파생결합증권정보 메뉴를 새로고침한 뒤 이 API를 먼저 TEST하니 아래 예시의 `ISIN:KR6539335879`로 1건을 반환했습니다. 같은 종목코드의 HTTPS 응답에서도 1건과 출력 필드 20개를 확인했습니다."
+      ]
+    },
+    "getAssetInfo": {
+      "records": 3,
+      "added_fields": {
+        "ISIN": [
+          1,
+          "종목번호"
+        ]
+      },
+      "result_element": "RESULT",
+      "notes": [
+        "포털 TEST와 HTTPS XML에서 출력 필드 `ISIN`을 확인했습니다."
+      ]
+    },
+    "getAssetXrcInfo": {
+      "records": 8,
+      "result_element": "RESULT"
+    },
+    "getRedCondiInfo": {
+      "records": 10,
+      "result_element": "RESULT"
+    },
+    "getRedIsinInfo": {
+      "records": 12,
+      "url": "http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key={SEIBRO_API_KEY}&apiId=getRedIsinInfo&params=RED_DT:20180806,SECN_KACD:4101,DERISEC_EXER_TPCD:3",
+      "result_element": "RESULT",
+      "notes": [
+        "아래 호출변수로 포털 TEST와 HTTPS에서 각각 12건을 확인했습니다. 재확인 중 직전에 테스트한 `getRedCondiInfo`의 `ISIN`이 URL에 남았을 때는 0건을 반환했습니다."
+      ]
+    },
+    "getNationFrsecCusInfo": {"records": 4},
+    "getNationFrsecSetlInfo": {"records": 7},
+    "getSecnFrsecCusInfo": {"records": 2},
+    "getSecnFrsecSetlInfo": {"records": 2}
+  }
+}

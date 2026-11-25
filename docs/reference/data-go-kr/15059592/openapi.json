@@ -1,0 +1,875 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "채권기본정보는 기준일자, 법인등록번호 또는 채권발행인명을 기준으로 채권에 대한 주요 정보를 제공하는 데이터입니다.\n\n제공 항목에는 채권표면이율, 채권순위구분, 채권잔액, 채권납입금액, 발행금액, 발행일자, 만기일자, 발행통화, 이자지급주기, 금리구분(고정·변동), 과세구분, 채권이자유형(이표·할인), 보증유형, 옵션유형, 상장일자, 자금용도, 이자산정방법 등 폭넓은 정보가 포함됩니다.\n\n이 데이터는 1개 오퍼레이션으로 구성되어 있습니다.\n각 오퍼레이션은 다음과 같습니다.\n\n① 채권기본정보조회 : \t기준일자, 법인등록번호, 채권발행인명을 통하여 채권표면이율, 채권순위구분코드, 채권잔액, 채권납입금액등을 조회하는 채권기본정보조회 기능\n\n<데이터 조회 시 유의사항>\n파라미터 없이 조회 시 데이터 조회 시간이 오래걸려 timeout이 발생하게 되어 필수 파라미터를 지정하였습니다.\n- 파라미터 조건 : 조회 시 아래의 필수 파라미터 중 최소 1개 이상을 반드시 입력해야 합니다.\n- 기본값 안내 : 필수 파라미터를 입력하지 않은 경우, 기준일자(basDt)는 자동으로 가장 최신 날짜로 설정되어 조회됩니다.\n\n[서비스별 필수 파라미터 목록]\n- 채권기본정보조회 : basDt, isinCd, crno\n\n※ 데이터 갱신주기는 일 1회입니다.\n※ 금융위원회의 모든 API는 데이터 보유기관으로부터 데이터를 연계받아 수집 후 개방하고 있습니다.\n금융위원회에서 제공하는 모든 서비스는 실시간이 아니며, 데이터 갱신은 기준일자로부터 영업일 하루 뒤 오후 1시 이후에 업데이트됩니다.\n예를 들어, 금요일 데이터는 차주 월요일에 제공됩니다. (월요일이 공휴일인 경우, 다음 영업일에 제공됩니다)\n※ 자주 묻는 질문(FAQ)은 https://www.fsc.go.kr/in060501 에서 확인하실 수 있습니다.\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_채권기본정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetBondIssuInfoService_V2",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getBondBasiInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "scrsItmsKcd": {
+                              "type": "string",
+                              "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "scrsItmsKcdNm": {
+                              "type": "string",
+                              "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "bondIssuCurCd": {
+                              "type": "string",
+                              "description": "채권발행시 해당 채권의 각국 통화를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "bondIssuCurCdNm": {
+                              "type": "string",
+                              "description": "채권발행시 해당 채권의 각국 통화를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "bondIsurNm": {
+                              "type": "string",
+                              "description": "채권을 발행한 발행 회사의 명칭",
+                              "properties": {}
+                            },
+                            "sicNm": {
+                              "type": "string",
+                              "description": "산업 주체들이 모든 산업활동을 그 성질에 따라 유형화한 분류 이름",
+                              "properties": {}
+                            },
+                            "bondIssuDt": {
+                              "type": "string",
+                              "description": "채권을 발행한 일자",
+                              "properties": {}
+                            },
+                            "bondExprDt": {
+                              "type": "string",
+                              "description": "채권의 만기일자(상환된 경우, 상환 일자)",
+                              "properties": {}
+                            },
+                            "irtChngDcd": {
+                              "type": "string",
+                              "description": "변동금리, 고정금리등 금리를 구분하는 코드",
+                              "properties": {}
+                            },
+                            "irtChngDcdNm": {
+                              "type": "string",
+                              "description": "변동금리, 고정금리등 금리를 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "bondSrfcInrt": {
+                              "type": "string",
+                              "description": "채권에 대한 표면 이자율",
+                              "properties": {}
+                            },
+                            "grnDcd": {
+                              "type": "string",
+                              "description": "보증의 종류를 구분하는 코드",
+                              "properties": {}
+                            },
+                            "grnDcdNm": {
+                              "type": "string",
+                              "description": "보증의 종류를 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "bondRnknDcd": {
+                              "type": "string",
+                              "description": "채권의 우선순위를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "bondRnknDcdNm": {
+                              "type": "string",
+                              "description": "채권의 우선순위를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "optnTcd": {
+                              "type": "string",
+                              "description": "Call, Put 등 옵션의 유형을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "optnTcdNm": {
+                              "type": "string",
+                              "description": "Call, Put 등 옵션의 유형을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "pclrBondKcd": {
+                              "type": "string",
+                              "description": "전환, 교환등 특이 채권의 종류를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "pclrBondKcdNm": {
+                              "type": "string",
+                              "description": "전환, 교환등 특이 채권의 종류를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "bondIssuAmt": {
+                              "type": "string",
+                              "description": "채권에 대한 최초발행금액",
+                              "properties": {}
+                            },
+                            "bondPymtAmt": {
+                              "type": "string",
+                              "description": "채권에 대한 납입금액",
+                              "properties": {}
+                            },
+                            "bondBal": {
+                              "type": "string",
+                              "description": "채권 발행 잔액",
+                              "properties": {}
+                            },
+                            "bondOffrMcd": {
+                              "type": "string",
+                              "description": "채권 모집시 모집 방법에 대한 코드",
+                              "properties": {}
+                            },
+                            "bondOffrMcdNm": {
+                              "type": "string",
+                              "description": "채권 모집시 모집 방법에 대한 코드의 명칭",
+                              "properties": {}
+                            },
+                            "lstgDt": {
+                              "type": "string",
+                              "description": "종목상장 적용일자(상장일자)",
+                              "properties": {}
+                            },
+                            "txtnDcd": {
+                              "type": "string",
+                              "description": "과세, 비과세, 부분과세등 과세 종류를 구분하는 코드",
+                              "properties": {}
+                            },
+                            "txtnDcdNm": {
+                              "type": "string",
+                              "description": "과세, 비과세, 부분과세등 과세 종류를 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "pamtRdptMcd": {
+                              "type": "string",
+                              "description": "원금 상환시 상환 방법에 따라 분류한 코드",
+                              "properties": {}
+                            },
+                            "pamtRdptMcdNm": {
+                              "type": "string",
+                              "description": "원금 상환시 상환 방법에 따라 분류한 코드의 명칭",
+                              "properties": {}
+                            },
+                            "stripsPsblYn": {
+                              "type": "string",
+                              "description": "스트립스채권(원금부분과 이자부분으로 나누어 각각 유통되는 채권)이 가능한지의 여부",
+                              "properties": {}
+                            },
+                            "stripsNm": {
+                              "type": "string",
+                              "description": "스트립스채권(원금부분과 이자부분으로 나누어 각각 유통되는 채권)의 명칭",
+                              "properties": {}
+                            },
+                            "prisLnkgBondYn": {
+                              "type": "string",
+                              "description": "물가지수를 연동하여 물가지수연동계수, 물가지수연동원금이 적용되는 채권인지 여부",
+                              "properties": {}
+                            },
+                            "piamPayInstNm": {
+                              "type": "string",
+                              "description": "원금과 이자를 지급하는 금융기관의 명칭",
+                              "properties": {}
+                            },
+                            "piamPayBrofNm": {
+                              "type": "string",
+                              "description": "원금과 이자를 지급하는 금융기관의 지점 이름",
+                              "properties": {}
+                            },
+                            "cptUsgeDcd": {
+                              "type": "string",
+                              "description": "자금의 용도가 시설자금인지, 운영자금인지등을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "cptUsgeDcdNm": {
+                              "type": "string",
+                              "description": "자금의 용도가 시설자금인지, 운영자금인지등을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "bondRegInstDcd": {
+                              "type": "string",
+                              "description": "채권을 등록하는 기관을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "bondRegInstDcdNm": {
+                              "type": "string",
+                              "description": "채권을 등록하는 기관을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "issuDptyNm": {
+                              "type": "string",
+                              "description": "발행 대리인(주간사)의 명칭",
+                              "properties": {}
+                            },
+                            "bondUndtInstNm": {
+                              "type": "string",
+                              "description": "채권의 인수기관 명칭",
+                              "properties": {}
+                            },
+                            "bondGrnInstNm": {
+                              "type": "string",
+                              "description": "채권에 대한 보증기관 명칭",
+                              "properties": {}
+                            },
+                            "cpbdMngCmpyNm": {
+                              "type": "string",
+                              "description": "회사채 관리 회사명",
+                              "properties": {}
+                            },
+                            "crfndYn": {
+                              "type": "string",
+                              "description": "크라우드펀딩(웹이나 모바일 네트워크 등을 통해 다수의 개인으로부터 자금을 모으는 행위)인지의 여부",
+                              "properties": {}
+                            },
+                            "prmncBondYn": {
+                              "type": "string",
+                              "description": "영구채권(만기가 정해져 있지 않는 자본증권)인지의 여부",
+                              "properties": {}
+                            },
+                            "qibTrgtScrtYn": {
+                              "type": "string",
+                              "description": "적격기관투자자 대상 여부",
+                              "properties": {}
+                            },
+                            "prmncBondTmnDt": {
+                              "type": "string",
+                              "description": "영구채권(만기가 정해져 있지 않는 자본증권)의 해지 일자",
+                              "properties": {}
+                            },
+                            "rgtExertMnbdDcd": {
+                              "type": "string",
+                              "description": "권리행사시 권리를 행사하는 주체를 구분하는 코드",
+                              "properties": {}
+                            },
+                            "rgtExertMnbdDcdNm": {
+                              "type": "string",
+                              "description": "권리행사시 권리를 행사하는 주체를 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "intCmpuMcd": {
+                              "type": "string",
+                              "description": "이자 산정시 산출 방법을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "intCmpuMcdNm": {
+                              "type": "string",
+                              "description": "이자 산정시 산출 방법을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "qibTmnDt": {
+                              "type": "string",
+                              "description": "적격기관투자자의 해지 일자",
+                              "properties": {}
+                            },
+                            "bondIntTcd": {
+                              "type": "string",
+                              "description": "채권별 이자 유형이 이표채인지, 할인채인지등을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "bondIntTcdNm": {
+                              "type": "string",
+                              "description": "채권별 이자 유형이 이표채인지, 할인채인지등을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "intPayCyclCtt": {
+                              "type": "string",
+                              "description": "이자 지급의 주기 일수",
+                              "properties": {}
+                            },
+                            "nxtmCopnDt": {
+                              "type": "string",
+                              "description": "다음 차수의 이표(공채 증권이나 채권에 이자 지급에 관한 내용을 적어서 나타내는 증표) 일자",
+                              "properties": {}
+                            },
+                            "rbfCopnDt": {
+                              "type": "string",
+                              "description": "직전의 이표(공채 증권이나 채권에 이자 지급에 관한 내용을 적어서 나타내는 증표)일자",
+                              "properties": {}
+                            },
+                            "bnkHldyIntPydyDcd": {
+                              "type": "string",
+                              "description": "이자 지급일이 은행휴일인경우, 실제 이자를 지급할 날짜(익영업일 혹은 전영업일등)",
+                              "properties": {}
+                            },
+                            "bnkHldyIntPydyDcdNm": {
+                              "type": "string",
+                              "description": "이자 지급일이 은행휴일인경우, 실제 이자를 지급할 날짜의 명칭(익영업일 혹은 전영업일등)",
+                              "properties": {}
+                            },
+                            "sttrHldyIntPydyDcd": {
+                              "type": "string",
+                              "description": "이자 지급일이 휴일인경우, 실제 이자를 지급할 날짜(익영업일 혹은 전영업일등)",
+                              "properties": {}
+                            },
+                            "sttrHldyIntPydyDcdNm": {
+                              "type": "string",
+                              "description": "이자 지급일이 휴일인경우, 실제 이자를 지급할 날짜의 명칭(익영업일 혹은 전영업일등)",
+                              "properties": {}
+                            },
+                            "intPayMmntDcd": {
+                              "type": "string",
+                              "description": "이자 지급시, 지급시기를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "intPayMmntDcdNm": {
+                              "type": "string",
+                              "description": "이자 지급시, 지급시기를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "elpsIntPayYn": {
+                              "type": "string",
+                              "description": "경과 이자의 지급 여부",
+                              "properties": {}
+                            },
+                            "kisScrsItmsKcd": {
+                              "type": "string",
+                              "description": "한국신용평가(KIS)에서 괸리하는 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "kisScrsItmsKcdNm": {
+                              "type": "string",
+                              "description": "한국신용평가(KIS)에서 괸리하는 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "kbpScrsItmsKcd": {
+                              "type": "string",
+                              "description": "한국자산평가에서 관리하는 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "kbpScrsItmsKcdNm": {
+                              "type": "string",
+                              "description": "한국자산평가에서 관리하는 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "niceScrsItmsKcd": {
+                              "type": "string",
+                              "description": "한국신용정보 기준, 해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "niceScrsItmsKcdNm": {
+                              "type": "string",
+                              "description": "한국신용정보 기준, 해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "fnScrsItmsKcd": {
+                              "type": "string",
+                              "description": "FN기준의 해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "fnScrsItmsKcdNm": {
+                              "type": "string",
+                              "description": "FN기준의 해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "채권기본정보조회",
+        "description": "기준일자, 법인등록번호, 채권발행인명을 통하여 채권표면이율, 채권순위구분코드, 채권잔액, 채권납입금액등을 조회하는 채권기본정보조회 기능",
+        "operationId": "getBondBasiInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지 번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "bondIsurNm",
+          "description": "채권을 발행한 발행 회사의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getBondBasiInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "scrsItmsKcd": {
+                      "type": "string",
+                      "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드"
+                    },
+                    "scrsItmsKcdNm": {
+                      "type": "string",
+                      "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭"
+                    },
+                    "bondIssuCurCd": {
+                      "type": "string",
+                      "description": "채권발행시 해당 채권의 각국 통화를 관리하는 코드"
+                    },
+                    "bondIssuCurCdNm": {
+                      "type": "string",
+                      "description": "채권발행시 해당 채권의 각국 통화를 관리하는 코드의 명칭"
+                    },
+                    "bondIsurNm": {
+                      "type": "string",
+                      "description": "채권을 발행한 발행 회사의 명칭"
+                    },
+                    "sicNm": {
+                      "type": "string",
+                      "description": "산업 주체들이 모든 산업활동을 그 성질에 따라 유형화한 분류 이름"
+                    },
+                    "bondIssuDt": {
+                      "type": "string",
+                      "description": "채권을 발행한 일자"
+                    },
+                    "bondExprDt": {
+                      "type": "string",
+                      "description": "채권의 만기일자(상환된 경우, 상환 일자)"
+                    },
+                    "irtChngDcd": {
+                      "type": "string",
+                      "description": "변동금리, 고정금리등 금리를 구분하는 코드"
+                    },
+                    "irtChngDcdNm": {
+                      "type": "string",
+                      "description": "변동금리, 고정금리등 금리를 구분하는 코드의 명칭"
+                    },
+                    "bondSrfcInrt": {
+                      "type": "string",
+                      "description": "채권에 대한 표면 이자율"
+                    },
+                    "grnDcd": {
+                      "type": "string",
+                      "description": "보증의 종류를 구분하는 코드"
+                    },
+                    "grnDcdNm": {
+                      "type": "string",
+                      "description": "보증의 종류를 구분하는 코드의 명칭"
+                    },
+                    "bondRnknDcd": {
+                      "type": "string",
+                      "description": "채권의 우선순위를 관리하는 코드"
+                    },
+                    "bondRnknDcdNm": {
+                      "type": "string",
+                      "description": "채권의 우선순위를 관리하는 코드의 명칭"
+                    },
+                    "optnTcd": {
+                      "type": "string",
+                      "description": "Call, Put 등 옵션의 유형을 관리하는 코드"
+                    },
+                    "optnTcdNm": {
+                      "type": "string",
+                      "description": "Call, Put 등 옵션의 유형을 관리하는 코드의 명칭"
+                    },
+                    "pclrBondKcd": {
+                      "type": "string",
+                      "description": "전환, 교환등 특이 채권의 종류를 관리하는 코드"
+                    },
+                    "pclrBondKcdNm": {
+                      "type": "string",
+                      "description": "전환, 교환등 특이 채권의 종류를 관리하는 코드의 명칭"
+                    },
+                    "bondIssuAmt": {
+                      "type": "string",
+                      "description": "채권에 대한 최초발행금액"
+                    },
+                    "bondPymtAmt": {
+                      "type": "string",
+                      "description": "채권에 대한 납입금액"
+                    },
+                    "bondBal": {
+                      "type": "string",
+                      "description": "채권 발행 잔액"
+                    },
+                    "bondOffrMcd": {
+                      "type": "string",
+                      "description": "채권 모집시 모집 방법에 대한 코드"
+                    },
+                    "bondOffrMcdNm": {
+                      "type": "string",
+                      "description": "채권 모집시 모집 방법에 대한 코드의 명칭"
+                    },
+                    "lstgDt": {
+                      "type": "string",
+                      "description": "종목상장 적용일자(상장일자)"
+                    },
+                    "txtnDcd": {
+                      "type": "string",
+                      "description": "과세, 비과세, 부분과세등 과세 종류를 구분하는 코드"
+                    },
+                    "txtnDcdNm": {
+                      "type": "string",
+                      "description": "과세, 비과세, 부분과세등 과세 종류를 구분하는 코드의 명칭"
+                    },
+                    "pamtRdptMcd": {
+                      "type": "string",
+                      "description": "원금 상환시 상환 방법에 따라 분류한 코드"
+                    },
+                    "pamtRdptMcdNm": {
+                      "type": "string",
+                      "description": "원금 상환시 상환 방법에 따라 분류한 코드의 명칭"
+                    },
+                    "stripsPsblYn": {
+                      "type": "string",
+                      "description": "스트립스채권(원금부분과 이자부분으로 나누어 각각 유통되는 채권)이 가능한지의 여부"
+                    },
+                    "stripsNm": {
+                      "type": "string",
+                      "description": "스트립스채권(원금부분과 이자부분으로 나누어 각각 유통되는 채권)의 명칭"
+                    },
+                    "prisLnkgBondYn": {
+                      "type": "string",
+                      "description": "물가지수를 연동하여 물가지수연동계수, 물가지수연동원금이 적용되는 채권인지 여부"
+                    },
+                    "piamPayInstNm": {
+                      "type": "string",
+                      "description": "원금과 이자를 지급하는 금융기관의 명칭"
+                    },
+                    "piamPayBrofNm": {
+                      "type": "string",
+                      "description": "원금과 이자를 지급하는 금융기관의 지점 이름"
+                    },
+                    "cptUsgeDcd": {
+                      "type": "string",
+                      "description": "자금의 용도가 시설자금인지, 운영자금인지등을 구분하는 코드"
+                    },
+                    "cptUsgeDcdNm": {
+                      "type": "string",
+                      "description": "자금의 용도가 시설자금인지, 운영자금인지등을 구분하는 코드의 명칭"
+                    },
+                    "bondRegInstDcd": {
+                      "type": "string",
+                      "description": "채권을 등록하는 기관을 구분하는 코드"
+                    },
+                    "bondRegInstDcdNm": {
+                      "type": "string",
+                      "description": "채권을 등록하는 기관을 구분하는 코드의 명칭"
+                    },
+                    "issuDptyNm": {
+                      "type": "string",
+                      "description": "발행 대리인(주간사)의 명칭"
+                    },
+                    "bondUndtInstNm": {
+                      "type": "string",
+                      "description": "채권의 인수기관 명칭"
+                    },
+                    "bondGrnInstNm": {
+                      "type": "string",
+                      "description": "채권에 대한 보증기관 명칭"
+                    },
+                    "cpbdMngCmpyNm": {
+                      "type": "string",
+                      "description": "회사채 관리 회사명"
+                    },
+                    "crfndYn": {
+                      "type": "string",
+                      "description": "크라우드펀딩(웹이나 모바일 네트워크 등을 통해 다수의 개인으로부터 자금을 모으는 행위)인지의 여부"
+                    },
+                    "prmncBondYn": {
+                      "type": "string",
+                      "description": "영구채권(만기가 정해져 있지 않는 자본증권)인지의 여부"
+                    },
+                    "qibTrgtScrtYn": {
+                      "type": "string",
+                      "description": "적격기관투자자 대상 여부"
+                    },
+                    "prmncBondTmnDt": {
+                      "type": "string",
+                      "description": "영구채권(만기가 정해져 있지 않는 자본증권)의 해지 일자"
+                    },
+                    "rgtExertMnbdDcd": {
+                      "type": "string",
+                      "description": "권리행사시 권리를 행사하는 주체를 구분하는 코드"
+                    },
+                    "rgtExertMnbdDcdNm": {
+                      "type": "string",
+                      "description": "권리행사시 권리를 행사하는 주체를 구분하는 코드의 명칭"
+                    },
+                    "intCmpuMcd": {
+                      "type": "string",
+                      "description": "이자 산정시 산출 방법을 관리하는 코드"
+                    },
+                    "intCmpuMcdNm": {
+                      "type": "string",
+                      "description": "이자 산정시 산출 방법을 관리하는 코드의 명칭"
+                    },
+                    "qibTmnDt": {
+                      "type": "string",
+                      "description": "적격기관투자자의 해지 일자"
+                    },
+                    "bondIntTcd": {
+                      "type": "string",
+                      "description": "채권별 이자 유형이 이표채인지, 할인채인지등을 관리하는 코드"
+                    },
+                    "bondIntTcdNm": {
+                      "type": "string",
+                      "description": "채권별 이자 유형이 이표채인지, 할인채인지등을 관리하는 코드의 명칭"
+                    },
+                    "intPayCyclCtt": {
+                      "type": "string",
+                      "description": "이자 지급의 주기 일수"
+                    },
+                    "nxtmCopnDt": {
+                      "type": "string",
+                      "description": "다음 차수의 이표(공채 증권이나 채권에 이자 지급에 관한 내용을 적어서 나타내는 증표) 일자"
+                    },
+                    "rbfCopnDt": {
+                      "type": "string",
+                      "description": "직전의 이표(공채 증권이나 채권에 이자 지급에 관한 내용을 적어서 나타내는 증표)일자"
+                    },
+                    "bnkHldyIntPydyDcd": {
+                      "type": "string",
+                      "description": "이자 지급일이 은행휴일인경우, 실제 이자를 지급할 날짜(익영업일 혹은 전영업일등)"
+                    },
+                    "bnkHldyIntPydyDcdNm": {
+                      "type": "string",
+                      "description": "이자 지급일이 은행휴일인경우, 실제 이자를 지급할 날짜의 명칭(익영업일 혹은 전영업일등)"
+                    },
+                    "sttrHldyIntPydyDcd": {
+                      "type": "string",
+                      "description": "이자 지급일이 휴일인경우, 실제 이자를 지급할 날짜(익영업일 혹은 전영업일등)"
+                    },
+                    "sttrHldyIntPydyDcdNm": {
+                      "type": "string",
+                      "description": "이자 지급일이 휴일인경우, 실제 이자를 지급할 날짜의 명칭(익영업일 혹은 전영업일등)"
+                    },
+                    "intPayMmntDcd": {
+                      "type": "string",
+                      "description": "이자 지급시, 지급시기를 관리하는 코드"
+                    },
+                    "intPayMmntDcdNm": {
+                      "type": "string",
+                      "description": "이자 지급시, 지급시기를 관리하는 코드의 명칭"
+                    },
+                    "elpsIntPayYn": {
+                      "type": "string",
+                      "description": "경과 이자의 지급 여부"
+                    },
+                    "kisScrsItmsKcd": {
+                      "type": "string",
+                      "description": "한국신용평가(KIS)에서 괸리하는 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드"
+                    },
+                    "kisScrsItmsKcdNm": {
+                      "type": "string",
+                      "description": "한국신용평가(KIS)에서 괸리하는 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭"
+                    },
+                    "kbpScrsItmsKcd": {
+                      "type": "string",
+                      "description": "한국자산평가에서 관리하는 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드"
+                    },
+                    "kbpScrsItmsKcdNm": {
+                      "type": "string",
+                      "description": "한국자산평가에서 관리하는 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭"
+                    },
+                    "niceScrsItmsKcd": {
+                      "type": "string",
+                      "description": "한국신용정보 기준, 해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드"
+                    },
+                    "niceScrsItmsKcdNm": {
+                      "type": "string",
+                      "description": "한국신용정보 기준, 해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭"
+                    },
+                    "fnScrsItmsKcd": {
+                      "type": "string",
+                      "description": "FN기준의 해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드"
+                    },
+                    "fnScrsItmsKcdNm": {
+                      "type": "string",
+                      "description": "FN기준의 해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            }
+          }
+        }
+      }
+    }
+  }
+}

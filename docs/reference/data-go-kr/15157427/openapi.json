@@ -1,0 +1,767 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "REPO정보서비스는 REPO 증권종류별 담보금액, REPO 거래금액 및 일평균잔액, REPO 통화별잔액 등의 정보를 제공하는 API 서비스입니다. REPO 서비스란 금융시장에서 단기 자금 조달 및 운용을 위한 한 유형의 거래로, 증권의 매도자와 매수자가 미리 약정된 조건에 따라 일정 기간 후 매수자에게 증권을 다시 매도하는 형태의 거래를 말합니다. 실질적으로 REPO 거래는 단기 자금 조달 수단으로 기능합니다. 한국예탁결제원에서 제공하는 REPO서비스는 제3자 입장에서 공정하고 효율적인 REPO플랫폼을 통해 REPO 거래에 수반되는 결제, 거래증권 평가, 권리관리, 일일정산 등 3자간 환매서비스를 제공합니다. 예탁결제원은 중앙청산소(CCP) 역할을 수행하며, 기관 간 레포 시장의 안정성 확보 및 인프라를 운영하고 있습니다. REPO 거래에서 발생할 수 있는 신용위험 및 시장위험을 효과적으로 관리하고 있으며, 자본시장의 활성화와 유동성 공급을 위해 REPO 거래 관련 정책 지원 등의 업무도 수행하고 있습니다. 한국예탁결제원의 대표 증권정보포털인 SEIBro를 통해 실시간 REPO금리 및 시장 현황을 제공하고 있으며, 2025년에는 종합정보플랫폼 'RP인사이드'를 개시하여 KOFR 및 레포 시장의 업권, 차주신용, 담보, 포지션별 거래 분석을 확인할 수 있고 차입금리 비교 서비스를 제공하고 있습니다. 예탁결제원의 서비스의 장점은 Repo거래당사자간 합의에 따라 거래 세부사항을 자유롭게 정할 수 있으며, 거래기간 중에도 거래조건 변경이 가능합니다. 그리고 담보증권의 평가 일일정산서비스를 통해 담보증권의 가치변동에 따른 증거금 이행 및 거래규모 조정이 가능합니다. 마지막으로 담보증권에서 이자 등 권리가 발생하는 경우 수익지급을 통해 매도자에게 권리관리서비스를 제공하며, 매수자가 담보증권을 처분한 경우에도 대체지급프로세스를 통해 권리관리서비스를 제공합니다.",
+    "version": "1.0.0",
+    "title": "한국예탁결제원_REPO정보서비스_GW"
+  },
+  "host": "apis.data.go.kr/B552481/RepoSvc",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getColatRepoAmt": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "integer",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "stkColatAmt": {
+                              "type": "string",
+                              "description": "주식 담보금액",
+                              "properties": {}
+                            },
+                            "cpColatAmt": {
+                              "type": "string",
+                              "description": "CP 담보금액",
+                              "properties": {}
+                            },
+                            "cpbondColatAmt": {
+                              "type": "string",
+                              "description": "회사채 담보금액",
+                              "properties": {}
+                            },
+                            "etcBondColatAmt": {
+                              "type": "string",
+                              "description": "기타채권 담보금액",
+                              "properties": {}
+                            },
+                            "etfColatAmt": {
+                              "type": "string",
+                              "description": "ETF 담보금액",
+                              "properties": {}
+                            },
+                            "fbondColatAmt": {
+                              "type": "string",
+                              "description": "금융채 담보금액",
+                              "properties": {}
+                            },
+                            "lbondColatAmt": {
+                              "type": "string",
+                              "description": "지방채 담보금액",
+                              "properties": {}
+                            },
+                            "msbColatAmt": {
+                              "type": "string",
+                              "description": "통안채 담보금액",
+                              "properties": {}
+                            },
+                            "nbondColatAmt": {
+                              "type": "string",
+                              "description": "국채 담보금액",
+                              "properties": {}
+                            },
+                            "sbondColatAmt": {
+                              "type": "string",
+                              "description": "특수채 담보금액",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "REPO 증권종류별 담보금액 현황 조회",
+        "description": "REPO유형(기관REPO, 고객REPO)별, 증권종류별 REPO 담보금액을 조회",
+        "operationId": "getColatRepoAmt",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "std_dt",
+          "description": "조회기준일자",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "repo_sort_cd",
+          "description": "REPO유형(1: 기관REPO, 2: 고객REPO)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getTrAmtRepoRem": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "dyAvgRema": {
+                              "type": "string",
+                              "description": "일평균잔액",
+                              "properties": {}
+                            },
+                            "trAmt": {
+                              "type": "string",
+                              "description": "거래금액",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "REPO 거래금액 및 일평균잔액 현황 조회",
+        "description": "REPO유형(기관REPO, 고객REPO)별 REPO 거래금액 및 일평균잔액을 조회",
+        "operationId": "getTrAmtRepoRem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "std_dt",
+          "description": "조회기준일자",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "repo_sort_cd",
+          "description": "REPO유형",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    },
+    "/getCurRepoRem": {
+      "get": {
+        "responses": {
+          "3": {
+            "description": "NODATA_ERROR(데이터 없음)"
+          },
+          "10": {
+            "description": "INVALID_REQUEST_PARAMETER_ERROR(잘못된 요청 파라메터)"
+          },
+          "11": {
+            "description": "NO_MANDATORY_REQUEST_PARAMETER_ERROR(필수요청 파라메터가 없음)"
+          },
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "totalCount": {
+                      "type": "integer",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "repoRema": {
+                              "type": "string",
+                              "description": "REPO 잔액",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "REPO 통화별잔액 조회",
+        "description": "특정기준일자의 REPO 잔액을 통화별(KRW,USD,JPY)로 조회",
+        "operationId": "getCurRepoRem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "std_dt",
+          "description": "기준일자",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "cur_cd",
+          "description": "통화코드(KRW, USD, JPY)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getColatRepoAmt_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "integer",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "stkColatAmt": {
+                      "type": "string",
+                      "description": "주식 담보금액"
+                    },
+                    "cpColatAmt": {
+                      "type": "string",
+                      "description": "CP 담보금액"
+                    },
+                    "cpbondColatAmt": {
+                      "type": "string",
+                      "description": "회사채 담보금액"
+                    },
+                    "etcBondColatAmt": {
+                      "type": "string",
+                      "description": "기타채권 담보금액"
+                    },
+                    "etfColatAmt": {
+                      "type": "string",
+                      "description": "ETF 담보금액"
+                    },
+                    "fbondColatAmt": {
+                      "type": "string",
+                      "description": "금융채 담보금액"
+                    },
+                    "lbondColatAmt": {
+                      "type": "string",
+                      "description": "지방채 담보금액"
+                    },
+                    "msbColatAmt": {
+                      "type": "string",
+                      "description": "통안채 담보금액"
+                    },
+                    "nbondColatAmt": {
+                      "type": "string",
+                      "description": "국채 담보금액"
+                    },
+                    "sbondColatAmt": {
+                      "type": "string",
+                      "description": "특수채 담보금액"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getTrAmtRepoRem_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            },
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "dyAvgRema": {
+                      "type": "string",
+                      "description": "일평균잔액"
+                    },
+                    "trAmt": {
+                      "type": "string",
+                      "description": "거래금액"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getCurRepoRem_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "totalCount": {
+              "type": "integer",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "repoRema": {
+                      "type": "string",
+                      "description": "REPO 잔액"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "swaggerOprtinVOs": [
+    {
+      "oprtinUrl": "https://seibro.or.kr/openapi/RepoSvc/getColatRepoAmt",
+      "oprtinNm": "REPO 증권종류별 담보금액 현황 조회",
+      "oprtinDc": "REPO유형(기관REPO, 고객REPO)별, 증권종류별 REPO 담보금액을 조회",
+      "gwSvcNm": "getColatRepoAmt",
+      "operationId": "getColatRepoAmt",
+      "publicDataTyDetailCode": "PRDE02",
+      "reqList": [
+        {
+          "paramtrNm": "serviceKey",
+          "paramtrDc": "공공데이터포털에서 받은 인증키",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        },
+        {
+          "paramtrNm": "pageNo",
+          "paramtrDc": "페이지번호",
+          "paramtrBassValue": "1",
+          "paramtrTy": "string",
+          "paramtrDivision": "옵션",
+          "ck": true
+        },
+        {
+          "paramtrNm": "numOfRows",
+          "paramtrDc": "한 페이지 결과 수",
+          "paramtrBassValue": "10",
+          "paramtrTy": "string",
+          "paramtrDivision": "옵션",
+          "ck": true
+        },
+        {
+          "paramtrNm": "std_dt",
+          "paramtrDc": "조회기준일자",
+          "paramtrBassValue": "20210930",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        },
+        {
+          "paramtrNm": "repo_sort_cd",
+          "paramtrDc": "REPO유형(1: 기관REPO, 2: 고객REPO)",
+          "paramtrBassValue": "1",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        }
+      ],
+      "resList": [
+        {
+          "paramtrNm": "header",
+          "paramtrDc": "header",
+          "arrayYn": "N",
+          "paramtrDefNm": "#/definitions/getColatRepoAmt_header",
+          "subDefNm": "getColatRepoAmt_header",
+          "paramtrTy": "object",
+          "paramtrDivision": "필수",
+          "ck": true,
+          "subParam": [
+            {
+              "paramtrNm": "resultCode",
+              "paramtrDc": "결과코드",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            },
+            {
+              "paramtrNm": "resultMsg",
+              "paramtrDc": "결과메세지",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            }
+          ]
+        },
+        {
+          "paramtrNm": "body",
+          "paramtrDc": "body",
+          "arrayYn": "N",
+          "paramtrDefNm": "#/definitions/getColatRepoAmt_body",
+          "subDefNm": "getColatRepoAmt_body",
+          "paramtrTy": "object",
+          "paramtrDivision": "필수",
+          "ck": true,
+          "subParam": [
+            {
+              "paramtrNm": "items",
+              "paramtrDc": "items",
+              "arrayYn": "N",
+              "paramtrDefNm": "#/definitions/getColatRepoAmt_items",
+              "subDefNm": "getColatRepoAmt_items",
+              "paramtrTy": "object",
+              "paramtrDivision": "필수",
+              "ck": true,
+              "subParam": [
+                {
+                  "paramtrNm": "item",
+                  "paramtrDc": "item",
+                  "arrayYn": "N",
+                  "paramtrDefNm": "#/definitions/getColatRepoAmt_item",
+                  "subDefNm": "getColatRepoAmt_item",
+                  "paramtrTy": "object",
+                  "paramtrDivision": "필수",
+                  "ck": true,
+                  "subParam": [
+                    {
+                      "paramtrNm": "stkColatAmt",
+                      "paramtrDc": "주식 담보금액",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "cpColatAmt",
+                      "paramtrDc": "CP 담보금액",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "cpbondColatAmt",
+                      "paramtrDc": "회사채 담보금액",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "etcBondColatAmt",
+                      "paramtrDc": "기타채권 담보금액",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "etfColatAmt",
+                      "paramtrDc": "ETF 담보금액",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "fbondColatAmt",
+                      "paramtrDc": "금융채 담보금액",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "lbondColatAmt",
+                      "paramtrDc": "지방채 담보금액",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "msbColatAmt",
+                      "paramtrDc": "통안채 담보금액",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "nbondColatAmt",
+                      "paramtrDc": "국채 담보금액",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "sbondColatAmt",
+                      "paramtrDc": "특수채 담보금액",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

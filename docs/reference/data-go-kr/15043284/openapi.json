@@ -1,0 +1,398 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "주식배당정보는 법인등록번호 또는 주식발행회사명을 기준으로 배당 관련 주요 정보를 제공하는 데이터입니다. \n\n제공 항목에는 배당기준일자, 현금배당지급일자, 주식교부일자, 주식일반배당금액, 차등배당금액, 배당률, 주식종류(보통주·우선주 등), 배당사유 코드 및 명칭, 명의개서대리인 정보 등이 포함됩니다. \n\n단일 오퍼레이션으로 구성되어 있으며 세부 내용은 다음과 같습니다.\n① 배당정보조회 : 기준일자, 법인등록번호, 주식발행회사명을 통하여 배당기준일자, 현금배당지급일자, 주식교부일자, 주식일반배당금액, 주식차등배당금액 등을 조회하는 배당정보조회 기능\n\n이 데이터를 통해 기업별 배당 정책 및 실행 현황을 시점별로 파악할 수 있으며, 배당정책의 변화, 현금흐름 분석, 투자자 참고자료로 활용할 수 있습니다.\n\n※ 데이터 갱신주기는 일 1회입니다.\n※ 금융위원회의 모든 API는 데이터 보유기관으로부터 데이터를 연계받아 수집 후 개방하고 있습니다.\n금융위원회에서 제공하는 모든 서비스는 실시간이 아니며, 데이터 갱신은 기준일자로부터 영업일 하루 뒤 오후 1시 이후에 업데이트됩니다.\n예를 들어, 금요일 데이터는 차주 월요일에 제공됩니다. (월요일이 공휴일인 경우, 다음 영업일에 제공됩니다)\n※ 자주 묻는 질문(FAQ)은 https://www.fsc.go.kr/in060501 에서 확인하실 수 있습니다.\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_주식배당정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetStocDiviInfoService_V2",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getDiviInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "stckIssuCmpyNm": {
+                              "type": "string",
+                              "description": "주식발행사의 명칭",
+                              "properties": {}
+                            },
+                            "dvdnBasDt": {
+                              "type": "string",
+                              "description": "배당(주식을 가지고 있는 사람들에게 그 소유 지분에 따라 기업이 이윤을 분배하는 것) 기준 일자",
+                              "properties": {}
+                            },
+                            "cashDvdnPayDt": {
+                              "type": "string",
+                              "description": "현금 배당을 지급한 일자",
+                              "properties": {}
+                            },
+                            "stckHndvDt": {
+                              "type": "string",
+                              "description": "주식을 교부한 일자",
+                              "properties": {}
+                            },
+                            "stckDvdnRcd": {
+                              "type": "string",
+                              "description": "주식 배상시 그 사유를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "stckDvdnRcdNm": {
+                              "type": "string",
+                              "description": "주식 배상시 그 사유를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "trsnmDptyDcd": {
+                              "type": "string",
+                              "description": "권리자가 변경되어 관련 서류에서 명의인의 표시를 수정할때 그 대리인을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "trsnmDptyDcdNm": {
+                              "type": "string",
+                              "description": "권리자가 변경되어 관련 서류에서 명의인의 표시를 수정할때 그 대리인을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "scrsItmsKcd": {
+                              "type": "string",
+                              "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "scrsItmsKcdNm": {
+                              "type": "string",
+                              "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "stckGenrDvdnAmt": {
+                              "type": "string",
+                              "description": "1주당 현금 배당 금액",
+                              "properties": {}
+                            },
+                            "stckGrdnDvdnAmt": {
+                              "type": "string",
+                              "description": "차등 배정 기준에 따라 배당한 주식 차등 배당 금액",
+                              "properties": {}
+                            },
+                            "stckGenrCashDvdnRt": {
+                              "type": "string",
+                              "description": "주식의 현금 배당 비율(권리발행의 현금배정비율)",
+                              "properties": {}
+                            },
+                            "stckGenrDvdnRt": {
+                              "type": "string",
+                              "description": "주식의 일반 배당 비율(권리발행의 주식배정비율)",
+                              "properties": {}
+                            },
+                            "cashGrdnDvdnRt": {
+                              "type": "string",
+                              "description": "차등 기준에 따라 현금을 배당한 비율",
+                              "properties": {}
+                            },
+                            "stckGrdnDvdnRt": {
+                              "type": "string",
+                              "description": "차등 배정 기준에 따라 배당한 주식 차등 배당률",
+                              "properties": {}
+                            },
+                            "stckParPrc": {
+                              "type": "string",
+                              "description": "주식의 권면에 기재된 금액",
+                              "properties": {}
+                            },
+                            "stckStacMd": {
+                              "type": "string",
+                              "description": "발행사의 주결산 시점에 해당하는 월일",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "배당정보조회",
+        "description": "기준일자, 법인등록번호, 주식발행회사명을 통하여 배당기준일자, 현금배당지급일자, 주식교부일자, 주식일반배당금액, 주식차등배당금액 등을 조회하는 배당정보조회 기능",
+        "operationId": "getDiviInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "stckIssuCmpyNm",
+          "description": "주식발행사의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getDiviInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "stckIssuCmpyNm": {
+                      "type": "string",
+                      "description": "주식발행사의 명칭"
+                    },
+                    "dvdnBasDt": {
+                      "type": "string",
+                      "description": "배당(주식을 가지고 있는 사람들에게 그 소유 지분에 따라 기업이 이윤을 분배하는 것) 기준 일자"
+                    },
+                    "cashDvdnPayDt": {
+                      "type": "string",
+                      "description": "현금 배당을 지급한 일자"
+                    },
+                    "stckHndvDt": {
+                      "type": "string",
+                      "description": "주식을 교부한 일자"
+                    },
+                    "stckDvdnRcd": {
+                      "type": "string",
+                      "description": "주식 배상시 그 사유를 관리하는 코드"
+                    },
+                    "stckDvdnRcdNm": {
+                      "type": "string",
+                      "description": "주식 배상시 그 사유를 관리하는 코드의 명칭"
+                    },
+                    "trsnmDptyDcd": {
+                      "type": "string",
+                      "description": "권리자가 변경되어 관련 서류에서 명의인의 표시를 수정할때 그 대리인을 구분하는 코드"
+                    },
+                    "trsnmDptyDcdNm": {
+                      "type": "string",
+                      "description": "권리자가 변경되어 관련 서류에서 명의인의 표시를 수정할때 그 대리인을 구분하는 코드의 명칭"
+                    },
+                    "scrsItmsKcd": {
+                      "type": "string",
+                      "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드"
+                    },
+                    "scrsItmsKcdNm": {
+                      "type": "string",
+                      "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭"
+                    },
+                    "stckGenrDvdnAmt": {
+                      "type": "string",
+                      "description": "1주당 현금 배당 금액"
+                    },
+                    "stckGrdnDvdnAmt": {
+                      "type": "string",
+                      "description": "차등 배정 기준에 따라 배당한 주식 차등 배당 금액"
+                    },
+                    "stckGenrCashDvdnRt": {
+                      "type": "string",
+                      "description": "주식의 현금 배당 비율(권리발행의 현금배정비율)"
+                    },
+                    "stckGenrDvdnRt": {
+                      "type": "string",
+                      "description": "주식의 일반 배당 비율(권리발행의 주식배정비율)"
+                    },
+                    "cashGrdnDvdnRt": {
+                      "type": "string",
+                      "description": "차등 기준에 따라 현금을 배당한 비율"
+                    },
+                    "stckGrdnDvdnRt": {
+                      "type": "string",
+                      "description": "차등 배정 기준에 따라 배당한 주식 차등 배당률"
+                    },
+                    "stckParPrc": {
+                      "type": "string",
+                      "description": "주식의 권면에 기재된 금액"
+                    },
+                    "stckStacMd": {
+                      "type": "string",
+                      "description": "발행사의 주결산 시점에 해당하는 월일"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    }
+  }
+}

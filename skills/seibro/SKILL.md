@@ -1,11 +1,17 @@
 ---
 name: seibro
-description: SEIBRO 공식 Open API와 공개 WebSquare 화면에서 한국 주식의 권리일정, 주총 안건, 배당, 의무보유, 주식관련사채와 채권 발행·상환을 조회한다. SEIBRO 또는 예탁결제원 데이터로 조회하거나 DART 사채 공시와 대조할 때 사용한다.
+description: SEIBRO 공식 Open API를 우선 사용해 한국 주식의 권리일정, 주총 안건, 배당, 의무보유, 주식관련사채와 채권 발행·상환을 조회한다. 공식 API의 미지원 항목은 공공데이터포털 API와 공개 WebSquare 명세에서 찾는다. SEIBRO 또는 예탁결제원 데이터로 조회하거나 DART 사채 공시와 대조할 때 사용한다.
 ---
 
 # SEIBRO 조회와 분석
 
 저장소 루트에서 `python -m pip install -e .`를 실행하고 아래 Python 함수를 사용한다. 키가 필요한 요청은 `SEIBRO_API_KEY` 또는 `DART_API_KEY`를 환경변수나 로컬 `.env`에서 읽는다. Colab 예제는 Secrets를 쓴다. 키 값과 인증정보가 든 요청 URL·원시 XML을 출력하지 않는다.
+
+## 조회 경로 우선순위
+
+1. 필요한 항목이 [SEIBRO 공식 Open API 명세](../../docs/reference/README.md)에 있으면 공식 API를 우선한다.
+2. 공식 API에 필요한 조회나 필드가 없으면 [공공데이터포털 API 명세](../../docs/reference/data-go-kr/README.md)에서 서비스와 대표 호출을 찾는다. 기관 API와 포털 API의 대응 항목은 [조회 비교](../../docs/reference/data-go-kr/overlap.md)에서 확인한다.
+3. 두 API로 얻기 어려운 화면 상세는 공개 WebSquare에서 조회한다. 요청에 조회 경로가 명시된 경우 그 경로를 사용한다.
 
 ## 질문별 조회 함수
 
@@ -36,4 +42,4 @@ print(data["agendas"].head().to_string(index=False))
 - 미상환잔액은 CB 전환가능분을 계산할 때 쓰인다. BW 미행사분은 신주인수권 행사 내역을 대조한다. 주식수 희석과 의무보유를 같이 해석할 때 [희석 분석 원본](../../scenarios/_src/combined/01_dilution.py)의 계산 전제를 확인한다.
 - 빈 표, 부분 조회, 호출 오류를 구분하고 결과에 사용한 출처와 시점을 적는다.
 
-호출 범위와 단위의 세부사항은 [데이터 소스](../../docs/data_sources.md), 인자·컬럼은 [Python 레퍼런스](../../docs/python_reference.md)를 읽는다. 예시를 실행하거나 비교할 때는 [시나리오 색인](../../scenarios/README.md)에서 공식 API·웹·혼합 분류를 찾는다.
+원천 API ID·입출력 필드는 [공식 Open API 명세](../../docs/reference/README.md), 패키지 인자·컬럼은 [Python 레퍼런스](../../docs/python_reference.md), 실측한 제약은 [데이터 소스](../../docs/data_sources.md)에서 확인한다. 예시를 실행할 때는 [시나리오 색인](../../scenarios/README.md)에서 공식 API·웹·혼합 분류를 찾는다.

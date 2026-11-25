@@ -1,0 +1,894 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "단기금융증권거래정보는 단기금융상품(CP, CD 등)의 거래 현황을 기준일자별로 제공하는 데이터입니다.\n\n주요 항목으로는 단기금융상품구분코드, 매매금액, 매매수익률(금리), 발행일자, 만기일자, 잔존만기, 통화코드, ISIN코드, 매도·매수 금융업종구분 등이 포함되며, 상품 유형별, 업종별, 금리 수준별 거래 구조를 파악할 수 있습니다.\n\n해당 데이터는 ① 건별매매내역 조회, ② 매매금리 조회, ③ 매매금액 조회의 세 가지 오퍼레이션으로 제공되며, 단기 금융시장 내 자금 흐름과 유동성 현황을 파악하고, 금융회사의 단기자금 운용 및 리스크 관리에 필요한 기초자료로 활용할 수 있습니다.\n\n※ 데이터 갱신주기는 일 1회입니다.\n※ 금융위원회의 모든 API는 데이터 보유기관으로부터 데이터를 연계받아 수집 후 개방하고 있습니다.\n금융위원회에서 제공하는 모든 서비스는 실시간이 아니며, 데이터 갱신은 기준일자로부터 영업일 하루 뒤 오후 1시 이후에 업데이트됩니다.\n예를 들어, 금요일 데이터는 차주 월요일에 제공됩니다. (월요일이 공휴일인 경우, 다음 영업일에 제공됩니다)\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_단기금융증권거래정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetShorTermSecuTradInfoService_V2",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getCaseBuyAndSellInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "stlSqno": {
+                              "type": "string",
+                              "description": "결제 건을 식별하기 위해 순차적으로 부여한 일련 번호",
+                              "properties": {}
+                            },
+                            "slngShtrFinBzcDcd": {
+                              "type": "string",
+                              "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드",
+                              "properties": {}
+                            },
+                            "slngShtrFinBzcDcdNm": {
+                              "type": "string",
+                              "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드의 명칭",
+                              "properties": {}
+                            },
+                            "buynShtrFinBzcDcd": {
+                              "type": "string",
+                              "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드",
+                              "properties": {}
+                            },
+                            "buynShtrFinBzcDcdNm": {
+                              "type": "string",
+                              "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드의 명칭",
+                              "properties": {}
+                            },
+                            "curCd": {
+                              "type": "string",
+                              "description": "각국의 통화를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "curCdNm": {
+                              "type": "string",
+                              "description": "각국의 통화를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "shtrFinPrdTrdAmt": {
+                              "type": "string",
+                              "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 매매 금액",
+                              "properties": {}
+                            },
+                            "shtrFinPrdIrt": {
+                              "type": "string",
+                              "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 금리",
+                              "properties": {}
+                            },
+                            "shtrFinPrdDcd": {
+                              "type": "string",
+                              "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "shtrFinPrdDcdNm": {
+                              "type": "string",
+                              "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "shtrFinPrdIssuDt": {
+                              "type": "string",
+                              "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 발행 일자",
+                              "properties": {}
+                            },
+                            "shtrFinPrdExprDt": {
+                              "type": "string",
+                              "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 만기 일자",
+                              "properties": {}
+                            },
+                            "shtrPrdRmngExprDcd": {
+                              "type": "string",
+                              "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "shtrPrdRmngExprDcdNm": {
+                              "type": "string",
+                              "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드의 명칭",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "건별매매내역조회",
+        "description": "기준일자, 매도단기금융업종구분코드를 통하여 통화코드, 단기금융상품금리, 단기금융상품구분코드명등을 조회하는 건별매매내역조회 기능",
+        "operationId": "getCaseBuyAndSellInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "slngShtrFinBzcDcd",
+          "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getBuyAndSellAmou_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "stlSqno": {
+                              "type": "string",
+                              "description": "결제 건을 식별하기 위해 순차적으로 부여한 일련 번호",
+                              "properties": {}
+                            },
+                            "shtrFinPrdDcd": {
+                              "type": "string",
+                              "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "shtrFinPrdDcdNm": {
+                              "type": "string",
+                              "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "trdDcd": {
+                              "type": "string",
+                              "description": "매수, 매도 등 매매구분을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "trdDcdNm": {
+                              "type": "string",
+                              "description": "매수, 매도 등 매매구분을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "shtrFinBzcDcd": {
+                              "type": "string",
+                              "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드",
+                              "properties": {}
+                            },
+                            "shtrFinBzcDcdNm": {
+                              "type": "string",
+                              "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드의 명칭",
+                              "properties": {}
+                            },
+                            "shtrPrdRmngExprDcd": {
+                              "type": "string",
+                              "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "shtrPrdRmngExprDcdNm": {
+                              "type": "string",
+                              "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "rmngExprTrdAmt": {
+                              "type": "string",
+                              "description": "잔존만기별 매매금액(결제금액)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "매매금액조회",
+        "description": "기준일자, 단기금융상품구분코드명을 통하여 매매구분코드명, 잔존만기매매금액, 결제일련번호등을 조회하는 매매금액조회 기능",
+        "operationId": "getBuyAndSellAmou_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "shtrFinPrdDcdNm",
+          "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getBuyAndSellInteRate_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "stlSqno": {
+                              "type": "string",
+                              "description": "결제 건을 식별하기 위해 순차적으로 부여한 일련 번호",
+                              "properties": {}
+                            },
+                            "shtrFinPrdDcd": {
+                              "type": "string",
+                              "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "shtrFinPrdDcdNm": {
+                              "type": "string",
+                              "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "isurPtrnNm": {
+                              "type": "string",
+                              "description": "발행사의 업종 유형에 관한 명칭",
+                              "properties": {}
+                            },
+                            "curCd": {
+                              "type": "string",
+                              "description": "각국의 통화를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "curCdNm": {
+                              "type": "string",
+                              "description": "각국의 통화를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "shtrPrdRmngExprDcd": {
+                              "type": "string",
+                              "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "shtrPrdRmngExprDcdNm": {
+                              "type": "string",
+                              "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "rmngExprTrdBnfRt": {
+                              "type": "string",
+                              "description": "잔존만기별 매매시 수익률",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "매매금리조회",
+        "description": "기준일자, 단기금융상품구분코드명을 통하여 통화코드, 잔존만기매매수익률, 결제일련번호등을 조회하는 매매금리조회 기능",
+        "operationId": "getBuyAndSellInteRate_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "shtrFinPrdDcdNm",
+          "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getCaseBuyAndSellInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "stlSqno": {
+                      "type": "string",
+                      "description": "결제 건을 식별하기 위해 순차적으로 부여한 일련 번호"
+                    },
+                    "slngShtrFinBzcDcd": {
+                      "type": "string",
+                      "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드"
+                    },
+                    "slngShtrFinBzcDcdNm": {
+                      "type": "string",
+                      "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드의 명칭"
+                    },
+                    "buynShtrFinBzcDcd": {
+                      "type": "string",
+                      "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드"
+                    },
+                    "buynShtrFinBzcDcdNm": {
+                      "type": "string",
+                      "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드의 명칭"
+                    },
+                    "curCd": {
+                      "type": "string",
+                      "description": "각국의 통화를 관리하는 코드"
+                    },
+                    "curCdNm": {
+                      "type": "string",
+                      "description": "각국의 통화를 관리하는 코드의 명칭"
+                    },
+                    "shtrFinPrdTrdAmt": {
+                      "type": "string",
+                      "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 매매 금액"
+                    },
+                    "shtrFinPrdIrt": {
+                      "type": "string",
+                      "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 금리"
+                    },
+                    "shtrFinPrdDcd": {
+                      "type": "string",
+                      "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드"
+                    },
+                    "shtrFinPrdDcdNm": {
+                      "type": "string",
+                      "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드의 명칭"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "shtrFinPrdIssuDt": {
+                      "type": "string",
+                      "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 발행 일자"
+                    },
+                    "shtrFinPrdExprDt": {
+                      "type": "string",
+                      "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 만기 일자"
+                    },
+                    "shtrPrdRmngExprDcd": {
+                      "type": "string",
+                      "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드"
+                    },
+                    "shtrPrdRmngExprDcdNm": {
+                      "type": "string",
+                      "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드의 명칭"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getBuyAndSellAmou_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "stlSqno": {
+                      "type": "string",
+                      "description": "결제 건을 식별하기 위해 순차적으로 부여한 일련 번호"
+                    },
+                    "shtrFinPrdDcd": {
+                      "type": "string",
+                      "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드"
+                    },
+                    "shtrFinPrdDcdNm": {
+                      "type": "string",
+                      "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드의 명칭"
+                    },
+                    "trdDcd": {
+                      "type": "string",
+                      "description": "매수, 매도 등 매매구분을 관리하는 코드"
+                    },
+                    "trdDcdNm": {
+                      "type": "string",
+                      "description": "매수, 매도 등 매매구분을 관리하는 코드의 명칭"
+                    },
+                    "shtrFinBzcDcd": {
+                      "type": "string",
+                      "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드"
+                    },
+                    "shtrFinBzcDcdNm": {
+                      "type": "string",
+                      "description": "단기 금융을 괸리하는 회사의 업종을 구분한 코드의 명칭"
+                    },
+                    "shtrPrdRmngExprDcd": {
+                      "type": "string",
+                      "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드"
+                    },
+                    "shtrPrdRmngExprDcdNm": {
+                      "type": "string",
+                      "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드의 명칭"
+                    },
+                    "rmngExprTrdAmt": {
+                      "type": "string",
+                      "description": "잔존만기별 매매금액(결제금액)"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getBuyAndSellInteRate_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "stlSqno": {
+                      "type": "string",
+                      "description": "결제 건을 식별하기 위해 순차적으로 부여한 일련 번호"
+                    },
+                    "shtrFinPrdDcd": {
+                      "type": "string",
+                      "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드"
+                    },
+                    "shtrFinPrdDcdNm": {
+                      "type": "string",
+                      "description": "단기 금융(30일, 60일, 90일 120일등)의 금융상품(CP, CD등) 을 구분하는 코드의 명칭"
+                    },
+                    "isurPtrnNm": {
+                      "type": "string",
+                      "description": "발행사의 업종 유형에 관한 명칭"
+                    },
+                    "curCd": {
+                      "type": "string",
+                      "description": "각국의 통화를 관리하는 코드"
+                    },
+                    "curCdNm": {
+                      "type": "string",
+                      "description": "각국의 통화를 관리하는 코드의 명칭"
+                    },
+                    "shtrPrdRmngExprDcd": {
+                      "type": "string",
+                      "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드"
+                    },
+                    "shtrPrdRmngExprDcdNm": {
+                      "type": "string",
+                      "description": "단기 금융상품의 잔존 만기 기간을 구분하는 코드의 명칭"
+                    },
+                    "rmngExprTrdBnfRt": {
+                      "type": "string",
+                      "description": "잔존만기별 매매시 수익률"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    }
+  }
+}

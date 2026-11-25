@@ -1,0 +1,321 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "REPO종목정보는 환매조건부채권거래(REPO)에 활용되는 종목의 금리 정보를 제공하는 데이터입니다.\n\n데이터는 단일 오퍼레이션으로 구성되어 있으며, 기준일자와 종목번호를 기준으로, 종목명, 종목구분, 시장구분, 표면이율, 만기일, 발행기관, 금리구분, 발행금액 등의 정보를 제공합니다.\n\n오퍼레이션의 세부 정보는 아래와 같습니다.\n\n① 금리정보 조회 : 기준일자를 통하여 상환기간분류코드, 매수자업종유형코드, 매도자업종유형코드등을 조회하는 금리정보조회 기능\n\n* 환매조건부채권거래(REPO)란? : 환매조건부매매로 금융기관이 특정 자산을 일정 기간 후에 원금과 이자를 지급하고 다시 매입하기로 약정하는 거래\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_REPO종목정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetRepoItemInfoService_V2",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getInteRateInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "rpSqno": {
+                              "type": "string",
+                              "description": "환매조건부채권을 식별하기 위하여 순차적으로 부여한 일련번호",
+                              "properties": {}
+                            },
+                            "rpBuyScrtKcd": {
+                              "type": "string",
+                              "description": "기업어음의 매입증권 종류를 관리하는 코드 (통안채, 국채, 은행채 등)",
+                              "properties": {}
+                            },
+                            "rpBuyScrtKcdNm": {
+                              "type": "string",
+                              "description": "기업어음의 매입증권 종류를 관리하는 코드의 명칭 (통안채, 국채, 은행채 등)",
+                              "properties": {}
+                            },
+                            "rpBuyAplCurCd": {
+                              "type": "string",
+                              "description": "환매조건부채권(RP)을 매입 할때 적용되는 통화를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "rpBuyAplCurCdNm": {
+                              "type": "string",
+                              "description": "환매조건부채권(RP)을 매입 할때 적용되는 통화를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "rdptTermCcd": {
+                              "type": "string",
+                              "description": "상환 기간에 따라 기간을 분류한 코드",
+                              "properties": {}
+                            },
+                            "rdptTermCcdNm": {
+                              "type": "string",
+                              "description": "상환 기간에 따라 기간을 분류한 코드의 명칭",
+                              "properties": {}
+                            },
+                            "rpRmngExprDcd": {
+                              "type": "string",
+                              "description": "기업어음(RP)의 잔존 만기 기간을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "rpRmngExprDcdNm": {
+                              "type": "string",
+                              "description": "기업어음(RP)의 잔존 만기 기간을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "purcBzcTcd": {
+                              "type": "string",
+                              "description": "업종별 유형을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "purcBzcTcdNm": {
+                              "type": "string",
+                              "description": "업종별 유형을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "slrBzcTcd": {
+                              "type": "string",
+                              "description": "업종별 유형을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "slrBzcTcdNm": {
+                              "type": "string",
+                              "description": "업종별 유형을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "rpInrt": {
+                              "type": "string",
+                              "description": "환매조건부채권거래 매수자 제공 매입금액에 대한 이율",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "금리정보조회",
+        "description": "기준일자를 통하여 상환기간분류코드, 매수자업종유형코드, 매도자업종유형코드등을 조회하는 금리정보조회 기능",
+        "operationId": "getInteRateInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getInteRateInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "rpSqno": {
+                      "type": "string",
+                      "description": "환매조건부채권을 식별하기 위하여 순차적으로 부여한 일련번호"
+                    },
+                    "rpBuyScrtKcd": {
+                      "type": "string",
+                      "description": "기업어음의 매입증권 종류를 관리하는 코드 (통안채, 국채, 은행채 등)"
+                    },
+                    "rpBuyScrtKcdNm": {
+                      "type": "string",
+                      "description": "기업어음의 매입증권 종류를 관리하는 코드의 명칭 (통안채, 국채, 은행채 등)"
+                    },
+                    "rpBuyAplCurCd": {
+                      "type": "string",
+                      "description": "환매조건부채권(RP)을 매입 할때 적용되는 통화를 관리하는 코드"
+                    },
+                    "rpBuyAplCurCdNm": {
+                      "type": "string",
+                      "description": "환매조건부채권(RP)을 매입 할때 적용되는 통화를 관리하는 코드의 명칭"
+                    },
+                    "rdptTermCcd": {
+                      "type": "string",
+                      "description": "상환 기간에 따라 기간을 분류한 코드"
+                    },
+                    "rdptTermCcdNm": {
+                      "type": "string",
+                      "description": "상환 기간에 따라 기간을 분류한 코드의 명칭"
+                    },
+                    "rpRmngExprDcd": {
+                      "type": "string",
+                      "description": "기업어음(RP)의 잔존 만기 기간을 구분하는 코드"
+                    },
+                    "rpRmngExprDcdNm": {
+                      "type": "string",
+                      "description": "기업어음(RP)의 잔존 만기 기간을 구분하는 코드의 명칭"
+                    },
+                    "purcBzcTcd": {
+                      "type": "string",
+                      "description": "업종별 유형을 관리하는 코드"
+                    },
+                    "purcBzcTcdNm": {
+                      "type": "string",
+                      "description": "업종별 유형을 관리하는 코드의 명칭"
+                    },
+                    "slrBzcTcd": {
+                      "type": "string",
+                      "description": "업종별 유형을 관리하는 코드"
+                    },
+                    "slrBzcTcdNm": {
+                      "type": "string",
+                      "description": "업종별 유형을 관리하는 코드의 명칭"
+                    },
+                    "rpInrt": {
+                      "type": "string",
+                      "description": "환매조건부채권거래 매수자 제공 매입금액에 대한 이율"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    }
+  }
+}

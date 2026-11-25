@@ -1,0 +1,743 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "채권대차정보는 기준일자, 대차증권구분코드명, 표준산업분류명 등을 기준으로 채권 대차거래 현황을 조회할 수 있는 데이터입니다.\n\n총 3가지 오퍼레이션으로 제공되며, 각각의 기능은 다음과 같습니다:\n\n① 채권대차종목순위 조회: 대차체결금액, 상환금액, 대차잔액 등을 종목별로 제공\n② 채권종목별 대차거래현황 조회: 개별 채권 종목의 거래 내역과 잔액 현황\n③ 채권업종별 참여현황 조회: 산업별로 채권 대여·차입 잔액 및 비율 제공\n주요 항목에는 ISIN코드, 채권명, 산업분류명, 대차체결금액, 대차상환금액, 대차잔액, 대여·차입잔액 및 비율 등이 포함됩니다.\n\n본 데이터는 채권시장 내 유통 규모, 종목별 거래 집중도, 산업별 참여 구조를 분석할 수 있어, 금융시장 감시, 투자 전략 수립, 금융기관 리스크 점검 등에 활용될 수 있습니다.\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_채권대차정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetBondLendBorrInfoService_V2",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getBondLendAndBorrRank_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "lnbScrtDcd": {
+                              "type": "string",
+                              "description": "대차 증권이 주식인지, 채권인지등을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "lnbScrtDcdNm": {
+                              "type": "string",
+                              "description": "대차 증권이 주식인지, 채권인지등을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "lnbCclAmt": {
+                              "type": "string",
+                              "description": "대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래) 체결 금액",
+                              "properties": {}
+                            },
+                            "lnbRdptAmt": {
+                              "type": "string",
+                              "description": "대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래) 거래에서 상환한 금액",
+                              "properties": {}
+                            },
+                            "lnbBal": {
+                              "type": "string",
+                              "description": "대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래) 거래후 잔액",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "채권대차종목순위조회",
+        "description": "기준일자, 대차증권구분코드명을 통하여 대차체결금액, 대차상환금액, 대차잔액등을 조회하는 채권대차종목순위조회 기능",
+        "operationId": "getBondLendAndBorrRank_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "lnbScrtDcdNm",
+          "description": "대차 증권이 주식인지, 채권인지등을 구분하는 코드의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getBondItemLendAndBorrTradStat_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "bondLnbCclAmt": {
+                              "type": "string",
+                              "description": "채권 대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래)를 체결한 금액",
+                              "properties": {}
+                            },
+                            "bondLnbRdptAmt": {
+                              "type": "string",
+                              "description": "채권 대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래) 상환 금액",
+                              "properties": {}
+                            },
+                            "bondLnbBal": {
+                              "type": "string",
+                              "description": "채권 대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래) 잔액",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "채권종목별대차거래현황조회",
+        "description": "기준일자를 통하여 채권대차체결금액, 채권대차상환금액, 채권대차잔액등을 조회하는 채권종목별대차거래현황조회 기능",
+        "operationId": "getBondItemLendAndBorrTradStat_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getBondBusiTypePartStat_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "sicCd": {
+                              "type": "string",
+                              "description": "산업 주체들이 모든 산업활동을 그 성질에 따라 유형화하고 이를 부호화한 코드",
+                              "properties": {}
+                            },
+                            "sicNm": {
+                              "type": "string",
+                              "description": "산업 주체들이 모든 산업활동을 그 성질에 따라 유형화한 분류 이름",
+                              "properties": {}
+                            },
+                            "bondLndnBal": {
+                              "type": "string",
+                              "description": "채권 대여 잔액",
+                              "properties": {}
+                            },
+                            "bondLndnRto": {
+                              "type": "string",
+                              "description": "대여 잔고 전체에서 채권대여금액이 차지하는 비율",
+                              "properties": {}
+                            },
+                            "bondBrwBal": {
+                              "type": "string",
+                              "description": "채권 차입후 잔고 금액",
+                              "properties": {}
+                            },
+                            "bondBrwRto": {
+                              "type": "string",
+                              "description": "차입 잔고 전체에서 채권 차입이 차지하는 비율",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "채권업종별참여현황조회",
+        "description": "기준일자, 표준산업분류명을 통하여 채권대여잔액, 채권대여비율, 채권차입잔액, 채권차입비율등을 조회하는 채권업종별참여현황조회 기능",
+        "operationId": "getBondBusiTypePartStat_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "sicNm",
+          "description": "산업 주체들이 모든 산업활동을 그 성질에 따라 유형화한 분류 이름",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getBondLendAndBorrRank_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "lnbScrtDcd": {
+                      "type": "string",
+                      "description": "대차 증권이 주식인지, 채권인지등을 구분하는 코드"
+                    },
+                    "lnbScrtDcdNm": {
+                      "type": "string",
+                      "description": "대차 증권이 주식인지, 채권인지등을 구분하는 코드의 명칭"
+                    },
+                    "lnbCclAmt": {
+                      "type": "string",
+                      "description": "대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래) 체결 금액"
+                    },
+                    "lnbRdptAmt": {
+                      "type": "string",
+                      "description": "대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래) 거래에서 상환한 금액"
+                    },
+                    "lnbBal": {
+                      "type": "string",
+                      "description": "대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래) 거래후 잔액"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getBondItemLendAndBorrTradStat_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "bondLnbCclAmt": {
+                      "type": "string",
+                      "description": "채권 대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래)를 체결한 금액"
+                    },
+                    "bondLnbRdptAmt": {
+                      "type": "string",
+                      "description": "채권 대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래) 상환 금액"
+                    },
+                    "bondLnbBal": {
+                      "type": "string",
+                      "description": "채권 대차(증권회사가 고객과의 신용거래에 필요로 하는 돈이나 주식을 증권금융회사가 대출하는 거래) 잔액"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getBondBusiTypePartStat_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "sicCd": {
+                      "type": "string",
+                      "description": "산업 주체들이 모든 산업활동을 그 성질에 따라 유형화하고 이를 부호화한 코드"
+                    },
+                    "sicNm": {
+                      "type": "string",
+                      "description": "산업 주체들이 모든 산업활동을 그 성질에 따라 유형화한 분류 이름"
+                    },
+                    "bondLndnBal": {
+                      "type": "string",
+                      "description": "채권 대여 잔액"
+                    },
+                    "bondLndnRto": {
+                      "type": "string",
+                      "description": "대여 잔고 전체에서 채권대여금액이 차지하는 비율"
+                    },
+                    "bondBrwBal": {
+                      "type": "string",
+                      "description": "채권 차입후 잔고 금액"
+                    },
+                    "bondBrwRto": {
+                      "type": "string",
+                      "description": "차입 잔고 전체에서 채권 차입이 차지하는 비율"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    }
+  }
+}

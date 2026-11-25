@@ -1,11 +1,12 @@
 # 데이터 소스 정리
 
-`seibro_api` 패키지가 데이터를 끌어오는 경로를 **소스별로 구분**한 문서.
-크게 세 갈래다.
+SEIBRO 관련 데이터는 아래 순서로 조회 경로를 선택합니다.
 
-1. **SEIBRO 공식 Open API** — 인증키(`SEIBRO_API_KEY`) 필요
-2. **SEIBRO 웹 (WebSquare)** — 비공식, 인증키 불필요
-3. **DART** — 별도 기관(전자공시), 인증키(`DART_API_KEY`) 필요
+1. **SEIBRO 공식 Open API**에서 필요한 조회 기능과 필드를 먼저 찾습니다. 인증에는 `SEIBRO_API_KEY`를 사용합니다.
+2. 공식 API에 필요한 항목이 없으면 **공공데이터포털 API**를 확인합니다. 서비스별 활용신청과 공공데이터포털 인증키가 필요합니다.
+3. 두 API에서 얻기 어려운 화면 상세는 **SEIBRO 공개 WebSquare**에서 확인합니다. 공개 화면에는 API 인증키가 필요 없습니다.
+
+KOFR와 DART는 각각 금리 공시와 기업 공시를 보완하는 출처입니다.
 
 ---
 
@@ -14,6 +15,7 @@
 - 엔드포인트: `https://seibro.or.kr/OpenPlatform/callOpenAPI.jsp`
 - 인증: `.env`의 `SEIBRO_API_KEY`
 - 구현: [`openapi/client.py`](../seibro_api/openapi/client.py) `SeibroClient._call_api()` (XML→DataFrame, 인증서 검증)
+- 원천 명세: [공식 Open API 색인](reference/README.md)에서 5개 분야의 요청·응답 필드와 엑셀 원본을 확인합니다.
 
 | apiId | 용도 | 호출 함수 |
 |-------|------|----------|
@@ -39,7 +41,17 @@
 
 ---
 
-## 2. SEIBRO 웹 — WebSquare 호출 (key X)
+## 2. 공공데이터포털 Open API
+
+한국예탁결제원 서비스 10개와 금융위원회 서비스 20개를 조사했습니다. 호출은 `https://apis.data.go.kr`에서 수행하며, 서비스별 경로와 파라미터는 공개 Swagger 명세를 따릅니다. 대표 조회에서는 한국예탁결제원 서비스의 XML과 금융위원회 서비스의 JSON 응답을 확인했습니다.
+
+주총·배당·채권 발행·상환 등은 SEIBRO 공식 Open API와 겹치는 영역입니다. 기준일 의미, 검색 단위, 응답 필드가 맞는지 확인한 뒤 비교합니다. 증권예탁 통계, REPO, 크라우드펀딩, 금융용어처럼 공식 API 37개에서 찾기 어려운 항목도 이 경로에서 확인할 수 있습니다. [공공데이터포털 서비스 색인](reference/data-go-kr/README.md) · [겹치는 조회 비교](reference/data-go-kr/overlap.md)
+
+활용정보의 **OpenAPI 실행 준비 → OpenAPI 호출**로 요청 변수와 응답을 확인할 수 있습니다. 개인 인증키는 실행할 때만 사용하고 공유하는 예시에는 자리표시자를 사용합니다. [대표 호출 및 응답 검증](reference/data-go-kr/verification.md)
+
+---
+
+## 3. SEIBRO 웹 — WebSquare 호출 (key X)
 
 - 엔드포인트: `https://seibro.or.kr/websquare/engine/proworks/callServletService.jsp`
 - 방식: XML POST(`<reqParam action=… task=…>`) + 브라우저 헤더(Referer/submissionid)
@@ -77,10 +89,10 @@ Protocol로 SEIBRO를 수동 조작하며 WebSquare XML POST를 녹화 → `web_
 
 ---
 
-## 2b. KSD KOFR 공시 — kofr.kr WebSquare (key X)
+## 3b. KSD KOFR 공시 — kofr.kr WebSquare (key X)
 
 - 엔드포인트: `https://www.kofr.kr/websquare/engine/proworks/callServletService.jsp`
-- 방식: 섹션 2와 동일한 WebSquare XML POST. 호스트만 다르다(`www.kofr.kr`, KSD의 KOFR 공시 사이트).
+- 방식: SEIBRO 공개 화면과 같은 WebSquare XML POST를 `www.kofr.kr`에서 사용합니다.
 - 구현: [`kofr.py`](../seibro_api/kofr.py) `get_kofr_rates()` — 페이지네이션(`CURR_PAGE`) 자동 처리.
 
 | action | task | 용도 | 호출 함수 |
@@ -93,7 +105,7 @@ KOFR = Korea Overnight Financing Repo rate. 국채·통안증권 담보 익일�
 
 ---
 
-## 3. DART (별도 기관)
+## 4. DART (별도 기관)
 
 | 소스 | 용도 | 호출 함수 |
 |------|------|----------|
@@ -109,6 +121,7 @@ KOFR = Korea Overnight Financing Repo rate. 국채·통안증권 담보 익일�
 ```
 SEIBRO 공식 Open API (key O)  → 종목명부 · 주식수량변동 · 주식관련사채(CB/BW/EB) 현황
                               · 배당일정/배당분배금내역(1987년~, 3년씩 분할조회)
+공공데이터포털 API (key O)   → 공식 API 조회 범위 보완 · 증권예탁 통계 · REPO · 크라우드펀딩
 SEIBRO 웹 WebSquare (key X)   → 회사검색 · 권리기준일 · 무상증자 상세 · 배당내역상세 · 발행주식수증감내역
 KSD KOFR kofr.kr (key X)      → KOFR 무위험지표금리 일별공시(금리·지수·복리평균)
 DART (별도 기관, key O)       → 사채 발행공시 이력 · 정기보고서 사채 테이블

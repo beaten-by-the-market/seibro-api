@@ -1,0 +1,1547 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "주식발행정보는 기준일자, 법인등록번호 또는 주식발행회사명을 기준으로 종목의 기본 정보부터 발행 내역, 의무보호예수 반환 정보, 주식발행 현황까지 종합적으로 제공하는 데이터입니다.\n\n주요 제공 항목으로는 주식액면가, 발행주식수, 상장 및 상장폐지일자, 주식발행일자와 발행차수, 주식발행사유, 반환일자 및 반환주식수, 보호예수 등록일 및 사유, 보통주·우선주의 총발행수 등이 포함됩니다.\n\n<데이터 조회 시 유의사항>\n파라미터 없이 조회 시 데이터 조회 시간이 오래걸려 timeout이 발생하게 되어 필수 파라미터를 지정하였습니다.\n- 파라미터 조건 : 조회 시 아래의 필수 파라미터 중 최소 1개 이상을 반드시 입력해야 합니다.\n- 기본값 안내 : 필수 파라미터를 입력하지 않은 경우, 기준일자(basDt)는 자동으로 가장 최신 날짜로 설정되어 조회됩니다.\n\n[서비스별 필수 파라미터 목록]\n- 종목기본정보조회 : basDt, isinCd, crno\n- 주식발행내역조회, 의무보호예수반환정보조회, 주식발행현황조회 : 없음\n\n해당 데이터는 다음 4가지 조회 기능으로 구성되어 있으며,\n① 종목기본정보 조회, ② 주식발행내역 조회, ③ 의무보호예수반환정보 조회, ④ 주식발행현황 조회를 통해 개별 항목을 상세히 조회할 수 있습니다.\n\n본 데이터는 상장기업 정보 분석, 유상증자 동향 파악, 보호예수 해제 규모 모니터링 등 자본시장 분석과 공시 검증 자료로 활용할 수 있습니다.\n\n※ 데이터 갱신주기는 일 1회입니다.\n※ 금융위원회의 모든 API는 데이터 보유기관으로부터 데이터를 연계받아 수집 후 개방하고 있습니다.\n금융위원회에서 제공하는 모든 서비스는 실시간이 아니며, 데이터 갱신은 기준일자로부터 영업일 하루 뒤 오후 1시 이후에 업데이트됩니다.\n예를 들어, 금요일 데이터는 차주 월요일에 제공됩니다. (월요일이 공휴일인 경우, 다음 영업일에 제공됩니다)\n※ 자주 묻는 질문(FAQ)은 https://www.fsc.go.kr/in060501 에서 확인하실 수 있습니다.\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_주식발행정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetStocIssuInfoService_V3",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getStocIssuInfo_V3": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "stckIssuCmpyNm": {
+                              "type": "string",
+                              "description": "주식발행사의 명칭",
+                              "properties": {}
+                            },
+                            "scrsDcd": {
+                              "type": "string",
+                              "description": "유가증권구분코드",
+                              "properties": {}
+                            },
+                            "stckIssuSqno": {
+                              "type": "string",
+                              "description": "주식발행일련번호",
+                              "properties": {}
+                            },
+                            "stckIssuDt": {
+                              "type": "string",
+                              "description": "주식을 발행한 날로서 주권의 경우 그 효력이 발생하는 일자",
+                              "properties": {}
+                            },
+                            "stckIssuDcnt": {
+                              "type": "string",
+                              "description": "회사가 주식을 발행하는 과정에서 발행 이력을  관리하기 위하여 발행시 마다 부여하는 순서",
+                              "properties": {}
+                            },
+                            "scrsItmsKcd": {
+                              "type": "string",
+                              "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "scrsItmsKcdNm": {
+                              "type": "string",
+                              "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "stckIssuRcd": {
+                              "type": "string",
+                              "description": "주식을 발행할때 발행 사유를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "stckIssuRcdNm": {
+                              "type": "string",
+                              "description": "주식을 발행할때 발행 사유를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "issuStckCnt": {
+                              "type": "string",
+                              "description": "발행 주식의 총 수량",
+                              "properties": {}
+                            },
+                            "lstgDt": {
+                              "type": "string",
+                              "description": "종목상장 적용일자(상장일자)",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "주식발행내역조회",
+        "description": "기준일자, 법인등록번호, 주식발행회사명을 통하여 주식발행일자, 주식발행차수, 주식발행사유코드등을 조회하는 주식발행내역조회 기능",
+        "operationId": "getStocIssuInfo_V3",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "stckIssuCmpyNm",
+          "description": "주식발행사의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getLockUpRetuInfo_V3": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "itmsShrtnCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호",
+                              "properties": {}
+                            },
+                            "stckIssuCmpyNm": {
+                              "type": "string",
+                              "description": "주식발행사의 명칭",
+                              "properties": {}
+                            },
+                            "scrsItmsKcd": {
+                              "type": "string",
+                              "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "scrsItmsKcdNm": {
+                              "type": "string",
+                              "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "lstgDcd": {
+                              "type": "string",
+                              "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드",
+                              "properties": {}
+                            },
+                            "lstgDcdNm": {
+                              "type": "string",
+                              "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "lkupRegDt": {
+                              "type": "string",
+                              "description": "의무보호예수(증권시장에 새로 상장되거나 인수ㆍ합병(M&A), 유상증자가 있을 때 대주주 등이 보유한 주식을 일정기간 팔지 못하게 하는 것)를 등록한 일자",
+                              "properties": {}
+                            },
+                            "lkupRegStckCnt": {
+                              "type": "string",
+                              "description": "의무보호예수(증권시장에 새로 상장되거나 인수ㆍ합병(M&A), 유상증자가 있을 때 대주주 등이 보유한 주식을 일정기간 팔지 못하게 하는 것)로 등록한 주식 수량",
+                              "properties": {}
+                            },
+                            "rsrnDt": {
+                              "type": "string",
+                              "description": "유가증권등을 반환한 일자",
+                              "properties": {}
+                            },
+                            "rsrnStckCnt": {
+                              "type": "string",
+                              "description": "최초 예탁 후 반환(주식)수량",
+                              "properties": {}
+                            },
+                            "afrsRsqtCnt": {
+                              "type": "string",
+                              "description": "반환 후 잔여 주식 수량",
+                              "properties": {}
+                            },
+                            "stckLblHoldRcd": {
+                              "type": "string",
+                              "description": "주식의무보유시 그 사유를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "stckLblHoldRcdNm": {
+                              "type": "string",
+                              "description": "주식의무보유시 그 사유를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "lblProtTsumIssuStckCnt": {
+                              "type": "string",
+                              "description": "의무보호예수(증권시장에 새로 상장되거나 인수ㆍ합병(M&A), 유상증자가 있을 때 대주주 등이 보유한 주식을 일정기간 팔지 못하게 하는 것)로 발행한 총합계 주식 수량",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "의무보호예수반환정보조회",
+        "description": "기준일자, 법인등록번호, 주식발행회사명을 통하여 반환일자, 반환주식수, 반환후잔량수등을 조회하는 의무보호예수반환정보조회 기능",
+        "operationId": "getLockUpRetuInfo_V3",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "stckIssuCmpyNm",
+          "description": "주식발행사의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getItemBasiInfo_V3": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "isinCd": {
+                              "type": "string",
+                              "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                              "properties": {}
+                            },
+                            "stckIssuCmpyNm": {
+                              "type": "string",
+                              "description": "주식발행사의 명칭",
+                              "properties": {}
+                            },
+                            "isinCdNm": {
+                              "type": "string",
+                              "description": "유가증권 국제인증 고유번호 코드 이름",
+                              "properties": {}
+                            },
+                            "scrsItmsKcd": {
+                              "type": "string",
+                              "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "scrsItmsKcdNm": {
+                              "type": "string",
+                              "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "stckParPrc": {
+                              "type": "string",
+                              "description": "주식의 권면에 기재된 금액",
+                              "properties": {}
+                            },
+                            "issuStckCnt": {
+                              "type": "string",
+                              "description": "발행 주식의 총 수량",
+                              "properties": {}
+                            },
+                            "lstgDt": {
+                              "type": "string",
+                              "description": "종목상장 적용일자(상장일자)",
+                              "properties": {}
+                            },
+                            "lstgAbolDt": {
+                              "type": "string",
+                              "description": "종목상장 폐지일자",
+                              "properties": {}
+                            },
+                            "dpsgRegDt": {
+                              "type": "string",
+                              "description": "종목상장 적용일자(상장일)",
+                              "properties": {}
+                            },
+                            "dpsgCanDt": {
+                              "type": "string",
+                              "description": "예탁을 취소한 일자",
+                              "properties": {}
+                            },
+                            "issuFrmtClsfNm": {
+                              "type": "string",
+                              "description": "발행형태를 구분하는 명칭",
+                              "properties": {}
+                            },
+                            "itmsShrtnCd": {
+                              "type": "string",
+                              "description": "종목단축코드",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "종목기본정보조회",
+        "description": "기준일자, 법인등록번호, 주식발행회사명을 통하여 주식액면가, 발행주식수, 상장일자, 상장폐지일자등을 조회하는 종목기본정보조회 기능",
+        "operationId": "getItemBasiInfo_V3",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "stckIssuCmpyNm",
+          "description": "주식발행사의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getStocIssuStat_V3": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메시지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지 번호",
+                      "properties": {}
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "crno": {
+                              "type": "string",
+                              "description": "법인등록번호",
+                              "properties": {}
+                            },
+                            "stckIssuCmpyNm": {
+                              "type": "string",
+                              "description": "주식발행사의 명칭",
+                              "properties": {}
+                            },
+                            "onskTisuCnt": {
+                              "type": "string",
+                              "description": "의결권이 있는주식(보통주)의 총 발행 수량",
+                              "properties": {}
+                            },
+                            "pfstTisuCnt": {
+                              "type": "string",
+                              "description": "우선주(의결권이 없는 주식)의 총 발행 수량",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "주식발행현황조회",
+        "description": "기준일자, 법인등록번호, 주식발행회사명을 통하여 보통주총발행수, 우선주총발행수를 조회하는 주식발행현황조회 기능",
+        "operationId": "getStocIssuStat_V3",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "crno",
+          "description": "법인등록번호",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "stckIssuCmpyNm",
+          "description": "주식발행사의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getStocIssuInfo_V3_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "stckIssuCmpyNm": {
+                      "type": "string",
+                      "description": "주식발행사의 명칭"
+                    },
+                    "scrsDcd": {
+                      "type": "string",
+                      "description": "유가증권구분코드"
+                    },
+                    "stckIssuSqno": {
+                      "type": "string",
+                      "description": "주식발행일련번호"
+                    },
+                    "stckIssuDt": {
+                      "type": "string",
+                      "description": "주식을 발행한 날로서 주권의 경우 그 효력이 발생하는 일자"
+                    },
+                    "stckIssuDcnt": {
+                      "type": "string",
+                      "description": "회사가 주식을 발행하는 과정에서 발행 이력을  관리하기 위하여 발행시 마다 부여하는 순서"
+                    },
+                    "scrsItmsKcd": {
+                      "type": "string",
+                      "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드"
+                    },
+                    "scrsItmsKcdNm": {
+                      "type": "string",
+                      "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭"
+                    },
+                    "stckIssuRcd": {
+                      "type": "string",
+                      "description": "주식을 발행할때 발행 사유를 관리하는 코드"
+                    },
+                    "stckIssuRcdNm": {
+                      "type": "string",
+                      "description": "주식을 발행할때 발행 사유를 관리하는 코드의 명칭"
+                    },
+                    "issuStckCnt": {
+                      "type": "string",
+                      "description": "발행 주식의 총 수량"
+                    },
+                    "lstgDt": {
+                      "type": "string",
+                      "description": "종목상장 적용일자(상장일자)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getLockUpRetuInfo_V3_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "itmsShrtnCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호"
+                    },
+                    "stckIssuCmpyNm": {
+                      "type": "string",
+                      "description": "주식발행사의 명칭"
+                    },
+                    "scrsItmsKcd": {
+                      "type": "string",
+                      "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드"
+                    },
+                    "scrsItmsKcdNm": {
+                      "type": "string",
+                      "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭"
+                    },
+                    "lstgDcd": {
+                      "type": "string",
+                      "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드"
+                    },
+                    "lstgDcdNm": {
+                      "type": "string",
+                      "description": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드의 명칭"
+                    },
+                    "lkupRegDt": {
+                      "type": "string",
+                      "description": "의무보호예수(증권시장에 새로 상장되거나 인수ㆍ합병(M&A), 유상증자가 있을 때 대주주 등이 보유한 주식을 일정기간 팔지 못하게 하는 것)를 등록한 일자"
+                    },
+                    "lkupRegStckCnt": {
+                      "type": "string",
+                      "description": "의무보호예수(증권시장에 새로 상장되거나 인수ㆍ합병(M&A), 유상증자가 있을 때 대주주 등이 보유한 주식을 일정기간 팔지 못하게 하는 것)로 등록한 주식 수량"
+                    },
+                    "rsrnDt": {
+                      "type": "string",
+                      "description": "유가증권등을 반환한 일자"
+                    },
+                    "rsrnStckCnt": {
+                      "type": "string",
+                      "description": "최초 예탁 후 반환(주식)수량"
+                    },
+                    "afrsRsqtCnt": {
+                      "type": "string",
+                      "description": "반환 후 잔여 주식 수량"
+                    },
+                    "stckLblHoldRcd": {
+                      "type": "string",
+                      "description": "주식의무보유시 그 사유를 관리하는 코드"
+                    },
+                    "stckLblHoldRcdNm": {
+                      "type": "string",
+                      "description": "주식의무보유시 그 사유를 관리하는 코드의 명칭"
+                    },
+                    "lblProtTsumIssuStckCnt": {
+                      "type": "string",
+                      "description": "의무보호예수(증권시장에 새로 상장되거나 인수ㆍ합병(M&A), 유상증자가 있을 때 대주주 등이 보유한 주식을 일정기간 팔지 못하게 하는 것)로 발행한 총합계 주식 수량"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getItemBasiInfo_V3_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "isinCd": {
+                      "type": "string",
+                      "description": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호"
+                    },
+                    "stckIssuCmpyNm": {
+                      "type": "string",
+                      "description": "주식발행사의 명칭"
+                    },
+                    "isinCdNm": {
+                      "type": "string",
+                      "description": "유가증권 국제인증 고유번호 코드 이름"
+                    },
+                    "scrsItmsKcd": {
+                      "type": "string",
+                      "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드"
+                    },
+                    "scrsItmsKcdNm": {
+                      "type": "string",
+                      "description": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭"
+                    },
+                    "stckParPrc": {
+                      "type": "string",
+                      "description": "주식의 권면에 기재된 금액"
+                    },
+                    "issuStckCnt": {
+                      "type": "string",
+                      "description": "발행 주식의 총 수량"
+                    },
+                    "lstgDt": {
+                      "type": "string",
+                      "description": "종목상장 적용일자(상장일자)"
+                    },
+                    "lstgAbolDt": {
+                      "type": "string",
+                      "description": "종목상장 폐지일자"
+                    },
+                    "dpsgRegDt": {
+                      "type": "string",
+                      "description": "종목상장 적용일자(상장일)"
+                    },
+                    "dpsgCanDt": {
+                      "type": "string",
+                      "description": "예탁을 취소한 일자"
+                    },
+                    "issuFrmtClsfNm": {
+                      "type": "string",
+                      "description": "발행형태를 구분하는 명칭"
+                    },
+                    "itmsShrtnCd": {
+                      "type": "string",
+                      "description": "종목단축코드"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getStocIssuStat_V3_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메시지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지 번호"
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "crno": {
+                      "type": "string",
+                      "description": "법인등록번호"
+                    },
+                    "stckIssuCmpyNm": {
+                      "type": "string",
+                      "description": "주식발행사의 명칭"
+                    },
+                    "onskTisuCnt": {
+                      "type": "string",
+                      "description": "의결권이 있는주식(보통주)의 총 발행 수량"
+                    },
+                    "pfstTisuCnt": {
+                      "type": "string",
+                      "description": "우선주(의결권이 없는 주식)의 총 발행 수량"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "swaggerOprtinVOs": [
+    {
+      "oprtinUrl": "http://openapi.fsc.go.kr/service/GetStocIssuInfoService_V2/getLockUpRetuInfo_V2",
+      "oprtinNm": "의무보호예수반환정보조회",
+      "oprtinDc": "기준일자, 법인등록번호, 주식발행회사명을 통하여 반환일자, 반환주식수, 반환후잔량수등을 조회하는 의무보호예수반환정보조회 기능",
+      "gwSvcNm": "getLockUpRetuInfo_V2",
+      "operationId": "getLockUpRetuInfo_V2",
+      "publicDataTyDetailCode": "PRDE02",
+      "reqList": [
+        {
+          "paramtrNm": "ServiceKey",
+          "paramtrDc": "공공데이터포털에서 받은 인증키",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        },
+        {
+          "paramtrNm": "pageNo",
+          "paramtrDc": "페이지번호",
+          "paramtrBassValue": "1",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        },
+        {
+          "paramtrNm": "numOfRows",
+          "paramtrDc": "한 페이지 결과 수",
+          "paramtrBassValue": "10",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        },
+        {
+          "paramtrNm": "resultType",
+          "paramtrDc": "결과형식(xml/json)",
+          "paramtrBassValue": "xml",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        },
+        {
+          "paramtrNm": "basDt",
+          "paramtrDc": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "paramtrBassValue": "20231226",
+          "paramtrTy": "string",
+          "paramtrDivision": "필수",
+          "ck": true
+        },
+        {
+          "paramtrNm": "crno",
+          "paramtrDc": "법인등록번호",
+          "paramtrBassValue": "",
+          "paramtrTy": "string",
+          "paramtrDivision": "옵션",
+          "ck": true
+        },
+        {
+          "paramtrNm": "stckIssuCmpyNm",
+          "paramtrDc": "주식발행사의 명칭",
+          "paramtrBassValue": "",
+          "paramtrTy": "string",
+          "paramtrDivision": "옵션",
+          "ck": true
+        }
+      ],
+      "resList": [
+        {
+          "paramtrNm": "header",
+          "paramtrDc": "header",
+          "arrayYn": "N",
+          "paramtrDefNm": "#/definitions/LockUpRetuInfo_header",
+          "subDefNm": "LockUpRetuInfo_header",
+          "paramtrTy": "object",
+          "paramtrDivision": "필수",
+          "ck": true,
+          "subParam": [
+            {
+              "paramtrNm": "resultCode",
+              "paramtrDc": "결과코드",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            },
+            {
+              "paramtrNm": "resultMsg",
+              "paramtrDc": "결과메시지",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            }
+          ]
+        },
+        {
+          "paramtrNm": "body",
+          "paramtrDc": "body",
+          "arrayYn": "N",
+          "paramtrDefNm": "#/definitions/LockUpRetuInfo_body",
+          "subDefNm": "LockUpRetuInfo_body",
+          "paramtrTy": "object",
+          "paramtrDivision": "필수",
+          "ck": true,
+          "subParam": [
+            {
+              "paramtrNm": "numOfRows",
+              "paramtrDc": "한 페이지 결과 수",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            },
+            {
+              "paramtrNm": "pageNo",
+              "paramtrDc": "페이지 번호",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            },
+            {
+              "paramtrNm": "totalCount",
+              "paramtrDc": "전체 결과 수",
+              "arrayYn": "N",
+              "paramtrDefNm": "",
+              "paramtrTy": "string",
+              "paramtrDivision": "필수",
+              "ck": true
+            },
+            {
+              "paramtrNm": "items",
+              "paramtrDc": "items",
+              "arrayYn": "N",
+              "paramtrDefNm": "#/definitions/LockUpRetuInfo_items",
+              "subDefNm": "LockUpRetuInfo_items",
+              "paramtrTy": "object",
+              "paramtrDivision": "필수",
+              "ck": true,
+              "subParam": [
+                {
+                  "paramtrNm": "item",
+                  "paramtrDc": "item",
+                  "arrayYn": "N",
+                  "paramtrDefNm": "#/definitions/LockUpRetuInfo_item",
+                  "subDefNm": "LockUpRetuInfo_item",
+                  "paramtrTy": "object",
+                  "paramtrDivision": "필수",
+                  "ck": true,
+                  "subParam": [
+                    {
+                      "paramtrNm": "basDt",
+                      "paramtrDc": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "crno",
+                      "paramtrDc": "법인등록번호",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "필수",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "isinCd",
+                      "paramtrDc": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "isinCdNm",
+                      "paramtrDc": "유가증권 국제인증 고유번호 코드 이름",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "itmsShrtnCd",
+                      "paramtrDc": "국제 채권 식별 번호. 유가증권(채권)의 국제인증 고유번호의 단축번호",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "stckIssuCmpyNm",
+                      "paramtrDc": "주식발행사의 명칭",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "scrsItmsKcd",
+                      "paramtrDc": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "scrsItmsKcdNm",
+                      "paramtrDc": "해당 유가증권의 종목종류(ex, 우선주, 보통주)를 관리하는 코드의 명칭",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "lstgDcd",
+                      "paramtrDc": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "lstgDcdNm",
+                      "paramtrDc": "유가증권이 상장된 시장이나 유가증권의 상장상태등을 관리하는 코드의 명칭",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "lkupRegDt",
+                      "paramtrDc": "의무보호예수(증권시장에 새로 상장되거나 인수ㆍ합병(M&A), 유상증자가 있을 때 대주주 등이 보유한 주식을 일정기간 팔지 못하게 하는 것)를 등록한 일자",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "lkupRegStckCnt",
+                      "paramtrDc": "의무보호예수(증권시장에 새로 상장되거나 인수ㆍ합병(M&A), 유상증자가 있을 때 대주주 등이 보유한 주식을 일정기간 팔지 못하게 하는 것)로 등록한 주식 수량",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "rsrnDt",
+                      "paramtrDc": "유가증권등을 반환한 일자",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "rsrnStckCnt",
+                      "paramtrDc": "최초 예탁 후 반환(주식)수량",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "afrsRsqtCnt",
+                      "paramtrDc": "반환 후 잔여 주식 수량",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "stckLblHoldRcd",
+                      "paramtrDc": "주식의무보유시 그 사유를 관리하는 코드",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "stckLblHoldRcdNm",
+                      "paramtrDc": "주식의무보유시 그 사유를 관리하는 코드의 명칭",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    },
+                    {
+                      "paramtrNm": "lblProtTsumIssuStckCnt",
+                      "paramtrDc": "의무보호예수(증권시장에 새로 상장되거나 인수ㆍ합병(M&A), 유상증자가 있을 때 대주주 등이 보유한 주식을 일정기간 팔지 못하게 하는 것)로 발행한 총합계 주식 수량",
+                      "arrayYn": "N",
+                      "paramtrDefNm": "",
+                      "paramtrTy": "string",
+                      "paramtrDivision": "옵션",
+                      "ck": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

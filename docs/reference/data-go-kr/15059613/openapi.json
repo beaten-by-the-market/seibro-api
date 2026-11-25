@@ -1,0 +1,274 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "크라우드펀딩정보는 온라인소액투자중개업자를 통해 자금을 조달한 크라우드펀딩 발행사의 정보를 제공하는 데이터입니다. 발행사명, 대표자명, 발행금액, 발행일자, 증권종류, 증권수량, 발행사 업종, 소재지 등의 정보가 포함됩니다.\n\n이 데이터는 1개 오퍼레이션으로 구성되어 있습니다.\n오퍼레이션은 다음과 같습니다.\n\n① 크라우드펀딩 발행사정보 조회 : 발행사의 기본 정보, 자금조달 내역, 증권 발행 현황을 조회합니다.\n\n※ 크라우드펀딩이란? 군중 또는 다수를 의미하는 영어단어 크라우드(Crowd)와 자금조달을 뜻하는 펀딩(Funding)을 조합한 용어\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_크라우드펀딩정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetFundInfoService_V2",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getFundIssuCompInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "basDt": {
+                              "type": "string",
+                              "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+                              "properties": {}
+                            },
+                            "fundIssuCmpyNm": {
+                              "type": "string",
+                              "description": "크라우드펀딩 발행회사의 명칭",
+                              "properties": {}
+                            },
+                            "fundTofrAmt": {
+                              "type": "string",
+                              "description": "크라우드펀딩 총 모집 금액",
+                              "properties": {}
+                            },
+                            "fundOffrSttgDt": {
+                              "type": "string",
+                              "description": "크라우드펀딩 모집 기간의 시작일자 ",
+                              "properties": {}
+                            },
+                            "fundOffrEdDt": {
+                              "type": "string",
+                              "description": "크라우드펀딩 모집 기간의 종료일자",
+                              "properties": {}
+                            },
+                            "fundSbscAmt": {
+                              "type": "string",
+                              "description": "크라우드펀딩 청약당시 청약 금액",
+                              "properties": {}
+                            },
+                            "fundSbscRt": {
+                              "type": "string",
+                              "description": "크라우드펀딩 청약률",
+                              "properties": {}
+                            },
+                            "fundInvsCnt": {
+                              "type": "string",
+                              "description": "크라우드펀딩 투자자 수",
+                              "properties": {}
+                            },
+                            "fundIssuCmpyRprsBzcNm": {
+                              "type": "string",
+                              "description": "크라우드펀딩 발행회사의 대표 업종 명칭",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "크라우드펀딩발행사정보조회",
+        "description": "기준일자, 크라우드펀딩 발행회사명을 통하여 크라우드펀딩 발행사정보를 제공하는 금융위원회_크라우드펀딩정보",
+        "operationId": "getFundIssuCompInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지 번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "basDt",
+          "description": "작업 또는 거래의 기준이 되는 일자(년월일)",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        },
+        {
+          "name": "fundIssuCmpyNm",
+          "description": "크라우드펀딩 발행회사의 명칭",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getFundIssuCompInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "basDt": {
+                      "type": "string",
+                      "description": "작업 또는 거래의 기준이 되는 일자(년월일)"
+                    },
+                    "fundIssuCmpyNm": {
+                      "type": "string",
+                      "description": "크라우드펀딩 발행회사의 명칭"
+                    },
+                    "fundTofrAmt": {
+                      "type": "string",
+                      "description": "크라우드펀딩 총 모집 금액"
+                    },
+                    "fundOffrSttgDt": {
+                      "type": "string",
+                      "description": "크라우드펀딩 모집 기간의 시작일자 "
+                    },
+                    "fundOffrEdDt": {
+                      "type": "string",
+                      "description": "크라우드펀딩 모집 기간의 종료일자"
+                    },
+                    "fundSbscAmt": {
+                      "type": "string",
+                      "description": "크라우드펀딩 청약당시 청약 금액"
+                    },
+                    "fundSbscRt": {
+                      "type": "string",
+                      "description": "크라우드펀딩 청약률"
+                    },
+                    "fundInvsCnt": {
+                      "type": "string",
+                      "description": "크라우드펀딩 투자자 수"
+                    },
+                    "fundIssuCmpyRprsBzcNm": {
+                      "type": "string",
+                      "description": "크라우드펀딩 발행회사의 대표 업종 명칭"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    }
+  }
+}

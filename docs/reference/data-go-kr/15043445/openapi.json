@@ -1,0 +1,516 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "국제거래외화증권예탁결제정보는 외화증권의 예탁결제일자를 기준으로 외화증권의 예탁·결제 거래 현황을 제공하는 데이터입니다.\n\n주요 항목에는 유가증권구분코드 및 명칭, 시장 국가 코드 및 대륙명, 예탁증권 매도건수 및 매도금액, 매수건수 및 매수금액, 결제일자, 종목 구분 등이 포함되며, 국가별 또는 시장별로 외화증권 거래 동향을 파악할 수 있습니다.\n\n이 데이터는 ① 외화증권예탁결제정보 조회, ② 시장별 외화증권예탁결제현황 조회의 두 가지 오퍼레이션으로 제공되며, 외화 유가증권 거래 흐름, 해외 투자자금 유입·유출 추이, 대륙별·국가별 거래 집중도 분석 등에 활용됩니다.\n특히 국제 금융거래의 예탁 및 결제 규모를 정량적으로 파악할 수 있는 데이터로서, 투자기관, 정책기관, 연구기관 등에서 글로벌 자본 흐름 분석과 외환·자본시장 안정성 진단에 활용할 수 있습니다.\n\n** 유의사항\n본 개방데이터는 공공누리 2유형임을 참고하시기 바랍니다.\n이용허락범위 제2유형 : 출처표시 + 상업적 이용금지\n해당 데이터를 상업적으로 활용하고자 하는 이용자는 데이터 원천 소유자인 한국예탁결제원과 사용 목적과 범위에 따른 정보이용계약이 필요합니다. \n정보이용계약 또는 해당 정보에 관하여 궁금한 점이 있으시면 한국예탁결제원 증권정보부(연락처: portal@ksd.or.kr)로 이메일 문의 주시기 바랍니다.",
+    "version": "1.0.0",
+    "title": "금융위원회_국제거래외화증권예탁결제정보"
+  },
+  "host": "apis.data.go.kr/1160100/GetDrForeSecuSettInfoService_V2",
+  "basePath": "",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/getForeSecuSettInfo_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "frcrScrtDpsgStlDt": {
+                              "type": "string",
+                              "description": "외화증권의 예탁 결제일자",
+                              "properties": {}
+                            },
+                            "scrsDcd": {
+                              "type": "string",
+                              "description": "채권, 어음, CD등 유가증권을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "dataSqno": {
+                              "type": "string",
+                              "description": "데이터의 순번",
+                              "properties": {}
+                            },
+                            "scrsDcdNm": {
+                              "type": "string",
+                              "description": "채권, 어음, CD등 유가증권을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "scrsMrktNtnlDcd": {
+                              "type": "string",
+                              "description": "유가증권이 거래되는 시장의 국가를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "scrsMrktNtnlDcdNm": {
+                              "type": "string",
+                              "description": "유가증권이 거래되는 시장의 국가를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "dpsgScrtSlngCcnt": {
+                              "type": "string",
+                              "description": "예탁증권을 매도한 수량",
+                              "properties": {}
+                            },
+                            "buynCcnt": {
+                              "type": "string",
+                              "description": "유가증권등을 매수한 수량",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "외화증권예탁결제정보조회",
+        "description": "외화증권예탁결제일자를 통하여 유가증권구분코드명, 유가증권시장국가구분코드, 예탁증권매도건수등을 조회하는 외화증권예탁결제정보조회 기능",
+        "operationId": "getForeSecuSettInfo_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "frcrScrtDpsgStlDt",
+          "description": "외화증권의 예탁 결제일자",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    },
+    "/getMarkForeSecuSettStat_V2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "object",
+                  "description": "header",
+                  "properties": {
+                    "resultCode": {
+                      "type": "string",
+                      "description": "결과코드",
+                      "properties": {}
+                    },
+                    "resultMsg": {
+                      "type": "string",
+                      "description": "결과메세지",
+                      "properties": {}
+                    }
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "description": "body",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "items",
+                      "properties": {
+                        "item": {
+                          "type": "object",
+                          "description": "item",
+                          "properties": {
+                            "frcrScrtDpsgStlDt": {
+                              "type": "string",
+                              "description": "외화증권의 예탁 결제일자",
+                              "properties": {}
+                            },
+                            "scrsDcd": {
+                              "type": "string",
+                              "description": "채권, 어음, CD등 유가증권을 구분하는 코드",
+                              "properties": {}
+                            },
+                            "scrsDcdNm": {
+                              "type": "string",
+                              "description": "채권, 어음, CD등 유가증권을 구분하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "scrsMrktCnntNm": {
+                              "type": "string",
+                              "description": "유가증권이 발행되는 국가가 소속되어 있는 대륙의 명칭",
+                              "properties": {}
+                            },
+                            "scrsMrktNtnlDcd": {
+                              "type": "string",
+                              "description": "유가증권이 거래되는 시장의 국가를 관리하는 코드",
+                              "properties": {}
+                            },
+                            "scrsMrktNtnlDcdNm": {
+                              "type": "string",
+                              "description": "유가증권이 거래되는 시장의 국가를 관리하는 코드의 명칭",
+                              "properties": {}
+                            },
+                            "dpsgScrtSlngCcnt": {
+                              "type": "string",
+                              "description": "예탁증권을 매도한 수량",
+                              "properties": {}
+                            },
+                            "dpsgScrtSlngAmt": {
+                              "type": "string",
+                              "description": "예탁증권을 매도한 금액",
+                              "properties": {}
+                            },
+                            "buynCcnt": {
+                              "type": "string",
+                              "description": "유가증권등을 매수한 수량",
+                              "properties": {}
+                            },
+                            "buynAmt": {
+                              "type": "string",
+                              "description": "유가증권등을 매수한 금액",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "string",
+                      "description": "전체 결과 수",
+                      "properties": {}
+                    },
+                    "pageNo": {
+                      "type": "string",
+                      "description": "페이지번호",
+                      "properties": {}
+                    },
+                    "numOfRows": {
+                      "type": "string",
+                      "description": "한 페이지 결과 수",
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "response"
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API 목록"
+        ],
+        "summary": "시장별외화증권예탁결제현황조회",
+        "description": "외화증권예탁결제일자를 통하여 유가증권시장대륙명, 유가증권시장국가구분코드명, 예탁증권매도건수, 예탁증권매도금액등을 조회하는 시장별외화증권예탁결제현황조회 기능",
+        "operationId": "getMarkForeSecuSettStat_V2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "serviceKey",
+          "description": "공공데이터포털에서 받은 인증키",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "pageNo",
+          "description": "페이지번호",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "numOfRows",
+          "description": "한 페이지 결과 수",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "resultType",
+          "description": "결과형식(xml/json)",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "frcrScrtDpsgStlDt",
+          "description": "외화증권의 예탁 결제일자",
+          "type": "string",
+          "required": false,
+          "in": "query"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "getForeSecuSettInfo_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "frcrScrtDpsgStlDt": {
+                      "type": "string",
+                      "description": "외화증권의 예탁 결제일자"
+                    },
+                    "scrsDcd": {
+                      "type": "string",
+                      "description": "채권, 어음, CD등 유가증권을 구분하는 코드"
+                    },
+                    "dataSqno": {
+                      "type": "string",
+                      "description": "데이터의 순번"
+                    },
+                    "scrsDcdNm": {
+                      "type": "string",
+                      "description": "채권, 어음, CD등 유가증권을 구분하는 코드의 명칭"
+                    },
+                    "scrsMrktNtnlDcd": {
+                      "type": "string",
+                      "description": "유가증권이 거래되는 시장의 국가를 관리하는 코드"
+                    },
+                    "scrsMrktNtnlDcdNm": {
+                      "type": "string",
+                      "description": "유가증권이 거래되는 시장의 국가를 관리하는 코드의 명칭"
+                    },
+                    "dpsgScrtSlngCcnt": {
+                      "type": "string",
+                      "description": "예탁증권을 매도한 수량"
+                    },
+                    "buynCcnt": {
+                      "type": "string",
+                      "description": "유가증권등을 매수한 수량"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    },
+    "getMarkForeSecuSettStat_V2_response": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "header",
+          "properties": {
+            "resultCode": {
+              "type": "string",
+              "description": "결과코드"
+            },
+            "resultMsg": {
+              "type": "string",
+              "description": "결과메세지"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "body",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "items",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "description": "item",
+                  "properties": {
+                    "frcrScrtDpsgStlDt": {
+                      "type": "string",
+                      "description": "외화증권의 예탁 결제일자"
+                    },
+                    "scrsDcd": {
+                      "type": "string",
+                      "description": "채권, 어음, CD등 유가증권을 구분하는 코드"
+                    },
+                    "scrsDcdNm": {
+                      "type": "string",
+                      "description": "채권, 어음, CD등 유가증권을 구분하는 코드의 명칭"
+                    },
+                    "scrsMrktCnntNm": {
+                      "type": "string",
+                      "description": "유가증권이 발행되는 국가가 소속되어 있는 대륙의 명칭"
+                    },
+                    "scrsMrktNtnlDcd": {
+                      "type": "string",
+                      "description": "유가증권이 거래되는 시장의 국가를 관리하는 코드"
+                    },
+                    "scrsMrktNtnlDcdNm": {
+                      "type": "string",
+                      "description": "유가증권이 거래되는 시장의 국가를 관리하는 코드의 명칭"
+                    },
+                    "dpsgScrtSlngCcnt": {
+                      "type": "string",
+                      "description": "예탁증권을 매도한 수량"
+                    },
+                    "dpsgScrtSlngAmt": {
+                      "type": "string",
+                      "description": "예탁증권을 매도한 금액"
+                    },
+                    "buynCcnt": {
+                      "type": "string",
+                      "description": "유가증권등을 매수한 수량"
+                    },
+                    "buynAmt": {
+                      "type": "string",
+                      "description": "유가증권등을 매수한 금액"
+                    }
+                  }
+                }
+              }
+            },
+            "totalCount": {
+              "type": "string",
+              "description": "전체 결과 수"
+            },
+            "pageNo": {
+              "type": "string",
+              "description": "페이지번호"
+            },
+            "numOfRows": {
+              "type": "string",
+              "description": "한 페이지 결과 수"
+            }
+          }
+        }
+      }
+    }
+  }
+}
