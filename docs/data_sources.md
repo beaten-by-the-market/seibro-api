@@ -68,6 +68,17 @@ KOFR와 DART는 각각 금리 공시와 기업 공시를 보완하는 출처입�
 
 일정사유별 상세 조회는 무상증자(102), 배당(103), 액면분할(201), 액면병합(202), 자본감소(205)를 지원합니다. 그 외 사유는 기준일 목록을 반환합니다. `get_company_schedules()`와 `get_dividend_details()`에는 `use_openapi=False`를 지정해 회사 검색도 WebSquare로 실행할 수 있습니다.
 
+전체 사유코드와 상세 응답을 읽는 방법은 [사유별 권리일정 안내](python_reference.md#사유별-권리일정-조회)에 있습니다.
+
+### 사유별 권리일정의 WebSquare 호출
+
+1. 웹 회사 검색은 `SearchPTask`의 `searchCompanyContentList`를 사용합니다.
+2. 일정 조회는 `EntrSkedulPTask`의 `getRgtStdDtByConoList`에 `ISSUCO_CUSTNO`와 `RGT_RACD`를 보냅니다.
+3. 기준일 목록 응답에서 `CODE`를 상세 요청의 `RGT_STD_DT`로 사용합니다. `F_STD_DT`는 화면에 표시되는 날짜입니다.
+4. 기간 내 기준일마다 [사유별 상세 action 목록](../seibro_api/schedule_reason.py)을 실행합니다. 무상증자는 `rissuBasicInfoViewEL1`, `preIssuStkDetailsList1`, `payDetailsList`, `issuDetailsList1`을 사용합니다. 일부 요청에는 녹화에서 확인한 `REPM_DT=19990514`가 포함됩니다.
+
+화면 XML이나 action이 변경되면 [HAR로 웹 호출 확인](#har로-웹-호출-확인) 절차로 기준일을 선택한 직후의 요청과 파라미터를 확인합니다.
+
 ### 메뉴 링크 → API 만드는 워크플로
 
 웹 메뉴 URL(`…?w2xPath=/IPORTAL/…/{PAGE}.xml&menuNo=NN`)만 있으면 다음이 가능하다.
@@ -78,14 +89,13 @@ KOFR와 DART는 각각 금리 공시와 기업 공시를 보완하는 출처입�
 4. submission_id = `submission_` + action
 5. `SeibroWebSquareClient` 패턴으로 POST 재현
 
-**한계**: 다단계 연쇄 호출(예: 기준일을 먼저 받아 다음 호출에 주입), 날짜범위·페이징이
-위젯 이벤트로만 세팅되는 경우, JS가 너무 동적인 경우 → 이럴 땐 recorder로 fallback.
+기준일 선택이나 페이지 이동처럼 화면 조작에 따라 요청이 이어지면 HAR에서 호출 순서와 각 요청의 입력값을 확인합니다.
 
-### recorder — 웹 호출 발굴 도구
+### HAR로 웹 호출 확인
 
-[`recorder/seibro_recorder.py`](../recorder/seibro_recorder.py): Selenium + Chrome DevTools
-Protocol로 SEIBRO를 수동 조작하며 WebSquare XML POST를 녹화 → `web_calls.json`,
-`replay_candidates.py` 생성. 위 action들을 발굴해 패키지로 승격하는 경로.
+1. 브라우저 개발자 도구의 Network 탭을 열고, 대상 SEIBRO 화면 진입부터 종목·기간 선택과 조회까지 재현합니다.
+2. **Export HAR (sanitized)**로 내보냅니다. 요청 URL과 본문, 응답에 인증키가 들어 있는지도 확인하고 값을 가린 뒤 공유합니다. [Chrome DevTools HAR 안내](https://developer.chrome.com/docs/devtools/network/reference#save-as-har)
+3. 관련 WebSquare POST의 요청 XML에서 `action`, `task`, 파라미터를 확인하고 응답 XML에서 반환 필드를 확인합니다. HAR에 응답 본문이 빠졌으면 민감정보를 제거한 응답 XML도 함께 받습니다.
 
 ---
 
@@ -176,9 +186,3 @@ DART (별도 기관, key O)       → 사채 발행공시 이력 · 정기보고
     처리한다(`get_issuco_custno()`가 검증).
   - **필수 파라미터 누락 시 `<vector>` 없는 응답**: `<SeibroAPI><RES/></SeibroAPI>`만
     온다. `SeibroAPIError`로 즉시 올리고 재시도하지 않는다.
-
-## 이전 연구 자료
-
-- 의무보유, 주총, 채권 발행·상환 조회는 위 공식 API 함수와 [시나리오](../scenarios/README.md)로 이어집니다.
-- 공유자원포털의 `StockSvc/getSafeDpDutyDepoStatusN1`은 별도 서비스키를 쓰던 연구 예제입니다. 현재 패키지의 보호예수는 OpenPlatform의 `getSafeDpDutyDepoStatus`를 호출합니다.
-- 예전 연구 노트북은 `2f96200` 시점의 Git 이력에서 확인할 수 있습니다. 기업정보 관련 원본 자료는 [가이드 엑셀](../resources/Guide_Corp%20%281%29.xlsx)에 있습니다.

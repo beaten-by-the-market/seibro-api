@@ -30,6 +30,5 @@ print(schedules.head().to_string(index=False))
 | [Python API 레퍼런스](docs/python_reference.md) | 함수 입력·출력, 호출 예시와 기준일 차이 |
 | [`seibro_api/`](seibro_api/) | 재사용할 Python 함수. 공식 클라이언트는 `openapi/`, 공개 화면 호출은 `web/` |
 | [`scenarios/`](scenarios/README.md) | 공식 API·웹·혼합 실습. 각 시나리오는 Python 원본, 설명, 실행된 Colab 노트북으로 구성 |
-| [`recorder/`](recorder/README.md) | 공개 WebSquare 화면을 조사할 때 쓰는 개발 도구 |
 
 패키지는 Python으로 수정합니다. 시나리오는 `scenarios/_src/`의 Python 원본을 고치고 `python scenarios/_tools/build.py <분류>/<번호>`로 노트북을 생성합니다.

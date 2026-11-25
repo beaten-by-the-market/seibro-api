@@ -47,7 +47,6 @@ TERM_SCHEDULE_DISPLAY_ORDER = [
 COST_PAYMENT_W2X = "/IPORTAL/user/company/BIP_CNTS01022V.xml"
 COST_PAYMENT_MENU_NO = "20"
 COST_PAYMENT_ACTION = "costPaymentScheduleInfoListEL1"
-COST_PAYMENT_COUNT_ACTION = "costPaymentScheduleInfoListCnt"
 
 # 대금종류(PAY_COST_TPCD). 화면 드롭다운 라벨 기준.
 PAY_COST_TYPES = {

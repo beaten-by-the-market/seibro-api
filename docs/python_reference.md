@@ -1,5 +1,7 @@
 # SEIBRO Python API
 
+예탁결제원 원천 API의 전체 목록과 XML 필드는 [공식 Open API 명세](reference/README.md)에서 찾을 수 있습니다.
+
 ## 함수 목록
 
 ### openapi/client.py — SEIBRO Open API 클라이언트
@@ -159,6 +161,72 @@ df_pis = get_sub_pis("079160")
 | 발행회사 / 증권종류 / 발행방법 | 회사채, 조건부자본증권 등 포괄 |
 | 발행일자 / 발행총액 / 이자율(%) / 신용등급 | 금액 |
 | 만기일 / 상환여부 / 주관회사 | 상태 |
+
+### 사유별 권리일정 조회
+
+회사의 특정 권리사유에 대해 기준일을 찾고, 지원하는 사유라면 기준일별 상세 내역을 조회합니다. 배당·주총 등 여러 사유의 일정일자를 한 번에 보려면 [회사별 권리 일정 달력](../scenarios/web/02_company_schedules.md)을 사용합니다.
+
+#### 조회하기
+
+```python
+from seibro_api import get_schedule_reason_details
+
+df = get_schedule_reason_details(
+    "000100", reason_code="102", start_dt="2024-01-01", end_dt="2024-12-31",
+    save_csv=False,
+)
+if not df.empty:
+    print(df.groupby(["RGT_STD_DT", "DETAIL_TYPE"]).size())
+```
+
+터미널에서는 종목코드, 사유코드, 시작일, 종료일 순으로 입력합니다. 종료일을 생략하면 오늘까지 조회합니다.
+
+```bash
+python -m seibro_api.schedule_reason 000100 102 20240101 20241231
+```
+
+| 인자 | 설명 |
+|---|---|
+| `stock_code` | 종목코드. 회사 검색으로 예탁원 고객번호(`ISSUCO_CUSTNO`)를 확인합니다. |
+| `reason_code` | 권리사유 코드. 기본값은 무상증자(`102`)입니다. |
+| `start_dt`, `end_dt` | 권리기준일 조회 범위. 기본값은 2011년 1월 1일부터 오늘까지입니다. `YYYYMMDD`, `YYYY-MM-DD`, `YYYY/MM/DD`, Python 날짜 객체를 받습니다. |
+| `save_csv` | 기본값은 `True`입니다. 조회 결과가 있으면 작업 디렉터리에 `schedule_reason_<종목코드>_<사유코드>_<시작일>_<종료일>.csv`로 저장합니다. |
+| `include_standard_dates_only` | 기본값은 `True`입니다. 상세 조회가 구현되지 않은 사유에서 기준일 목록을 반환할지 정합니다. |
+
+상세 내역은 WebSquare에서 조회합니다. 고객번호를 찾을 때 Open API 클라이언트가 있으면 먼저 사용하고, 키가 없으면 웹 회사 검색으로 조회할 수 있습니다.
+
+#### 사유코드와 상세 조회 범위
+
+표의 상세 조회 함수는 `seibro_api`에서 직접 가져올 수 있습니다. 함수가 표시되지 않은 사유는 `get_schedule_reason_details()`에서 기준일 목록을 조회할 수 있습니다.
+
+| 코드 | 권리사유 | WebSquare 화면 | 상세 조회 함수 |
+|---|---|---|---|
+| `001` | 정기총회 | `BIP_CNTS01024V.xml` | — |
+| `002` | 임시총회 | `BIP_CNTS01024V.xml` | — |
+| `003` | 종류총회 | `BIP_CNTS01024V.xml` | — |
+| `009` | 기타총회 | `BIP_CNTS01024V.xml` | — |
+| `101` | 유상증자 | `BIP_CNTS01025V.xml` | — |
+| `102` | 무상증자 | `BIP_CNTS01026V.xml` | `get_bonus_issue_details()` |
+| `103` | 배당일정 | `BIP_CNTS01027V.xml` | `get_dividend_schedule_details()` |
+| `201` | 액면분할 | `BIP_CNTS01028V.xml` | `get_face_value_split_details()` |
+| `202` | 액면병합 | `BIP_CNTS01028V.xml` | `get_face_value_merge_details()` |
+| `203` | 사무인수 | `BIP_CNTS01029V.xml` | — |
+| `204` | 상호변경 | `BIP_CNTS01030V.xml` | — |
+| `205` | 자본감소 | `BIP_CNTS01031V.xml` | `get_capital_reduction_details()` |
+| `206` | 합병 | `BIP_CNTS01032V.xml` | — |
+| `207` | 회사분할 | `BIP_CNTS01033V.xml` | — |
+| `208` | 분할합병 | `BIP_CNTS01049V.xml` | — |
+| `210` | 주식교환 | `BIP_CNTS01035V.xml` | — |
+| `211` | 주식이전 | `BIP_CNTS01035V.xml` | — |
+| `301` | 주식전환 | `BIP_CNTS01036V.xml` | — |
+| `302` | 주식상환 | `BIP_CNTS01037V.xml` | — |
+| `900` | 매수청구 | `BIP_CNTS01039V.xml` | — |
+
+#### 결과 읽기
+
+- `RGT_STD_DT`는 권리기준일입니다. 주총 개최일, 배당금 지급일 등 실제 일정일자는 별도로 확인합니다.
+- `DETAIL_TYPE`은 응답 종류입니다. `basic`은 기본 내역, `pre_issued_stock`은 기발행 주식, `payment`는 지급 내역, `issued_stock`은 발행 내역입니다. 배당일정에는 `dividend`와 `stock_dividend`도 들어올 수 있습니다. `standard_date`는 기준일 목록입니다.
+- 결과가 비어 있으면 콘솔의 기간 내 기준일 수와 상세 호출 결과를 확인합니다. 개별 상세 요청 실패는 `df.attrs.get("errors", [])`에서 날짜와 응답 종류를 확인할 수 있습니다.
 
 ### dividend.py — 배당내역상세 조회
 
@@ -389,7 +457,7 @@ df = get_issued_bonds("2026-11-02", "2026-11-24")   # 기간 (목록만)
 |------|:----------:|:---------:|:---------------:|
 | **함수** | `get_stock_bonds` | `get_dart_cb_events` | `get_bonds_from_report` |
 | **시점** | 실시간 | 공시일 기준 | 보고서 기준일 |
-| **대상** | CB/BW/EB 통합 | CB/BW/EB 개별 공시 | CB, BW 별도 테이블 |
+| **대상** | CB/BW/EB 통합 | CB/BW/EB 개별 공시 | CB, BW, EB 별도 테이블 |
 | **미상환잔액** | O (실시간) | X (발행 시점만) | O (보고서 기준일) |
 | **전환/행사가** | O (최신) | O (발행 시점) | O (보고서 기준일) |
 | **전환가능주식수** | O (자동 계산) | O (공시 기재) | O (보고서 기재) |

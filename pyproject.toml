@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "seibro-api"
 version = "0.1.0"
-description = "Seibro & DART OpenAPI client for Korean stock-linked bonds (CB/BW/EB)"
+description = "SEIBRO Open API, WebSquare, and DART tools for Korean securities data"
 requires-python = ">=3.9"
 dependencies = [
     "requests",

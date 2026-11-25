@@ -11,14 +11,27 @@ docs_cache/
 .env
 .env.*
 !.env.example
+*.har
 
 # Claude Code
 .claude/
 
-# 생성물(조회 결과 CSV)
+# 조회 결과와 로컬 캐시
+corp_master.csv
+corp_master.pkl
 stock_bond_*.csv
 dart_bond_*.csv
+stock_issue_details_*.csv
 schedule_reason_*.csv
+company_schedules_*.csv
+cost_payment_*.csv
 dividend_*.csv
 bonus_issue_*.csv
 issued_share_change_*.csv
+kofr_*.csv
+overseas_settlement_*.csv
+overseas_holdings_*.csv
+sub_pis_[0-9]*.csv
+cb_[0-9]*.csv
+bw_[0-9]*.csv
+eb_[0-9]*.csv
