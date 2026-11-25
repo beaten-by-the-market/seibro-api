@@ -22,6 +22,7 @@
 | `getStkStatInfo` | 종목 기본정보(단축코드→ISIN·고객번호·발행주식총수) | `SeibroClient.get_stock_info()` |
 | `getXrcStkStatInfo` | 종목에 연결된 주식관련사채(CB/BW/EB) 목록 | `get_stock_bonds()`, `SeibroClient.get_stock_linked_bonds()` |
 | `getBondStatInfo` | 사채별 상세(미상환잔액·금리·신용등급·옵션 등) | `get_stock_bonds()`, `SeibroClient.get_bond_detail()` |
+| `getBondOptionXrcInfo` | 채권 표준코드별 상환 옵션 행사 | `SeibroClient.get_bond_redemptions()` |
 | `getXrcStkOptionXrcInfo` | 주식관련사채 권리행사 내역(행사일·행사금액·행사주식수·당시 행사가) | `SeibroClient.get_bond_exercises()`, `get_stock_linked_bond_status()` |
 | `getBondIssuInfo` | 발행일(하루) 또는 발행회사별 채권 발행 목록 | `SeibroClient.get_bond_issues()`, `get_issued_bonds()` |
 | `getSafeDpDutyDepoStatus` | 의무보호예수 예수(BIZ_TPCD=1)·반환(2) 내역, 조회기간 1년 이하 | `SeibroClient.get_lockup_status()`, `get_lockup_records()` |
@@ -53,9 +54,7 @@
 | `chgDetailsListEL1` | BIP_CNTS01012V | 발행주식수증감내역(개별) — 기간 조회 지원 | `get_issued_share_changes()` |
 | `issuInfoViewEL1` / `exerInfoView` | BIP_CNTS03004V | 채권 종목상세 기본정보 / 행사정보(현재 행사가·BW 신주대금 납입방법) | `get_bond_web_info()` |
 
-일정사유 19종(정기/임시총회·유무상증자·배당·액면분할·합병·분할·주식교환·매수청구 등)은
-`SCHEDULE_REASONS`에 정의돼 있으나, **상세 조회가 구현된 것은 무상증자(102)뿐**이고
-나머지는 기준일 목록만 반환한다.
+일정사유별 상세 조회는 무상증자(102), 배당(103), 액면분할(201), 액면병합(202), 자본감소(205)를 지원합니다. 그 외 사유는 기준일 목록을 반환합니다. `get_company_schedules()`와 `get_dividend_details()`에는 `use_openapi=False`를 지정해 회사 검색도 WebSquare로 실행할 수 있습니다.
 
 ### 메뉴 링크 → API 만드는 워크플로
 
@@ -129,7 +128,7 @@ DART (별도 기관, key O)       → 사채 발행공시 이력 · 정기보고
 ### 의무보호예수 (getSafeDpDutyDepoStatus)
 - 조회기간은 양 끝 포함 365일 이하. `get_lockup_records()`가 365일 구간으로 나눠 부른다.
 - 감자·액면분할·액면병합 뒤 예탁원은 기존 예수 기록을 반환 처리하지 않고 바뀐 수량으로 새로
-  예수한다. 미반환 잔량을 그냥 더하면 같은 주식을 여러 번 센다(scenarios/1_stock/01_dilution 참고).
+  예수한다. 미반환 잔량을 그냥 더하면 같은 주식을 여러 번 센다. [희석 분석](../scenarios/combined/01_dilution.md)
 - `TOTAL_STK_CNT`는 조회 시점의 발행주식총수다(예수 당시 값이 아님).
 
 ### 주식관련사채 행사가
@@ -164,5 +163,9 @@ DART (별도 기관, key O)       → 사채 발행공시 이력 · 정기보고
     처리한다(`get_issuco_custno()`가 검증).
   - **필수 파라미터 누락 시 `<vector>` 없는 응답**: `<SeibroAPI><RES/></SeibroAPI>`만
     온다. `SeibroAPIError`로 즉시 올리고 재시도하지 않는다.
-- `resources/`의 노트북은 연구 기록입니다. 의무보유·주총은 패키지와 [시나리오](../scenarios/README.md)에서 실행할 수 있습니다.
-- `resources/seibro1.ipynb`의 공유자원포털 연구 예제에는 별도 `SEIBRO_SHARE_API_KEY`가 필요합니다.
+
+## 이전 연구 자료
+
+- 의무보유, 주총, 채권 발행·상환 조회는 위 공식 API 함수와 [시나리오](../scenarios/README.md)로 이어집니다.
+- 공유자원포털의 `StockSvc/getSafeDpDutyDepoStatusN1`은 별도 서비스키를 쓰던 연구 예제입니다. 현재 패키지의 보호예수는 OpenPlatform의 `getSafeDpDutyDepoStatus`를 호출합니다.
+- 예전 연구 노트북은 `2f96200` 시점의 Git 이력에서 확인할 수 있습니다. 기업정보 관련 원본 자료는 [가이드 엑셀](../resources/Guide_Corp%20%281%29.xlsx)에 있습니다.

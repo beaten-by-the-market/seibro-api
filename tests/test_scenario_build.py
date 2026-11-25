@@ -50,3 +50,17 @@ def test_failed_cell_traceback_is_not_published(example, monkeypatch, capsys):
     assert build.build(source) is False
     assert destination.read_text(encoding="utf-8") == "previous notebook"
     assert "synthetic-test-value" not in capsys.readouterr().out
+
+
+def test_web_scenario_prepares_colab_without_api_key(example):
+    source, destination = example
+    web_source = source.parent / "web" / source.name
+    web_source.parent.mkdir()
+    source.rename(web_source)
+
+    assert build.build(web_source, execute=False)
+    notebook = nbformat.read(destination.parent / "web" / destination.name, as_version=4)
+
+    assert notebook.cells[3].source.startswith("SECRETS = []\n")
+    assert "API 키가 필요 없습니다" in notebook.cells[1].source
+    assert "scenarios/web/example.ipynb" in notebook.cells[0].source

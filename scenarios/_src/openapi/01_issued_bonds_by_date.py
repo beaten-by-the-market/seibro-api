@@ -72,7 +72,7 @@ plt.tight_layout()
 
 # %% [markdown]
 # ## 3. 기간 중 주식관련사채(CB·BW·EB)
-# 주식으로 바뀔 수 있는 사채입니다. 발행회사의 희석 효과는 `1_stock/01_dilution` 노트북으로 이어서 볼 수 있습니다.
+# 주식으로 바뀔 수 있는 사채입니다. 발행회사의 희석 효과는 `combined/01_dilution` 노트북으로 이어서 볼 수 있습니다.
 
 # %%
 eq = period[period["유형"].isin(["CB", "BW", "EB"])].copy()

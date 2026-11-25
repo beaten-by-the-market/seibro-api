@@ -18,7 +18,7 @@
 
 사용
     python scenarios/_tools/build.py                 # 전체
-    python scenarios/_tools/build.py 1_stock/01      # 경로에 이 문자열이 든 원본만
+    python scenarios/_tools/build.py openapi/01      # 경로에 이 문자열이 든 원본만
     python scenarios/_tools/build.py --no-exec …
 """
 from __future__ import annotations
@@ -124,7 +124,7 @@ def build(src_path: Path, execute: bool = True) -> bool:
 
     needs_krx = "krx_data_api" in text
     needs_dart = "DART_API_KEY" in text
-    secrets = ["SEIBRO_API_KEY"]
+    secrets = [] if rel.parts[0] == "web" else ["SEIBRO_API_KEY"]
     if needs_dart:
         secrets.append("DART_API_KEY")
     if needs_krx:
@@ -132,11 +132,14 @@ def build(src_path: Path, execute: bool = True) -> bool:
     url = f"https://colab.research.google.com/github/{GITHUB}/blob/{BRANCH}/scenarios/{quote(rel.as_posix())}"
     badge = f"[![Colab에서 열기](https://colab.research.google.com/assets/colab-badge.svg)]({url})"
     helper = f"SECRETS = {secrets!r}\n" + (HERE / "seibro_helper.py").read_text(encoding="utf-8").strip()
-    names = ", ".join(f"`{s}`" for s in secrets)
-    setup_md = ("## 0. 준비\n"
-                f"Colab 왼쪽 🔑(Secrets)에 {names}를 등록하고 이 노트북의 액세스를 켠 뒤 아래 두 셀을 실행하세요. "
-                "첫 셀은 패키지를 설치하고, 두 번째 셀은 모든 시나리오에 공통인 준비 코드입니다(접어 두어도 됩니다). "
-                "SEIBRO Open API 키는 [SEIBRO OpenPlatform](https://seibro.or.kr/OpenPlatform/)에서 신청합니다.")
+    if secrets:
+        names = ", ".join(f"`{name}`" for name in secrets)
+        credentials = f"Colab 왼쪽 🔑(Secrets)에 {names}를 등록하고 이 노트북의 액세스를 켭니다. "
+        if "SEIBRO_API_KEY" in secrets:
+            credentials += "SEIBRO Open API 키는 [SEIBRO OpenPlatform](https://seibro.or.kr/OpenPlatform/)에서 신청합니다. "
+    else:
+        credentials = "이 시나리오는 WebSquare 공개 화면을 조회하며 API 키가 필요 없습니다. "
+    setup_md = "## 0. 준비\n" + credentials + "아래 두 셀을 실행해 패키지를 설치하고 실행 환경을 준비하세요."
 
     nb = nbformat.v4.new_notebook()
     nb.metadata = {"kernelspec": {"name": "python3", "display_name": "Python 3", "language": "python"},

@@ -1,4 +1,4 @@
-"""실행된 노트북의 출력 확인: python scenarios/_tools/show.py scenarios/1_stock/01_dilution.ipynb"""
+"""실행된 노트북의 출력 확인: python scenarios/_tools/show.py scenarios/combined/01_dilution.ipynb"""
 import sys
 import nbformat
 

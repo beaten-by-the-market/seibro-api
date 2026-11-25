@@ -96,6 +96,8 @@ def get_dividend_details(
     session: requests.Session | None = None,
     save_csv: bool = True,
     sleep_seconds: float = 0.3,
+    *,
+    use_openapi: bool = True,
 ) -> pd.DataFrame:
     """단일 종목의 배당내역상세(보통주 + 우선주)를 조회.
 
@@ -109,6 +111,7 @@ def get_dividend_details(
         session: requests.Session. None이면 자동 생성
         save_csv: True이면 dividend_<종목코드>.csv 저장
         sleep_seconds: 보통주/우선주 호출 사이 대기
+        use_openapi: False이면 고객번호도 웹 회사검색으로 찾는다.
 
     Returns:
         [종목코드, 회사명, 주식종류, 항목, <연도1>, <연도2>, <연도3>, <연도4>]
@@ -130,13 +133,13 @@ def get_dividend_details(
         )
 
     # Open API key가 있으면 client로, 없으면 웹 회사검색으로 고객번호 해결
-    if client is None:
+    if use_openapi and client is None:
         try:
             client = SeibroClient()
         except ValueError:
             client = None
     web_client = SeibroWebSquareClient(session=session)
-    stock = _resolve_stock(stock_code, client, web_client)
+    stock = _resolve_stock(stock_code, client if use_openapi else None, web_client)
     print(f"\n[Seibro] 배당내역상세 조회")
     print(f"  -> {stock['company_name']} ({stock['stock_code']}, 고객번호: {stock['issuco_custno']})")
 

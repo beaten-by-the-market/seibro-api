@@ -13,7 +13,7 @@ import pandas as pd
 IN_COLAB = "google.colab" in sys.modules
 warnings.filterwarnings("ignore", message="Unverified HTTPS request")
 
-if IN_COLAB:
+if IN_COLAB and SECRETS:
     from google.colab import userdata
     for _name in SECRETS:  # noqa: F821  (빌더가 이 셀 맨 위에 SECRETS 목록을 넣음)
         if os.environ.get(_name):
@@ -26,7 +26,7 @@ if IN_COLAB:
             from getpass import getpass
             _v = getpass(f"{_name}: ")
         os.environ[_name] = _v.strip()
-else:
+elif SECRETS:
     from dotenv import find_dotenv, load_dotenv
     load_dotenv(find_dotenv(usecwd=True))
 
@@ -80,5 +80,6 @@ def _status(n):
     return "없음" if IN_COLAB or not n.startswith("KRX_") else "krx-data-api 자체 .env 사용"
 
 
+credential_status = ", ".join(f"{n}: {_status(n)}" for n in SECRETS)
 print("SEIBRO 준비 완료", "(Colab)" if IN_COLAB else "(로컬)",
-      "| " + ", ".join(f"{n}: {_status(n)}" for n in SECRETS))  # noqa: F821
+      "| " + (credential_status or "웹 조회 · 키 필요 없음"))

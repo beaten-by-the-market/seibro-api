@@ -456,6 +456,13 @@ class SeibroClient:
         """
         return self._call_api("getBondStatInfo", {"ISIN": str(isin).strip()})
 
+    def get_bond_redemptions(self, isin: str) -> pd.DataFrame:
+        """채권 표준코드별 상환 옵션 행사 내역(getBondOptionXrcInfo)."""
+        isin = str(isin).strip().upper()
+        if len(isin) != 12 or not isin.isascii() or not isin.isalnum():
+            raise ValueError("채권 표준코드는 영문과 숫자를 합쳐 12자리입니다.")
+        return self._call_api("getBondOptionXrcInfo", {"ISIN": isin})
+
     def get_stock_linked_bonds(self, stock_isin: str) -> pd.DataFrame:
         """주식(행사대상) 표준코드 → 연결된 주식관련사채(CB/BW/EB) 목록.
 

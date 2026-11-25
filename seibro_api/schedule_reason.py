@@ -480,6 +480,8 @@ def get_company_schedules(
     client: SeibroClient | None = None,
     web_client: SeibroWebSquareClient | None = None,
     save_csv: bool = True,
+    *,
+    use_openapi: bool = True,
 ) -> pd.DataFrame:
     """회사 하나의 기간 내 '기간별 주요일정'을 한 번에 조회 (BIP_CNTS01021V).
 
@@ -497,6 +499,7 @@ def get_company_schedules(
         client: 종목코드→고객번호 해결용. None이면 자동 시도(키 없으면 웹검색).
         web_client: SeibroWebSquareClient. None이면 자동 생성.
         save_csv: True이면 company_schedules_<종목코드>_<기간>.csv 저장.
+        use_openapi: False이면 고객번호도 웹 회사검색으로 찾는다.
 
     Returns:
         일정일자(DT_BEGIN_DT) 오름차순 DataFrame. 칼럼: 종목코드/회사명/일정일자/
@@ -512,12 +515,12 @@ def get_company_schedules(
         raise ValueError(f"start_dt must be <= end_dt: {start} > {end}")
 
     web_client = web_client or SeibroWebSquareClient()
-    if client is None:
+    if use_openapi and client is None:
         try:
             client = SeibroClient()
         except ValueError:
             client = None
-    stock = _resolve_stock(stock_code, client, web_client)
+    stock = _resolve_stock(stock_code, client if use_openapi else None, web_client)
 
     print(f"\n[Seibro] 기간별 주요일정 조회")
     print(f"  -> {stock['company_name']} ({stock['stock_code']}, 고객번호: {stock['issuco_custno']})")
